@@ -1,0 +1,170 @@
+<main>
+    <!-- Create New Course Area Start -->
+    <section class="bd-new-course-area section-space">
+        <div class="container">
+            <!-- New Course Title aligned center -->
+            <h2 class="text-center mb-4">New Course</h2>
+
+            <div class="row g-30 justify-content-center">
+                <div class="col-xl-8 col-lg-9">
+                    <div class="bd-new-course-wrapper">
+                        <!-- Form Container styled for better UX -->
+                        <div class="card p-4">
+                            <form #courseForm="ngForm" (ngSubmit)="onSubmit()" novalidate>
+
+                                <!-- 1️⃣ Course Category -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="courseCategory">Course Category</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <select [(ngModel)]="course.courseCategory" name="course_category"
+                                            id="courseCategory" required #categoryRef="ngModel">
+                                            <option value="">Select a Category</option>
+                                            <option value="software-dev">Software Development</option>
+                                            <option value="ai-data-science">Artificial Intelligence & Data Science</option>
+                                            <option value="cybersecurity">Cybersecurity & Cloud</option>
+                                            <option value="devops">DevOps & Infrastructure</option>
+                                            <option value="uiux-design">UI/UX & Design</option>
+                                            <option value="database">Database & Data Engineering</option>
+                                            <option value="other-tech">Other Technical Topics</option>
+                                        </select>
+                                    </div>
+                                    <div *ngIf="categoryRef.invalid && categoryRef.touched" class="text-danger">
+                                        Please select a course category.
+                                    </div>
+                                </div>
+ 
+                                <!-- 2️⃣ Course Title -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="courseTitle">Course Title</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <input [(ngModel)]="course.courseTitle" name="course_title" id="courseTitle"
+                                            type="text" placeholder="Enter Course Title" required minlength="2"
+                                            #courseTitleRef="ngModel">
+                                    </div>
+                                    <div *ngIf="courseTitleRef.invalid && courseTitleRef.touched" class="text-danger">
+                                        <div *ngIf="courseTitleRef.errors?.['required']">Course Title is required.</div>
+                                        <div *ngIf="courseTitleRef.errors?.['minlength']">Title must be at least 2 characters long.</div>
+                                    </div>
+                                </div>
+
+                                <!-- 3️⃣ Course Description -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="courseDescription">Course Description</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <textarea [(ngModel)]="course.courseDescription" name="course_description"
+                                            id="courseDescription" placeholder="Enter Course Description" required
+                                            minlength="10" #courseDescRef="ngModel"></textarea>
+                                    </div>
+                                    <div *ngIf="courseDescRef.invalid && courseDescRef.touched" class="text-danger">
+                                        <div *ngIf="courseDescRef.errors?.['required']">Course Description is required.</div>
+                                        <div *ngIf="courseDescRef.errors?.['minlength']">Description must be at least 10 characters long.</div>
+                                    </div>
+                                </div>
+
+                                <!-- 4️⃣ Course Type (Paid or Free) -->
+                                <div class="bd-course-product-item mb-20">
+                                    <div class="form-input-box">
+                                        <div class="form-input-title">
+                                            <label>Course Type</label>
+                                        </div>
+                                        <div class="form-input">
+                                            <div class="radio d-flex-items gap-30">
+                                                <div class="form-check">
+                                                    <input [(ngModel)]="coursePaidValue" name="course_paid"
+                                                        class="form-check-input" type="radio" value="true" id="paid"
+                                                        (change)="togglePrice()">
+                                                    <label class="form-check-label" for="paid">Paid</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input [(ngModel)]="coursePaidValue" name="course_paid"
+                                                        class="form-check-input" type="radio" value="false" id="free"
+                                                        (change)="togglePrice()">
+                                                    <label class="form-check-label" for="free">Free</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 5️⃣ Course Level -->
+                                <div class="bd-course-product-item mb-20">
+                                    <div class="form-input-box">
+                                        <div class="form-input-title">
+                                            <label for="courseLevel">Course Level</label>
+                                        </div>
+                                        <div class="form-input">
+                                            <select [(ngModel)]="course.level" name="course_level" id="courseLevel" required>
+                                                <option *ngFor="let level of courseLevels" [value]="level">{{ level }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 6️⃣ Course Price -->
+                                <div class="bd-course-product-item mb-20">
+                                    <div class="form-input-box">
+                                        <div class="form-input-title">
+                                            <label for="regularPrice">Price</label>
+                                        </div>
+                                        <div class="form-input">
+                                            <input [(ngModel)]="course.coursePrice" name="regularPrice" type="number"
+                                                id="regularPrice" placeholder="Enter price"
+                                                [disabled]="coursePaidValue === 'false'" required min="50"
+                                                #priceRef="ngModel">
+                                        </div>
+                                        <div *ngIf="coursePaidValue === 'true' && priceRef.invalid && priceRef.touched"
+                                            class="text-danger">
+                                            <div *ngIf="priceRef.errors?.['required']">Price is required for paid courses.</div>
+                                            <div *ngIf="priceRef.errors?.['min']">Minimum price for a paid course is 50DT.</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 7️⃣ Course Thumbnail Upload -->
+                                <div class="form-input-box mb-30">
+                                    <div class="form-input-title">
+                                        <label for="imageUpload">Course Thumbnail</label>
+                                    </div>
+                                    <div class="bd-course-thumbnail">
+                                        <div class="bd-course-thumbnail-label">
+                                            <input type="file" id="imageUpload" accept="image/*" (change)="onFileSelected($event)">
+                                            <label for="imageUpload">
+                                                <span class="label-title">Change Thumbnail</span>
+                                                <span class="bd-course-thumbnail-preview">
+                                                    <span class="bd-course-thumbnail-preview-box" id="imagePreview"
+                                                        [ngStyle]="{'background-image': course.courseImage ? 'url(' + sanitizeUrl(course.courseImage) + ')' : 'url(assets/images/shape/select-thumb.webp)'}">
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div> <!-- ✅ Fixed missing closing tag here -->
+
+                                <!-- Submit Button -->
+                             <!-- Submit and Return Buttons -->
+<div class="d-flex-items justify-content-start gap-30 mt-50">
+    <!-- Publish Button -->
+    <button type="submit" class="bd-btn btn-outline-primary" [disabled]="courseForm.invalid">Publish</button>
+
+    <!-- Return to Course List Button -->
+    <a [routerLink]="['/course-list']" class="bd-btn btn-outline-secondary">
+         Courses List
+    </a>
+</div>
+
+
+                            </form>
+                        </div> <!-- End of card -->
+                    </div> <!-- End of bd-new-course-wrapper -->
+                </div> <!-- End of col-xl-8 -->
+            </div> <!-- End of row -->
+        </div> <!-- End of container -->
+    </section>
+    <!-- Create New Course Area End -->
+</main>
