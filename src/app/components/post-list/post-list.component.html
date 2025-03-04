@@ -1,0 +1,289 @@
+<app-navbar></app-navbar>
+<!-- Body main wrapper start -->
+<main>
+  <!-- breadcrumb area start -->
+  <section class="bd-breadcrumb-area p-relative fix z-index-11">
+    <div
+      class="bd-breadcrumb-bg-two"
+      data-background="assets/images/breadcrumb/breadcrumb-bg-2.webp"
+    ></div>
+    <div class="bd-breadcrumb-wrapper p-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="bd-breadcrumb style-two d-flex-center">
+              <div class="bd-breadcrumb-content">
+                <h1 class="bd-breadcrumb-title text-center">Forums</h1>
+                <div class="bd-breadcrumb-list">
+                  <span class="divider"
+                    ><i class="fa-regular fa-angle-right"></i
+                  ></span>
+                  <span class="active">Forums</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bd-breadcrumb-shape">
+          <div class="shape-1">
+            <img
+              src="assets/images/shape/breadcrumb-shape-1.webp"
+              alt="shape"
+            />
+          </div>
+          <div class="shape-3">
+            <img src="assets/images/shape/bulb-shape.webp" alt="shape" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb area end -->
+
+  <!-- blog area start -->
+  <section class="bd-blog-area section-space">
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-8 col-xl-8 col-xxl-8 col-lg-8">
+          <div class="row gy-30">
+            <div
+              *ngFor="let post of posts?.content"
+              class="col-xl-12 col-lg-12 col-md-12"
+            >
+              <article class="bd-blog bd-blog-wrapper blog-standard">
+                <div class="bd-blog-thumb">
+                  <a href="#"
+                    ><img
+                      src="assets/images/blog/blog-thumb-16.webp"
+                      alt="image"
+                  /></a>
+                </div>
+                <div class="bd-blog-meta-item">
+                  <span
+                    ><i class="fas fa-user"></i> by
+                    <a href="news.html">Alex</a></span
+                  >
+                  <span
+                    ><i class="fas fa-calendar-days"></i>
+                    {{ post.created_at | date : "d MMM yyyy" }}</span
+                  >
+                  <span
+                    ><i class="fa-solid fa-comment-dots"></i
+                    ><a [routerLink]="['/forums', post.id]"
+                      >{{ post.comments.length }} Comments</a
+                    ></span
+                  >
+                </div>
+                <div class="bd-blog-content">
+                  <h3 class="bd-blog-title mb-15 underline">
+                    <a [routerLink]="['/forums', post.id]"
+                      >{{ post.content | slice : 0 : 50 }}...</a
+                    >
+                  </h3>
+                  <p>
+                    {{ post.content }}
+                  </p>
+                  <div class="bd-blog-btn">
+                    <a
+                      [routerLink]="['/forums', post.id]"
+                      class="bd-btn btn-outline-primary"
+                      >Read More</a
+                    >
+                  </div>
+                  <div class="bd-blog-btn">
+                    <button
+                      class="btn btn-danger"
+                      (click)="onDeletePost(post.id)"
+                    >
+                      <i class="fas fa-trash"></i>
+                      <!-- Font Awesome Trash Icon -->
+                    </button>
+                  </div>
+                  <div class="bd-blog-btn">
+                    <button
+                      class="btn btn-warning"
+                      [routerLink]="['/update-post', post.id]"
+                    >
+                      <i class="fas fa-edit"></i>
+                      <!-- Font Awesome Edit Icon -->
+                    </button>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+          <!-- pagination style -->
+          <div class="basic-pagination">
+            <nav>
+              <ul>
+                <li>
+                  <a href="#" class="prev">
+                    <i class="fa-solid fa-angle-left"></i>
+                  </a>
+                </li>
+                <li>
+                  <a href="#">1</a>
+                </li>
+                <li>
+                  <a class="current" href="#">2</a>
+                </li>
+                <li>
+                  <a href="#">3</a>
+                </li>
+                <li>
+                  <a href="#" class="next">
+                    <i class="fa-solid fa-angle-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <!-- pagination style end -->
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-xxl-4 col-lg-4">
+          <div class="bd-blog-sidebar sidebar-right sidebar-sticky">
+            <div class="bd-blog-widget widget-search">
+              <h5 class="bd-widget-title mb-20">Search</h5>
+              <div class="bd-sidebar-search">
+                <form class="bd-sidebar-search-form" action="#" method="get">
+                  <input
+                    type="text"
+                    value=""
+                    required=""
+                    name="s"
+                    placeholder="Search"
+                  />
+                  <button type="submit"><i class="far fa-search"></i></button>
+                </form>
+              </div>
+            </div>
+            <div class="bd-blog-widget widget-latest-posts">
+              <h5 class="bd-widget-title mb-20">Latest Post</h5>
+              <div class="bd-widget-posts">
+                <div class="bd-recent-post-item">
+                  <div class="bd-recent-post-thumb">
+                    <a href="blog-details.html"
+                      ><img
+                        src="assets/images/blog/blog-thumb-01.webp"
+                        alt="image"
+                    /></a>
+                  </div>
+                  <div class="bd-recent-post-content">
+                    <div class="bd-recent-post-meta">
+                      <span class="icon"
+                        ><i class="fa-light fa-calendar-days"></i
+                      ></span>
+                      <span class="date"> 10 Oct, 2024</span>
+                    </div>
+                    <h6 class="bd-recent-post-title underline">
+                      <a href="blog-details.html"
+                        >Exploring Online Learning Strategies</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+                <div class="bd-recent-post-item">
+                  <div class="bd-recent-post-thumb">
+                    <a href="blog-details.html"
+                      ><img
+                        src="assets/images/blog/blog-thumb-04.webp"
+                        alt="image"
+                    /></a>
+                  </div>
+                  <div class="bd-recent-post-content">
+                    <div class="bd-recent-post-meta">
+                      <span class="icon"
+                        ><i class="fa-light fa-calendar-days"></i
+                      ></span>
+                      <span class="date"> 25 Sep, 2024</span>
+                    </div>
+                    <h6 class="bd-recent-post-title underline">
+                      <a href="blog-details.html"
+                        >The Future of University Education</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+                <div class="bd-recent-post-item">
+                  <div class="bd-recent-post-thumb">
+                    <a href="blog-details.html"
+                      ><img
+                        src="assets/images/blog/blog-thumb-10.webp"
+                        alt="image"
+                    /></a>
+                  </div>
+                  <div class="bd-recent-post-content">
+                    <div class="bd-recent-post-meta">
+                      <span class="icon"
+                        ><i class="fa-light fa-calendar-days"></i
+                      ></span>
+                      <span class="date"> 05 Aug, 2024</span>
+                    </div>
+                    <h6 class="bd-recent-post-title underline">
+                      <a href="blog-details.html"
+                        >Kindergarten Learning Through Play</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bd-blog-widget widget_categories">
+              <h5 class="bd-widget-title mb-20">Categories</h5>
+              <div class="bd-widget-list">
+                <ul>
+                  <li class="underline">
+                    <a href="blog-details.html">Online Learning</a>(10)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Study Tips</a>(06)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Teaching Methods</a>(04)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Career Advice</a>(05)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Educational Resources</a>(08)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Skill Development</a>(09)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Parenting Tips</a>(03)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Academic Success</a>(07)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Distance Learning</a>(04)
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="bd-blog-widget widget_tag_cloud">
+              <h5 class="bd-widget-title mb-20">Tags</h5>
+              <div class="tagcloud">
+                <a href="blog-details.html">Learning</a>
+                <a href="blog-details.html">Motivation</a>
+                <a href="blog-details.html">Education</a>
+                <a href="blog-details.html">Data Science</a>
+                <a href="blog-details.html">Tips</a>
+                <a href="blog-details.html">Course</a>
+              </div>
+            </div>
+            <div class="bd-sidebar-promotion">
+              <a href="sign-up.html" class="thumb">
+                <img src="assets/images/blog/sidebar-banner.webp" alt="image" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- blog area end -->
+</main>
+<!-- Body main wrapper end -->
+<app-footer></app-footer>

@@ -1,0 +1,137 @@
+<app-navbar></app-navbar>
+<main>
+  <!-- breadcrumb area start -->
+  <section class="bd-breadcrumb-area p-relative fix z-index-11">
+    <div
+      class="bd-breadcrumb-bg-two"
+      data-background="assets/images/breadcrumb/breadcrumb-bg-2.webp"
+    ></div>
+    <div class="bd-breadcrumb-wrapper p-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="bd-breadcrumb style-two d-flex-center">
+              <div class="bd-breadcrumb-content">
+                <h1 class="bd-breadcrumb-title">Create Post</h1>
+                <div class="bd-breadcrumb-list">
+                  <span class="divider"
+                    ><i class="fa-regular fa-angle-right"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bd-breadcrumb-shape">
+          <div class="shape-1">
+            <img
+              src="assets/images/shape/breadcrumb-shape-1.webp"
+              alt="shape"
+            />
+          </div>
+          <div class="shape-3">
+            <img src="assets/images/shape/bulb-shape.webp" alt="shape" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb area end -->
+
+  <!-- contact form area start -->
+  <section class="bd-contact-form-area section-space">
+    <div class="container">
+      <div class="row gy-30 justify-content-between align-items-center">
+        <div class="col-xl-6 col-lg-6">
+          <div class="bd-contact-form-wrapper">
+            <div class="bd-section-title-wrapper section-title-space">
+              <h2 class="bd-section-title mb-20">Create Forum</h2>
+            </div>
+            <div class="bd-contact-form">
+              <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+                <div class="row gy-30">
+                  <!-- content Field -->
+                  <div class="col-md-12">
+                    <div class="form-input-box">
+                      <div class="form-input-title">
+                        <label for="content">Content<span>*</span></label>
+                      </div>
+                      <div class="form-input">
+                        <textarea
+                          id="content"
+                          formControlName="content"
+                          placeholder="Write your post..."
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- tag Address Field -->
+                  <div class="col-md-12">
+                    <div class="form-input-box">
+                      <div class="form-input-title">
+                        <label for="tag">Tag<span>*</span></label>
+                      </div>
+                      <div class="form-input">
+                        <input
+                          id="tag"
+                          formControlName="tag"
+                          type="text"
+                          placeholder="Enter tag"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Subject Field -->
+                  <div class="col-md-12">
+                    <div class="form-input-box">
+                      <div class="form-input-title">
+                        <label for="postType">Type</label>
+                      </div>
+                      <div class="form-input">
+                        <select
+                          id="postType"
+                          formControlName="postType"
+                          required
+                        >
+                          <option *ngFor="let type of postTypes" [value]="type">
+                            {{ type }}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Hidden User ID Field -->
+                  <input type="hidden" formControlName="userId" />
+
+                  <!-- Submit Button -->
+                  <div class="col-xxl-12">
+                    <div class="bd-contact-form-btn">
+                      <button
+                        class="bd-btn btn-primary w-100"
+                        type="submit"
+                        [disabled]="postForm.invalid"
+                      >
+                        Cretae Form
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6">
+          <div class="bd-contact-form-thumb">
+            <img src="assets/images/contact/contact-thumb.webp" alt="images" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- contact form area end -->
+</main>
+<app-footer></app-footer>

@@ -1,0 +1,408 @@
+<app-navbar></app-navbar>
+<!-- Body main wrapper start -->
+<main>
+  <!-- blog details breadcrumb area start -->
+  <section
+    class="bd-blog-details-breadcrumb-area bd-blog-details-breadcrumb-bg section-space"
+    data-background="assets/images/blog/blog-details-banner.webp"
+  >
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-9 col-md-9">
+          <div class="bd-blog-details-breadcrumb-content">
+            <div class="bd-blog-details-breadcrumb-tag"></div>
+            <h1 class="bd-blog-details-breadcrumb-title">
+              {{ post?.postType }}
+            </h1>
+            <div class="bd-blog-details-breadcrumb-meta">
+              <div class="bd-blog-meta-item has-separator">
+                <span class="meta-thumb">
+                  <img src="assets/images/avatar/avatar.webp" alt="avatar" />
+                </span>
+                <span class="meta-text"
+                  ><a class="meta-author" href="blog-details.html"
+                    >Sarah Collins</a
+                  ></span
+                >
+              </div>
+              <div class="bd-blog-meta-item has-separator">
+                <span class="meta-icon">
+                  <i class="fa-sharp fa-light fa-calendar-days"></i>
+                </span>
+                <span class="meta-text"
+                  ><a href="blog-details.html">
+                    {{ post?.created_at | date : "d MMM yyyy" }}</a
+                  ></span
+                >
+              </div>
+              <div class="bd-blog-meta-item">
+                <span class="meta-icon">
+                  <i class="fa-light fa-comments"></i>
+                </span>
+                <span class="meta-text"
+                  ><a href="blog-details.html">3 Comments</a></span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="inner-shape-dots">
+      <img src="assets/images/shape/inner-dots-shape.webp" alt="" />
+    </div>
+  </section>
+  <!-- blog details breadcrumb area end -->
+
+  <!-- postbox area start -->
+  <section class="bd-postbox-area section-space">
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-8 col-xl-8 col-xxl-8 col-lg-8">
+          <div class="bd-postbox-wrapper">
+            <div class="bd-blog-feature-thumb">
+              <img
+                src="assets/images/blog/blog-thumb-01.webp"
+                alt="blog feature image"
+              />
+            </div>
+            <div class="bd-postbox-content">
+              <p class="bd-postbox-desc">
+                {{ post?.content }}
+              </p>
+
+              <div class="bd-postbox-meta">
+                <div class="bd-postbox-tag">
+                  <div class="tagcloud">
+                    <button
+                      class="btn"
+                      [ngClass]="{
+                        'btn-danger': hasLiked,
+                        'btn-outline-danger': !hasLiked
+                      }"
+                      (click)="toggleLike(post?.id)"
+                    >
+                      <i class="fas fa-heart"></i>
+                      <!-- Font Awesome Like Icon -->
+                      {{ likeCount }}
+                    </button>
+                  </div>
+                </div>
+                <div class="bd-postbox-share">
+                  <div class="theme-social">
+                    <ul class="social-icon-list">
+                      <li>
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                      </li>
+                      <li>
+                        <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bd-postbox-navigation">
+              <div class="row gy-30 align-items-center">
+                <div class="col-md-6">
+                  <div class="bd-postbox-more-left">
+                    <div class="bd-postbox-more-link">
+                      <a href="blog-details.html">
+                        <span class="mr-10">
+                          <i class="fa-sharp fa-solid fa-arrow-left"></i>
+                        </span>
+                        Previous
+                      </a>
+                    </div>
+                    <h5 class="title underline">
+                      <a href="blog-details.html"
+                        >The Evolution of Online Education</a
+                      >
+                    </h5>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="bd-postbox-more-right text-md-end">
+                    <div class="bd-postbox-more-link">
+                      <a href="blog-details.html">
+                        Next
+                        <span class="ml-10">
+                          <i class="fa-sharp fa-solid fa-arrow-right"></i>
+                        </span>
+                      </a>
+                    </div>
+                    <h5 class="title underline">
+                      <a href="blog-details.html"
+                        >The Rise of Virtual Classrooms</a
+                      >
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bd-postbox-author mb-30">
+              <div class="thumb">
+                <a href="#"
+                  ><img
+                    src="assets/images/avatar/avatar.webp"
+                    alt="Author image"
+                /></a>
+              </div>
+              <div class="bd-postbox-author-info">
+                <div class="mb-5">
+                  <h6 class="name underline"><a href="#">Sarah Collins</a></h6>
+                  <span class="designation">Senior Education Consultant</span>
+                </div>
+                <div class="bd-postbox-author-bio mb-15">
+                  <p>
+                    Sarah is an EdTech Consultant with over 8 years of
+                    experience in integrating technology into education to
+                    enhance learning experiences.
+                  </p>
+                </div>
+                <div class="theme-social circle">
+                  <ul class="social-icon-list">
+                    <li>
+                      <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    </li>
+                    <li>
+                      <a href="#"><i class="fa-brands fa-behance"></i></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="bd-blog-postbox-comment mb-30">
+              <h4 class="bd-section-title mb-30">
+                {{ post?.comments?.length }}Comments
+              </h4>
+              <div class="bd-postbox-comment">
+                <ul>
+                  <li *ngFor="let comment of comments">
+                    <div class="bd-postbox-comment-box">
+                      <div class="bd-postbox-comment-info">
+                        <div class="bd-postbox-comment-avatar">
+                          <img
+                            src="assets/images/avatar/avatar.webp"
+                            alt="image"
+                          />
+                        </div>
+                      </div>
+                      <div class="bd-postbox-comment-text">
+                        <div class="bd-postbox-comment-name">
+                          <h5 class="title mb-5">
+                            <a href="#">James Smith {{ comment?.content }}</a>
+                          </h5>
+                          <span class="post-meta">
+                            {{ comment?.created_at | date : "longDate" }}
+                          </span>
+                        </div>
+                        <p>
+                          {{ comment?.content }}
+                        </p>
+                        <button
+                          class="btn btn-danger"
+                          (click)="onDeleteComment(comment.id)"
+                        >
+                          <i class="fas fa-trash"></i>
+                          <!-- Font Awesome Trash Icon -->
+                        </button>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="bd-blog-postbox-comment-form">
+              <h4 class="bd-section-title mb-30">Leave a Comment</h4>
+              <div class="bd-review-form">
+                <form (ngSubmit)="onSubmit()" #commentForm="ngForm">
+                  <div class="row gy-30">
+                    <div class="col-xxl-12">
+                      <div class="bd-postbox-comment-input mb-15">
+                        <textarea
+                          [(ngModel)]="comment.content"
+                          name="commentContent"
+                          placeholder="Your Comment Here..."
+                          spellcheck="false"
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div class="col-xxl-12">
+                      <div class="bd-postbox-comment-btn">
+                        <button
+                          type="submit"
+                          class="bd-btn btn-primary"
+                          [disabled]="!commentForm.valid"
+                        >
+                          Submit Review
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-xl-4 col-xxl-4 col-lg-4">
+          <div class="bd-blog-sidebar sidebar-right sidebar-sticky">
+            <div class="bd-blog-widget widget-search">
+              <h5 class="bd-widget-title mb-20">Search</h5>
+              <div class="bd-sidebar-search">
+                <form class="bd-sidebar-search-form" action="#" method="get">
+                  <input
+                    type="text"
+                    value=""
+                    required=""
+                    name="s"
+                    placeholder="Search"
+                  />
+                  <button type="submit"><i class="far fa-search"></i></button>
+                </form>
+              </div>
+            </div>
+            <div class="bd-blog-widget widget-latest-posts">
+              <h5 class="bd-widget-title mb-20">Latest Post</h5>
+              <div class="bd-widget-posts">
+                <div class="bd-recent-post-item">
+                  <div class="bd-recent-post-thumb">
+                    <a href="blog-details.html"
+                      ><img
+                        src="assets/images/blog/blog-thumb-17.webp"
+                        alt="image"
+                    /></a>
+                  </div>
+                  <div class="bd-recent-post-content">
+                    <div class="bd-recent-post-meta">
+                      <span class="icon"
+                        ><i class="fa-light fa-calendar-days"></i
+                      ></span>
+                      <span class="date"> 10 Oct, 2024</span>
+                    </div>
+                    <h6 class="bd-recent-post-title underline">
+                      <a href="blog-details.html"
+                        >Exploring Online Learning Strategies</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+                <div class="bd-recent-post-item">
+                  <div class="bd-recent-post-thumb">
+                    <a href="blog-details.html"
+                      ><img
+                        src="assets/images/blog/blog-thumb-18.webp"
+                        alt="image"
+                    /></a>
+                  </div>
+                  <div class="bd-recent-post-content">
+                    <div class="bd-recent-post-meta">
+                      <span class="icon"
+                        ><i class="fa-light fa-calendar-days"></i
+                      ></span>
+                      <span class="date"> 25 Sep, 2024</span>
+                    </div>
+                    <h6 class="bd-recent-post-title underline">
+                      <a href="blog-details.html"
+                        >The Future of University Education</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+                <div class="bd-recent-post-item">
+                  <div class="bd-recent-post-thumb">
+                    <a href="blog-details.html"
+                      ><img
+                        src="assets/images/blog/blog-thumb-22.webp"
+                        alt="image"
+                    /></a>
+                  </div>
+                  <div class="bd-recent-post-content">
+                    <div class="bd-recent-post-meta">
+                      <span class="icon"
+                        ><i class="fa-light fa-calendar-days"></i
+                      ></span>
+                      <span class="date"> 05 Aug, 2024</span>
+                    </div>
+                    <h6 class="bd-recent-post-title underline">
+                      <a href="blog-details.html"
+                        >Kindergarten Learning Through Play</a
+                      >
+                    </h6>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bd-blog-widget widget_categories">
+              <h5 class="bd-widget-title mb-20">Categories</h5>
+              <div class="bd-widget-list">
+                <ul>
+                  <li class="underline">
+                    <a href="blog-details.html">Online Learning</a>(10)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Study Tips</a>(06)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Teaching Methods</a>(04)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Career Advice</a>(05)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Educational Resources</a>(08)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Skill Development</a>(09)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Parenting Tips</a>(03)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Academic Success</a>(07)
+                  </li>
+                  <li class="underline">
+                    <a href="blog-details.html">Distance Learning</a>(04)
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="bd-blog-widget widget_tag_cloud">
+              <h5 class="bd-widget-title mb-20">Tags</h5>
+              <div class="tagcloud">
+                <a href="blog-details.html">Learning</a>
+                <a href="blog-details.html">Motivation</a>
+                <a href="blog-details.html">Education</a>
+                <a href="blog-details.html">Data Science</a>
+                <a href="blog-details.html">Tips</a>
+                <a href="blog-details.html">Course</a>
+              </div>
+            </div>
+            <div class="bd-sidebar-promotion">
+              <a href="sign-up.html" class="thumb">
+                <img src="assets/images/blog/sidebar-banner.webp" alt="image" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- postbox area end -->
+</main>
+<app-footer></app-footer>

@@ -1,0 +1,198 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- Breadcrumb area -->
+  <section class="bd-breadcrumb-area p-relative fix z-index-11">
+    <div class="bd-breadcrumb-bg-two"> <img src="assets/images/breadcrumb/breadcrumb-bg-2.webp"></div>
+    <div class="bd-breadcrumb-wrapper p-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="bd-breadcrumb style-two d-flex-center">
+              <div class="bd-breadcrumb-content">
+                <h1 class="bd-breadcrumb-title text-center">Page d'acceuil Hackathon</h1>
+                <div class="bd-breadcrumb-list">
+                  <span class="divider"><i class="fa-regular fa-angle-right"></i></span>
+                  <a [routerLink]="['/hackathon_home_client']" class="active">Page d'acceuil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bd-breadcrumb-shape">
+          <div class="shape-1">
+            <img src="assets/images/shape/breadcrumb-shape-1.webp" alt="shape" />
+          </div>
+          <div class="shape-3">
+            <img src="assets/images/shape/bulb-shape.webp" alt="shape" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Barre de recherche (dans le flux, juste avant "Mes Hackathons") -->
+  <div class="search-container">
+    <div class="search-filter-wrapper">
+      <!-- Rangée 1 : Champs de saisie et bouton Localisation -->
+      <div class="search-row">
+        <input
+          type="text"
+          [(ngModel)]="searchTitle"
+          (input)="onSearchChange()"
+          placeholder="Titre"
+          class="search-input"
+        />
+        <input
+          type="text"
+          [(ngModel)]="searchDescription"
+          (input)="onSearchChange()"
+          placeholder="Description"
+          class="search-input"
+        />
+        <button (click)="toggleMap()" class="map-button">
+          {{ selectedContinent ? selectedContinent : 'Localisation' }}
+        </button>
+      </div>
+      <!-- Rangée 2 : Boutons Valider et Réinitialiser -->
+      <div class="search-row-buttons">
+        <button (click)="applyFilter()" class="search-button">Valider</button>
+        <button (click)="resetFilter()" class="reset-button">Réinitialiser</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hackathon grid area -->
+  <div class="bd-event-grid-area section-space">
+    <div class="container">
+      <div class="row gy-30">
+        <h2>Mes Hackathons :</h2>
+        <!-- Message si aucun hackathon trouvé -->
+        <div *ngIf="getPaginatedJoinedHackathons().length === 0">
+          <p>Aucun hackathon trouvé dans "Mes Hackathons".</p>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6" 
+             *ngFor="let hackathon of getPaginatedJoinedHackathons()">
+          <article class="bd-event-wrapper style-one joined-hackathon">
+            <div class="bd-event-item">
+              <div class="bd-event-thumb">
+                <a [routerLink]="['/hackathon_details_client', hackathon.id]">
+                  <img src="assets/images_slim/hackathon_1.webp" alt="image" />
+                </a>
+                <div class="bd-event-badge">
+                  <span class="bd-circle-badge primary">
+                    {{ hackathon.startTime | date:"dd" }}
+                    <span class="subtitle">{{ hackathon.startTime | date:"MMM" }}</span>
+                  </span>
+                </div>
+              </div>
+              <div class="bd-event-content">
+                <h5 class="bd-event-title underline mb-15">
+                  <a [routerLink]="['/hackathon_details_client', hackathon.id]">{{ hackathon.title }}</a>
+                </h5>
+                <p class="bd-event-description">{{ hackathon.description }}</p>
+                <div class="bd-event-divider"></div>
+                <div class="bd-event-meta d-flex-between">
+                  <div class="bd-event-meta-list">
+                    <span><i class="fa-regular fa-location-dot"></i> {{ hackathon.location | uppercase }}</span>
+                  </div>
+                  <div class="bd-event-meta-list">
+                    <span><i class="fa-regular fa-clock"></i> 
+                      {{ hackathon.startTime | date:"shortTime" }} - 
+                      {{ hackathon.endTime | date:"shortTime" }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <h2>Autres Hackathons :</h2>
+        <!-- Message si aucun hackathon trouvé -->
+        <div *ngIf="getPaginatedUnjoinedHackathons().length === 0">
+          <p>Aucun hackathon trouvé dans "Autres Hackathons".</p>
+        </div>
+        <div class="col-xl-4 col-lg-6 col-md-6" 
+             *ngFor="let hackathon of getPaginatedUnjoinedHackathons()">
+          <article class="bd-event-wrapper style-one unjoined-hackathon">
+            <div class="bd-event-item">
+              <div class="bd-event-thumb">
+                <a [routerLink]="['/hackathon_details_client', hackathon.id]">
+                  <img src="assets/images_slim/hackathon_2.png" alt="image" />
+                </a>
+                <div class="bd-event-badge">
+                  <span class="bd-circle-badge primary">
+                    {{ hackathon.startTime | date:"dd" }}
+                    <span class="subtitle">{{ hackathon.startTime | date:"MMM" }}</span>
+                  </span>
+                </div>
+              </div>
+              <div class="bd-event-content">
+                <h5 class="bd-event-title underline mb-15">
+                  <a [routerLink]="['/hackathon_details_client', hackathon.id]">{{ hackathon.title }}</a>
+                </h5>
+                <p class="bd-event-description">{{ hackathon.description }}</p>
+                <div class="bd-event-divider"></div>
+                <div class="bd-event-meta d-flex-between">
+                  <div class="bd-event-meta-list">
+                    <span><i class="fa-regular fa-location-dot"></i> {{ hackathon.location | uppercase }}</span>
+                  </div>
+                  <div class="bd-event-meta-list">
+                    <span><i class="fa-regular fa-clock"></i> 
+                      {{ hackathon.startTime | date:"shortTime" }} - 
+                      {{ hackathon.endTime | date:"shortTime" }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <!-- Pagination (exemple) -->
+        <div class="basic-pagination">
+          <nav>
+            <ul>
+              <li><a href="#" class="prev" (click)="previousPage($event)"><i class="fa-solid fa-angle-left"></i></a></li>
+              <li *ngFor="let page of getPagesArray()">
+                <a href="#" [class.current]="page === currentPage" (click)="goToPage(page, $event)">{{ page }}</a>
+              </li>
+              <li><a href="#" class="next" (click)="nextPage($event)"><i class="fa-solid fa-angle-right"></i></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Modal de la carte pour la localisation -->
+<div class="map-modal" *ngIf="showMap">
+  <div class="map-container">
+    <h3>Sélectionnez un continent</h3>
+    <div class="world-map-container">
+      <!-- Google Maps affiche le monde par défaut -->
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12093.917752716268!2d2.3522215!3d48.856614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e296aa08a7d%3A0xd18a7493a7b1f1a!2sParis%2C%20France!5e0!3m2!1sfr!2sfr!4v1680248589723!5m2!1sfr!2sfr"
+        width="600"
+        height="300"
+        style="border:0;"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="world-map"
+      ></iframe>
+    </div>
+    <div class="continent-buttons">
+      <button (click)="selectContinent('Europe')">Europe</button>
+      <button (click)="selectContinent('Asie')">Asie</button>
+      <button (click)="selectContinent('Afrique')">Afrique</button>
+      <button (click)="selectContinent('Amérique')">Amérique</button>
+      <button (click)="selectContinent('Océanie')">Océanie</button>
+    </div>
+    <button class="close-map" (click)="toggleMap()">Fermer</button>
+  </div>
+</div>
+
+<app-footer></app-footer>

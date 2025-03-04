@@ -1,0 +1,188 @@
+<app-navbar></app-navbar>
+
+<main>
+  <!-- breadcrumb area start -->
+  <section class="bd-breadcrumb-area p-relative fix z-index-11">
+    <div class="bd-breadcrumb-bg-two">
+      <img src="assets/images/breadcrumb/breadcrumb-bg-2.webp" alt="breadcrumb background" />
+    </div>
+    <div class="bd-breadcrumb-wrapper p-relative">
+      <div class="container">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="bd-breadcrumb style-two d-flex-center">
+              <div class="bd-breadcrumb-content">
+                <h1 class="bd-breadcrumb-title">
+                  {{ hackathon?.title }}
+                </h1>
+                <div class="bd-breadcrumb-list justify-content-start">
+                  <span class="divider">
+                    <i class="fa-regular fa-angle-right"></i>
+                  </span>
+                  <a [routerLink]="['/hackathon_home_client']" class="active">Page d'acceuil</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bd-breadcrumb-shape">
+          <div class="shape-1">
+            <img src="assets/images/shape/breadcrumb-shape-1.webp" alt="shape" />
+          </div>
+          <div class="shape-3">
+            <img src="assets/images/shape/bulb-shape.webp" alt="shape" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- breadcrumb area end -->
+
+  <!-- event details area start -->
+  <section class="bd-event-details-area section-space">
+    <div class="container">
+      <div class="row gy-30">
+        <!-- Image principale -->
+        <div class="col-xl-12">
+          <div class="bd-event-main-thumb">
+            <img src="assets/images_slim/hackathon_3.webp" alt="Hackathon main image" />
+          </div>
+        </div>
+        <!-- Contenu principal -->
+        <div class="col-xxl-8 col-xl-8 col-lg-7 col-md-12">
+          <div class="bd-even-details-content">
+            <div class="bd-even-details-heading mb-30">
+              <h2 class="bd-course-details-title">
+                {{ hackathon?.title }}
+              </h2>
+            </div>
+            <div class="bd-event-details-content mb-30">
+              <h3 class="bd-details-content-title">Overview</h3>
+              <p class="description">
+                {{ hackathon?.description }}
+              </p>
+            </div>
+            <div class="bd-event-details-content">
+              <h3 class="bd-details-content-title">Location</h3>
+              <div class="bd-event-details-location">
+                <div class="address">
+                  <span class="icon">
+                    <i class="fa-regular fa-location-dot"></i>
+                  </span>
+                  <a href="#">{{ hackathon?.location | uppercase }}</a>
+                </div>
+                <div class="address">
+                  <span class="icon">
+                    <i class="fa-regular fa-phone"></i>
+                  </span>
+                  <a href="tel:01234567890">+0123 - 4567890</a>
+                </div>
+              </div>
+              <div class="bd-event-map">
+                <!-- L'iframe affiche la carte en fonction de la localisation -->
+                <iframe
+                  [src]="getMapUrl(hackathon?.location)"
+                  width="600"
+                  height="300"
+                  style="border: 0"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Sidebar -->
+        <div class="col-xxl-4 col-xl-4 col-lg-5 col-md-12">
+          <div class="bd-event-sidebar-wrapper bd-event-sidebar-top sidebar-sticky">
+            <!-- Informations générales -->
+            <div class="bd-event-sidebar mb-30">
+              <div class="bd-event-countdown mb-20" id="countdown1">
+                <div class="countdown-item bg-1" data-unit="days"></div>
+                <div class="countdown-item bg-2" data-unit="hours"></div>
+                <div class="countdown-item bg-3" data-unit="minutes"></div>
+                <div class="countdown-item bg-4" data-unit="seconds"></div>
+              </div>
+              <div class="bd-event-info mb-20">
+                <div class="bd-event-price-wrap d-flex-between">
+                  <span class="title">Titre</span>
+                  <div class="bd-event-price">
+                    <span>{{ hackathon?.title }}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="bd-event-info-list">
+                <ul>
+                  <li>
+                    <div class="label">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      {{ hackathon?.startTime | date : "longDate" }} -
+                      {{ hackathon?.endTime | date : "longDate" }}
+                    </div>
+                  </li>
+                  <li>
+                    <div class="label">
+                      <i class="fa-solid fa-clock"></i>
+                      {{ hackathon?.startTime | date : "shortTime" }}
+                    </div>
+                  </li>
+                  <li>
+                    <div class="label">
+                      <i class="fa-solid fa-map-marker-alt"></i> Lieu :
+                    </div>
+                    <span class="value">{{ hackathon?.location }}</span>
+                  </li>
+                  <li>
+                    <div class="label">
+                      <i class="fa-solid fa-list"></i> Niveau difficulte :
+                    </div>
+                    <span class="value">{{ hackathon?.niveauDifficulte }}</span>
+                  </li>
+                  <li>
+                    <div class="label">
+                      <i class="fa-solid fa-globe"></i> Niveau importance :
+                    </div>
+                    <span class="value">{{ hackathon?.niveauImportance }}</span>
+                  </li>
+                  <li>
+                    <div class="label">
+                      <i class="fa-solid fa-bookmark"></i> Nbr de Places :
+                    </div>
+                    <span class="value">{{ hackathon?.nbrPlaces }}</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <!-- Participation -->
+            <div class="bd-event-sidebar mb-30">
+              <div class="d-flex-between mb-20">
+                <h6>Participez au hackathon :</h6>
+              </div>
+              <div class="bd-sidebar-booking">
+                <button
+                  class="bd-btn btn-outline-border-primary w-100"
+                  [ngClass]="{'btn-danger': isParticipant, 'btn-success': !isParticipant}"
+                  (click)="toggleParticipation()">
+                  <i class="fas" [ngClass]="{'fa-times-circle': isParticipant, 'fa-check-circle': !isParticipant}"></i>
+                  {{ isParticipant ? "Unjoin Hackathon" : "Join Hackathon" }}
+                </button>
+              </div>
+            </div>
+            <!-- Sponsors -->
+            <div class="bd-event-sidebar">
+              <h6 class="title mb-15">Sponsorisé par :</h6>
+              <div class="bd-event-sponsor">
+                <img src="assets/images_slim/logo_1.png" alt="logo sponsor 1" />
+                <img src="assets/images_slim/logo_2.png" alt="logo sponsor 2" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- event details area end -->
+</main>
+
+<app-footer></app-footer>
