@@ -1,0 +1,269 @@
+<main>
+    <!-- Course List Area Start -->
+    <section class="bd-course-list-area section-space">
+        <div class="container">
+            <div class="row gy-30">
+                <!-- Course List Section -->
+                <div class="col-xxl-9 col-xl-8 col-lg-9">
+                    <div class="row g-30">
+                        <div *ngFor="let course of courses" class="col-xl-6 col-lg-6 col-md-6">
+                            <div class="bd-course-wrapper style-two">
+                                <div class="bd-course-thumb-wrapper bd-course-thumb-style p-relative">
+                                    <div class="bd-course-badge">
+                                        <a class="bd-badge" [ngClass]="course.course_paid ? 'badge-warning' : 'badge-primary'" href="#">
+                                            {{ course.course_paid ? (course.course_price + ' DT') : 'FREE' }}
+                                        </a>
+                                    </div>
+                                    <div class="bd-course-thumb-bg">
+                                        <img 
+                                            [src]="course.course_image ? course.course_image : 'assets/images/course/default-course.webp'" 
+                                            alt="Course Image"
+                                            class="course-thumbnail"
+                                            (error)="course.course_image = 'assets/images/course/default-course.webp'"
+                                        >
+                                    </div>
+                                </div>
+                                <div class="bd-course-content">
+                                    <div class="bd-course-meta d-flex-between mb-15">
+                                        <div class="bd-course-tag">
+                                            <a class="bd-badge badge-outline-light badge-transparent" href="#">
+                                                {{ course.course_category }}
+                                            </a>
+                                        </div>
+                                        <div class="bd-course-lesson">
+                                            <span><i class="fa-light fa-book"></i> {{ course.course_lessons || 'N/A' }} Lessons</span>
+                                        </div>
+                                    </div>
+                                    <h5 class="bd-course-title underline mb-10">
+                                        <a href="javascript:void(0)">{{ course.course_title }}</a>
+                                    </h5>
+                                    <p>{{ course.course_description }}</p>
+                                    
+                                    <!-- Now add the Course Level here below the description -->
+                                    <div class="bd-course-level">
+                                        <span class="level-label"></span>{{ course.level || 'N/A' }}
+                                    </div>
+
+                                    <div class="bd-course-full-border"></div>
+                                    <div class="btn-wrap d-flex align-items-center justify-content-between">
+                                        <div class="bd-course-author">
+                                            <div class="thumb">
+                                                <img src="assets/images/avatar/avatar.webp" alt="Instructor">
+                                            </div>
+                                            <div class="name">
+                                                <a href="javascript:void(0)">Instructor</a>
+                                            </div>
+                                        </div>
+                                        <!-- DELETE BUTTON ADDED HERE -->
+                                        <div class="bd-course-actions d-flex align-items-center gap-10">
+                                            <button 
+                                                class="delete-btn" 
+                                                (click)="deleteCourse(course.course_id)"
+                                                title="Delete course"
+                                            >
+                                                Delete
+                                            </button>
+                                            <div class="bd-course-btn">
+                                                <a class="bd-text-btn" [routerLink]="['/course', course.course_id]">View Course
+                                                    <span class="box-icon">
+                                                        <i class="fa-regular fa-arrow-right-long first-icon"></i>
+                                                        <i class="fa-regular fa-arrow-right-long second-icon"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Loop -->
+                    </div>
+                </div>
+    <!-- Course List Area End -->
+
+
+                <!-- Filter Sidebar Section (Now on the right side) -->
+                <div class="col-xxl-3 col-xl-4 col-lg-3">
+                    <div class="bd-course-sidebar sidebar-right sidebar-sticky">
+                        <!-- Search Widget -->
+                        <div class="bd-course-widget widget-search">
+                            <h5 class="bd-widget-title mb-20">Search</h5>
+                            <div class="bd-widget-content">
+                                <div class="bd-sidebar-search">
+                                    <form class="bd-sidebar-search-form" action="#" method="get">
+                                        <input type="text" value="" required="" name="s" placeholder="Search">
+                                        <button type="submit" title="Search">
+                                            <i class="far fa-search"></i>
+                                        </button>
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Categories Widget -->
+                        <div class="bd-course-widget widget-category">
+                            <h5 class="bd-widget-title mb-20">Categories</h5>
+                            <div class="bd-widget-content">
+                                <div class="checkbox-option">
+                                    <input id="course-check-1" type="checkbox" checked="">
+                                    <label for="course-check-1">Data Science <span>(20)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-check-2" type="checkbox">
+                                    <label for="course-check-2">Machine Learning <span>(18)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-check-3" type="checkbox">
+                                    <label for="course-check-3">Computer Science <span>(25)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-check-4" type="checkbox">
+                                    <label for="course-check-4">Business Administration <span>(12)</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Level Widget -->
+                        <div class="bd-course-widget widget-level">
+                            <h5 class="bd-widget-title mb-20">Level</h5>
+                            <div class="bd-widget-content">
+                                <div class="checkbox-option">
+                                    <input id="course-level-1" type="checkbox">
+                                    <label for="course-level-1">All Levels <span>(25)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-level-2" type="checkbox" checked="">
+                                    <label for="course-level-2">Beginner <span>(10)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-level-3" type="checkbox">
+                                    <label for="course-level-3">Mid Level <span>(7)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-level-4" type="checkbox">
+                                    <label for="course-level-4">Advanced Level <span>(8)</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Price Widget -->
+                        <div class="bd-course-widget widget-price">
+                            <h5 class="bd-widget-title mb-20">Price</h5>
+                            <div class="bd-widget-content">
+                                <div class="checkbox-option">
+                                    <input id="course-price-1" type="checkbox">
+                                    <label for="course-price-1">All Prices <span>(25)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-price-2" type="checkbox" checked="">
+                                    <label for="course-price-2">Free <span>(5)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-price-3" type="checkbox">
+                                    <label for="course-price-3">Paid <span>(20)</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Ratings Widget -->
+                        <div class="bd-course-widget widget-ratings">
+                            <h5 class="bd-widget-title mb-20">Ratings</h5>
+                            <div class="bd-widget-content">
+                                <div class="checkbox-option">
+                                    <input id="course-ratings-1" type="checkbox">
+                                    <label for="course-ratings-1">
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <span>(15)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-ratings-2" type="checkbox" checked="">
+                                    <label for="course-ratings-2">
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <span>(4)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-ratings-3" type="checkbox">
+                                    <label for="course-ratings-3">
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <span>(3)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-ratings-4" type="checkbox">
+                                    <label for="course-ratings-4">
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <span>(2)</span></label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-ratings-5" type="checkbox">
+                                    <label for="course-ratings-5">
+                                        <i class="fa-sharp fa-solid fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <i class="fa-sharp fa-regular fa-star"></i>
+                                        <span>(1)</span></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Subcategory Widget -->
+                        <div class="bd-course-widget widget-subcategory">
+                            <h5 class="bd-widget-title mb-20">Subcategory</h5>
+                            <div class="bd-widget-content">
+                                <div class="checkbox-option">
+                                    <input id="course-subcategory-1" type="checkbox">
+                                    <label for="course-subcategory-1">Web Development</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-subcategory-2" type="checkbox">
+                                    <label for="course-subcategory-2">Data Science</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Language Widget -->
+                        <div class="bd-course-widget widget-language">
+                            <h5 class="bd-widget-title mb-20">Language</h5>
+                            <div class="bd-widget-content">
+                                <div class="checkbox-option">
+                                    <input id="course-language-1" type="checkbox">
+                                    <label for="course-language-1">Python</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-language-2" type="checkbox">
+                                    <label for="course-language-2">JavaScript</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-language-3" type="checkbox">
+                                    <label for="course-language-3">Java</label>
+                                </div>
+                                <div class="checkbox-option">
+                                    <input id="course-language-4" type="checkbox">
+                                    <label for="course-language-4">C++</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End of Sidebar -->
+            </div>
+        </div>
+    </section>
+    <!-- Course List Area End -->
+</main>
