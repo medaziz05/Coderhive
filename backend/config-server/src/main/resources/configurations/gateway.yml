@@ -1,0 +1,46 @@
+server:
+  port: 8845
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: complaint-service
+          uri: http://localhost:8089
+          predicates:
+            - Path=/complaints/**
+
+        - id: ticket-service
+          uri: http://localhost:8090
+          predicates:
+            - Path=/tickets/**
+
+
+
+
+springdoc:
+  api-docs:
+    enabled: true
+    groups:
+      enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+  paths-to-match: /**
+  urls:
+    - name: Service Complaints
+      url: http://localhost:8089/v3/api-docs
+    - name: Service Tickets
+      url: http://localhost:8090/v3/api-docs
+
+      spring:
+        application:
+          name: api-gateway
+      eureka:
+        client:
+          registerWithEureka: true
+          fetchRegistry: true
+          serviceUrl:
+            defaultZone: http://localhost:8761/eureka/
+
+
+
