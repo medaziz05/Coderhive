@@ -1,0 +1,68 @@
+<header>
+    <div class="bd-header-area header-style-one demo-header" id="header-sticky">
+        <div class="bd-header-inner">
+            <div class="bd-header-left">
+                <div class="bd-header-logo">
+                    <a href="index.html"><img src="assets/images/logo/logo.svg" alt="logo"></a>
+                </div>
+            </div>
+            <div class="bd-header-menu">
+                <nav class="main-menu bd-mobile-menu-active d-none d-xl-block">
+                    <ul>
+                        <li class="has-mega-menu">
+                            <a href="index.html">Home</a>
+
+                        </li>
+                        <!-- courses menu -->
+                        <li class="menu-item-has-children">
+                            <a href="javascript:void(0)">feedback</a>
+                            <ul class="submenu last-children">
+
+                            <li><a [routerLink]="['/addfeedback']">Courses</a></li>
+                            <li><a [routerLink]="['/addfeedback']">workshop</a></li>
+                            <li><a [routerLink]="['/addfeedback']">other</a></li>
+                            </ul>
+                        </li>
+
+
+
+
+                        <!-- dashboard menu -->
+                        <li class="menu-item-has-children" *ngIf="isAdmin()">
+                            <a href="javascript:void(0)">Dashboard</a>
+                            <ul class="submenu last-children">
+                                <li class="menu-item-has-children has-arrow">
+                                    <a href="javascript:void(0)">Instructor Dashboard</a>
+                                    <ul class="submenu">
+                                        <li><a href="instructor-dashboard.html">Instructor Dashboard</a></li>
+
+                                    </ul>
+                                </li>
+                                <li class="menu-item-has-children has-arrow">
+                                    <a href="javascript:void(0)">Student Dashboard</a>
+                                    <ul class="submenu">
+                                        <li><a routerLink="/admin/dashboard">Dashboard</a></li>
+
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+                     </ul>
+                </nav>
+            </div>
+            <div class="bd-header-right">
+
+                <div class="bd-header-hamburger">
+                    <div class="sidebar-toggle">
+                        <a class="bar-icon" href="javascript:void(0)">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

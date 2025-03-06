@@ -1,0 +1,22 @@
+<div class="search-container">
+  <div class="search-bar">
+    <input
+      type="text"
+      [(ngModel)]="searchTerm"
+      placeholder="Search complaints by title..."
+      (keyup.enter)="searchComplaints()"
+      class="search-input"
+    />
+    <button class="search-button" (click)="searchComplaints()">
+      <i class="fa fa-search"></i> Search
+    </button>
+  </div>
+
+  <!-- Optional: Clear search results button -->
+  <button
+    *ngIf="searchTerm"
+    class="clear-button"
+    (click)="clearSearch()">
+    Clear Search
+  </button>
+</div>

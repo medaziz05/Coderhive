@@ -1,0 +1,88 @@
+<main>
+
+        <!-- sign form area start -->
+        <section class="bd-authentication-cover-main ">
+            <div class="row h100vh mx-0">
+                <div class="col-xxl-6 col-xl-5 col-lg-12 d-xl-block d-none px-0">
+                    <div class="bd-authentication-cover overflow-hidden" data-background="assets/images/contact/sign-in-bg.webp">
+                        <div class="bd-authentication-cover-content d-flex-center d-none">
+                            <div class="bd-section-title-wrapper">
+                                <h2 class="bd-section-title mb-20">Welcome Back!</h2>
+                                <p class="bd-section-paragraph">Sign in to continue your journey and unlock a world of
+                                    opportunities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxl-6 col-xl-7">
+                    <div class="row justify-content-center align-items-center h100p">
+                        <div class="col-xxl-7 col-xl-9 col-lg-6 col-md-6 col-sm-8 col-12">
+                            <div class="bd-authentication-form-wrapper">
+                                <div class="bd-authentication-form-logo">
+                                    <a href="index.html"><img src="assets/images/logo/logo.svg" alt="logo"></a>
+                                </div>
+                                <h3 class="title mb-10">Sign In</h3>
+                                <p class="subtitle">Welcome back Wick</p>
+                                <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+                                    <div class="form-input-box mb-20">
+                                        <div class="form-input-title">
+                                            <label for="emailAddress">Email Address <span>*</span></label>
+                                        </div>
+                                        <div class="form-input">
+                                            <input name="email" id="emailAddress" type="email" placeholder="Email Address" [(ngModel)]="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-input-box mb-20">
+                                        <div class="form-input-title">
+                                            <label for="password">Password <span>*</span></label>
+                                        </div>
+                                        <div class="form-input">
+                                            <input name="password" id="password" type="password" placeholder="Your Password" [(ngModel)]="password" required>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex-between mb-20">
+                                        <div class="checkout-option">
+                                            <input id="rememberMe" type="checkbox">
+                                            <label for="rememberMe">Remember me</label>
+                                        </div>
+                                        <div class="sign-forgot underline">
+                                            <a href="forgot.html" class="sign-link">Forgot Password?</a>
+                                        </div>
+                                    </div>
+                                    <div class="bd-sign-btn">
+                                        <button type="submit" [disabled]="!loginForm.form.valid" class="bd-btn btn-primary w-100">Sign In</button>
+                                    </div>
+                                </form>
+                                <div class="bd-divider-wrapper">
+                                    <div class="bd-divider-line left-line"></div>
+                                    <span class="bd-divider-title">OR SignIn With</span>
+                                    <div class="bd-divider-line"></div>
+                                </div>
+                                <div class="bd-alter-sign mb-20">
+                                    <button class="bd-btn btn-outline-primary w-100" type="button"><span
+                                            class="thumb"><img src="assets/images/shape/facebook.svg"
+                                                alt="facebook"></span>Facebook</button>
+                                    <button class="bd-btn btn-outline-secondary w-100" type="button"><span
+                                            class="thumb"><img src="assets/images/shape/google.svg"
+                                                alt="facebook"></span>Google</button>
+                                </div>
+                                <div class="bd-sign-up-label underline-two text-center">
+                                    Don't have an account?<a href="sign-up.html" class="sign-link"> Sign up</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- sign form area end -->
+
+    </main>
+    <!-- Body main wrapper end -->
+
+    <!-- back to top -->
+    <div class="backtotop-wrap cursor-pointer">
+        <svg class="backtotop-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+            <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        </svg>
+    </div>

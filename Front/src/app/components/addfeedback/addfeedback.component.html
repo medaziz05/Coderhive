@@ -1,0 +1,126 @@
+<!-- Breadcrumb Area -->
+<section class="bd-breadcrumb-area p-relative fix z-index-11">
+  <div class="bd-breadcrumb-wrapper p-relative">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="bd-breadcrumb style-two d-flex-center">
+            <div class="bd-breadcrumb-content">
+              <h1 class="bd-breadcrumb-title">complaint</h1>
+              <div class="bd-breadcrumb-list">
+                <span><a href="index.html">iStudy</a></span>
+                <span class="divider"><i class="fa-regular fa-angle-right"></i></span>
+                <span class="active">complaint</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bd-breadcrumb-shape">
+        <div class="shape-1">
+          <img src="assets/images/shape/breadcrumb-shape-1.webp" alt="shape" class="animate__animated animate__fadeInLeft">
+        </div>
+        <div class="shape-3">
+          <img src="assets/images/shape/bulb-shape.webp" alt="shape" class="animate__animated animate__fadeInRight">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Feedback Form Area -->
+<div class="bd-contact-form-area section-space">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-xl-6 col-lg-6">
+        <div class="bd-contact-form-wrapper animate__animated animate__fadeInUp">
+          <h3 class="bd-section-title mb-20">Your feedback is important to us</h3>
+          <form (ngSubmit)="onSubmit()">
+            <!-- Title Field -->
+            <div class="form-group">
+              <label for="title">Title:</label>
+              <input
+                type="text"
+                id="title"
+                [(ngModel)]="addfeedback.title"
+                name="title"
+                (input)="validateTitle(addfeedback.title)"
+                placeholder="Enter a title (min 3 characters)"
+                required
+              >
+              <small *ngIf="!isTitleValid" class="error-message">The title must contain at least 3 characters.</small>
+            </div>
+
+            <!-- Anonymous Mode Option -->
+            <div class="form-group anonymous-toggle">
+              <div style="display: flex; justify-content: space-between; align-items: center; background-color: #28a745; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                <span style="color: white; font-weight: 500;">Send anonymously</span>
+                <label class="switch" style="position: relative; display: inline-block; width: 60px; height: 34px;">
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="addfeedback.isAnonymous"
+                    name="isAnonymous"
+                    (change)="onAnonymousChange()"
+                    style="opacity: 0; width: 0; height: 0;">
+                  <span class="slider round" style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px;"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Email Field - Conditionally Displayed -->
+            <div class="form-group" *ngIf="!addfeedback.isAnonymous">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                id="email"
+                [(ngModel)]="addfeedback.mail"
+                name="email"
+                (input)="validateEmail(addfeedback.mail)"
+                placeholder="Enter a valid email"
+                required
+              >
+              <small *ngIf="!isEmailValid" class="error-message">Please enter a valid email address.</small>
+            </div>
+
+            <!-- Description Field -->
+            <div class="form-group">
+              <label for="description">Description:</label>
+              <textarea
+                id="description"
+                [(ngModel)]="addfeedback.description"
+                name="description"
+                (input)="validateDescription(addfeedback.description)"
+                placeholder="Describe your issue (min 10 characters)"
+                required
+              ></textarea>
+              <small *ngIf="!isDescriptionValid" class="error-message">The description must contain at least 10 characters.</small>
+            </div>
+
+            <!-- Type Field -->
+            <div class="form-group">
+              <label for="type">Complaint Type:</label>
+              <select
+                id="type"
+                [(ngModel)]="addfeedback.type"
+                name="type"
+                (change)="validateType(addfeedback.type)"
+                required
+              >
+                <option *ngFor="let option of typeRecOptions" [value]="option">{{ option }}</option>
+              </select>
+              <small *ngIf="!isTypeValid" class="error-message">Please select a complaint type.</small>
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+              type="submit" 
+              class="bd-btn" 
+              [disabled]="!isTitleValid || (!addfeedback.isAnonymous && !isEmailValid) || !isDescriptionValid || !isTypeValid">
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

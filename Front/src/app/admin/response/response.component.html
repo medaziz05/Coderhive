@@ -1,0 +1,36 @@
+<form #responseForm="ngForm" novalidate>
+  <textarea
+      [(ngModel)]="responseMessage"
+      name="responseMessage"
+      placeholder="Enter your response"
+      rows="3"
+      class="response-textarea"
+      required
+      minlength="10"
+      #responseMessageCtrl="ngModel"
+  ></textarea>
+
+  <!-- Error messages -->
+  <div *ngIf="responseMessageCtrl.errors && (responseMessageCtrl.dirty || responseMessageCtrl.touched)">
+    <p class="error-message" *ngIf="responseMessageCtrl.errors['required']">
+      Response is required
+    </p>
+    <p class="error-message" *ngIf="responseMessageCtrl.errors['minlength']">
+      Response must be at least 10 characters ({{ responseMessageCtrl.errors['minlength']['requiredLength'] }} required)
+    </p>
+  </div>
+
+  <div class="response-buttons">
+    <button type="button"
+            (click)="handleCancel()"
+            class="btn-cancel">
+      Cancel
+    </button>
+    <button type="submit"
+            (click)="handleSubmit()"
+            [disabled]="responseMessage.length < 10 || !responseForm.valid"
+            class="btn-submit">
+      Submit Response
+    </button>
+  </div>
+</form>

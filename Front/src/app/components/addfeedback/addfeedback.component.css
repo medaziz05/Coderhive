@@ -1,0 +1,283 @@
+/* General Styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  color: #343a40;
+  line-height: 1.6;
+}
+
+/* Breadcrumb Area - Changed from Blue to Green */
+.bd-breadcrumb-area {
+  position: relative;
+  padding: 80px 0;
+  background-color: #28a745; /* Green color */
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 80%, 0% 100%);
+  transition: clip-path 0.5s ease, background-color 0.5s ease;
+}
+
+.bd-breadcrumb-area:hover {
+  clip-path: polygon(0% 0%, 100% 0%, 100% 90%, 0% 100%);
+  background-color: #218838; /* Darker green on hover */
+}
+
+.bd-breadcrumb-wrapper {
+  position: relative;
+  z-index: 11;
+}
+
+.bd-breadcrumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.bd-breadcrumb-title {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: white;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.bd-breadcrumb-title:hover {
+  transform: scale(1.1);
+  color: #ffffff;
+}
+
+.bd-breadcrumb-list {
+  font-size: 18px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bd-breadcrumb-list a {
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.bd-breadcrumb-list a:hover {
+  color: #ffffff;
+}
+
+.bd-breadcrumb-list .divider {
+  margin: 0 10px;
+  color: white;
+}
+
+.bd-breadcrumb-shape img {
+  max-width: 100px;
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.bd-breadcrumb-shape img:hover {
+  opacity: 1;
+  transform: rotate(360deg);
+}
+
+/* Feedback Form Area */
+.bd-contact-form-area {
+  padding: 60px 0;
+  background-color: #ffffff;
+}
+
+.bd-contact-form-wrapper {
+  background: #f0f4f7;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.bd-contact-form-wrapper:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.bd-section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.bd-section-title:hover {
+  color: #007bff;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 8px;
+  transition: color 0.3s ease;
+}
+
+.form-group label:hover {
+  color: #007bff;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 14px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.4), inset 0 0 5px rgba(0, 0, 0, 0.1);
+  outline: none;
+}
+
+.form-group textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+/* Button Styles */
+.bd-btn {
+  background-color: #28a745; /* Green */
+  color: #fff;
+  font-size: 18px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bd-btn:hover {
+  background-color: #218838; /* Darker green */
+  transform: scale(1.05);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.bd-btn:active {
+  background-color: #1e7e34; /* Darkest green */
+  transform: scale(0.95);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .bd-contact-form-area {
+    padding: 40px 0;
+  }
+
+  .bd-contact-form-wrapper {
+    padding: 30px;
+  }
+
+  .bd-section-title {
+    font-size: 20px;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    font-size: 14px;
+  }
+
+  .bd-btn {
+    font-size: 16px;
+  }
+}
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+input:checked + .slider {
+  background-color: #28a745; /* Green color for switch */
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+/* Style du switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/* Quand le bouton est activé */
+/* Replace this line */
+input:checked + .slider {
+  background: linear-gradient(to right,#2196F3 50%,#2196F3 50%);
+}
+
+/* With this instead */
+input:checked + .slider {
+  background-color: #2196F3; /* Makes the entire slider background blue when checked */
+}
+
+
+
+
+
+
+
+
+
+
+
+
