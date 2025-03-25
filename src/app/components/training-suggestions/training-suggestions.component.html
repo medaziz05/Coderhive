@@ -1,0 +1,14 @@
+<div *ngIf="suggestions.length > 0; else noSuggestions">
+    <h3>Suggestions de formations :</h3>
+    <ul>
+      <li *ngFor="let suggestion of suggestions">
+        <strong>{{ suggestion.title }}</strong> - {{ suggestion.description }}
+      </li>
+    </ul>
+  </div>
+  
+  <ng-template #noSuggestions>
+    <p>Aucune suggestion disponible pour cette formation.</p>
+  </ng-template>
+  
+  

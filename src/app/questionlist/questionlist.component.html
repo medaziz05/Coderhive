@@ -1,0 +1,20 @@
+<div *ngIf="errorMessage" class="error">
+    <p>{{ errorMessage }}</p>
+  </div>
+  
+  <div *ngIf="questions.length === 0" class="no-questions">
+    <p>Aucune question à afficher.</p>
+  </div>
+  
+  <ul *ngIf="questions.length > 0">
+    <li *ngFor="let question of questions">
+      <h3>{{ question.questionText }}</h3>
+      <ul>
+        <li *ngFor="let answer of question.answers">
+          <input type="radio" [name]="'question' + question.id" [value]="answer.id" [checked]="answer.isCorrect">
+          {{ answer.answerText }}
+        </li>
+      </ul>
+    </li>
+  </ul>
+  

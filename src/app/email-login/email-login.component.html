@@ -1,0 +1,19 @@
+<div class="signup-container">
+    <h2>Créer un compte</h2>
+  
+    <div>
+      <input type="text" [(ngModel)]="username" placeholder="Nom d'utilisateur">
+    </div>
+  
+    <div>
+      <input type="email" [(ngModel)]="email" placeholder="Email">
+    </div>
+  
+    <div>
+      <button (click)="signup()">S'inscrire</button>
+    </div>
+  
+    <div *ngIf="success" style="color: green">{{ success }}</div>
+    <div *ngIf="error" style="color: red">{{ error }}</div>
+  </div>
+  

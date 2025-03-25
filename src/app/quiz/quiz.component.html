@@ -1,0 +1,38 @@
+<div class="quiz-container">
+  <div *ngIf="!quizCompleted">
+    <div class="question">
+      <h3>Question {{ currentQuestionIndex + 1 }}:</h3>
+      <p>{{ questions[currentQuestionIndex].question }}</p>
+
+      <div class="options">
+        <button *ngFor="let option of questions[currentQuestionIndex].options" (click)="answerQuestion(option)">
+          {{ option }}
+        </button>
+      </div>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress" [style.width.%]="progress"></div>
+    </div>
+
+    <div class="timer">
+      Temps restant: {{ timeLeft }} secondes
+    </div>
+
+    <div class="score">
+      <p>Score: {{ score }} / {{ questions.length }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="quizCompleted">
+    <h2>Quiz terminé !</h2>
+    <p>{{ getCertificate() }}</p>
+    <button (click)="restartQuiz()">Recommencer le quiz</button>
+  </div>
+
+  <div *ngIf="showCongratulations" class="congratulations">
+    <h2>Félicitations !</h2>
+    <p>Vous avez obtenu un score parfait !</p>
+  </div>
+</div>
+

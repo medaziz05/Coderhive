@@ -1,0 +1,78 @@
+/* Pagination styles */
+.basic-pagination {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.basic-pagination nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 5px;
+}
+
+.basic-pagination nav ul li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  color: #333;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.basic-pagination nav ul li.active a {
+  background-color: #16a085;
+  color: white;
+}
+
+.basic-pagination nav ul li a.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.basic-pagination nav ul li a:hover:not(.disabled) {
+  background-color: #e0e0e0;
+}
+
+/* Display modes */
+.display-layout-list,
+.display-layout-grid {
+  display: none;
+}
+
+.display-layout-list.active,
+.display-layout-grid.active {
+  display: block;
+}
+
+/* Search input */
+.bd-sidebar-search-form {
+  position: relative;
+}
+
+.bd-sidebar-search-form input {
+  width: 100%;
+  padding: 10px 40px 10px 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  outline: none;
+}
+
+.bd-sidebar-search-form button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+

@@ -1,0 +1,6 @@
+<zxing-scanner
+  [formats]="qrFormat"
+  (scanSuccess)="onScanSuccess($event)">
+</zxing-scanner>
+
+<p *ngIf="message" style="margin-top: 15px; color: green;">{{ message }}</p>

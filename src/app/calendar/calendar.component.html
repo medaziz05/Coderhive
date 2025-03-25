@@ -1,0 +1,41 @@
+<div class="container mt-5">
+    <h2>Formulaire avec Sélecteur de Date</h2>
+    
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Champ Trainer ID -->
+      <div class="form-group">
+        <label for="trainerId">Trainer ID</label>
+        <input
+          type="number"
+          class="form-control"
+          id="trainerId"
+          formControlName="trainerId"
+          placeholder="Trainer ID"
+        />
+      </div>
+  
+      <!-- Champ Datepicker -->
+      <div class="form-group">
+        <label for="datepicker">Select a Date</label>
+        <input
+          type="text"
+          id="datepicker"
+          bsDatepicker
+          formControlName="date"
+          class="form-control"
+          placeholder="Select a date"
+        />
+      </div>
+  
+      <!-- Bouton de soumission -->
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  
+    <!-- Affichage des données du formulaire -->
+    <div *ngIf="myForm.value">
+      <h3>Form Data:</h3>
+      <pre>{{ myForm.value | json }}</pre>
+    </div>
+  </div>
+  

@@ -1,0 +1,20 @@
+<div class="chat-container">
+  <div class="chat-header">
+    <h2>CodingFactoryBot</h2>
+    <span class="online-indicator"></span>
+  </div>
+  <div class="chat-box">
+    <div *ngFor="let message of messages" class="message-wrapper" [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+      <div class="avatar" [ngClass]="message.sender">
+        <i class="fas" [ngClass]="{'fa-user': message.sender === 'user', 'fa-robot': message.sender === 'bot'}"></i>
+      </div>
+      <div class="message">{{ message.text }}</div>
+    </div>
+  </div>
+  <div class="input-container">
+    <input [(ngModel)]="userMessage" placeholder="Tapez votre message..." (keyup.enter)="sendMessage()"/>
+    <button (click)="sendMessage()">
+      <i class="fas fa-paper-plane"></i>
+    </button>
+  </div>
+</div>

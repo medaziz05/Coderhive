@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Participant Statistics</h2>
+  
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  
+    <table class="table table-striped" *ngIf="stats.length > 0">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let stat of stats">
+          <td>{{ stat[0] }}</td>
+          <td>{{ stat[1] }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div *ngIf="stats.length === 0">
+      <p>No statistics available.</p>
+    </div>
+  </div>
+  

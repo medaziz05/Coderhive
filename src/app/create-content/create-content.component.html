@@ -1,0 +1,21 @@
+<form (ngSubmit)="addContent()" #contentForm="ngForm">
+    <label>Type de contenu :</label>
+    <select [(ngModel)]="newContent.contentType" name="contentType" required>
+      <option *ngFor="let type of contentTypes" [value]="type">{{ type }}</option>
+    </select>
+  
+    <label>URL du contenu :</label>
+    <input type="url" [(ngModel)]="newContent.contentUrl" name="contentUrl" required />
+  
+    <label>Durée (minutes) :</label>
+    <input type="number" [(ngModel)]="newContent.duration" name="duration" required min="1" />
+  
+    <label>Module ID :</label>
+    <input type="number" [(ngModel)]="newContent.moduleId" name="moduleId" required />
+  
+    <button type="submit" [disabled]="contentForm.invalid">Ajouter Contenu</button>
+  </form>
+  
+  <p *ngIf="successMessage" style="color: green;">{{ successMessage }}</p>
+  <p *ngIf="errorMessage" style="color: red;">{{ errorMessage }}</p>
+  

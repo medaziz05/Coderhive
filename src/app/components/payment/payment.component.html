@@ -1,0 +1,34 @@
+<div class="payment-container">
+    <h2 class="text-center">💳 Paiement sécurisé avec Stripe</h2>
+
+    <form *ngIf="stripeLoaded" (ngSubmit)="pay()" class="payment-form">
+        <!-- Nom du titulaire -->
+        <div class="form-group">
+            <label for="card-holder">👤 Nom du titulaire de la carte</label>
+            <input id="card-holder" type="text" class="form-control" [(ngModel)]="cardHolderName" name="cardHolder" required placeholder="Entrez le nom du titulaire">
+        </div>
+
+        <!-- Informations de la carte -->
+        <div class="form-group">
+            <label>💳 Informations de carte bancaire</label>
+            <div class="stripe-container">
+                <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions" class="stripe-card"></ngx-stripe-card>
+            </div>
+        </div>
+
+        <!-- Bouton de paiement -->
+        <button type="submit" class="btn btn-primary btn-block payment-btn" [disabled]="loading">
+            <span *ngIf="!loading">🔒 Payer</span>
+            <div *ngIf="loading" class="spinner-border spinner-border-sm text-light" role="status"></div>
+        </button>
+    </form>
+
+    <div *ngIf="!stripeLoaded" class="loading-message">
+        ⏳ Chargement des informations de paiement...
+    </div>
+
+    <!-- Message d'erreur -->
+    <div *ngIf="errorMessage" class="error-message alert alert-danger mt-3">
+        ❌ {{ errorMessage }}
+    </div>
+</div>

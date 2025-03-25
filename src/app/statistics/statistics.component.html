@@ -1,0 +1,17 @@
+<div class="stat-card">
+    <h3>Note Moyenne des Formations</h3>
+    <p>{{ averageRating }} / 5</p>
+  </div>
+  
+  <div class="stat-card">
+    <h3>Répartition des Formations par Catégorie</h3>
+    <div *ngFor="let category of trainingsByCategory | keyvalue">
+      <p>{{ category.key }} : {{ category.value }} formations</p>
+    </div>
+  </div>
+  
+  <div class="stat-card" *ngIf="mostPopularTraining">
+    <h3>Formation la Plus Populaire</h3>
+    <p>{{ mostPopularTraining.name }} ({{ mostPopularTraining.participants.length }} participants)</p>
+  </div>
+  

@@ -1,0 +1,330 @@
+<app-navbar></app-navbar>
+
+<!-- Top section with search and filters -->
+<div class="course-top-meta d-flex-between flex-wrap mb-30 gap-30">
+  <div class="bd-top-sorting-left">
+    <h6 class="bd-sorting-item-found">
+      We found <span>{{ filteredAndSortedTrainingPrograms.length }}</span> courses available for you
+    </h6>
+  </div>
+  <div class="bd-top-sorting-right d-flex flex-wrap-small align-items-center gap-15">
+    <!-- Layout switcher -->
+    <div class="bd-layout-switcher">
+      <label class="bd-filter-type-text bd-list-filter-text" [class.active]="viewMode === 'list'">List</label>
+      <label class="bd-filter-type-text bd-grid-filter-text" [class.active]="viewMode === 'grid'">Grid</label>
+      <ul class="bd-switcher-btn">
+        <li>
+          <a
+            href="javascript:void(0)"
+            class="bd-filter-layout-trigger bd-list-filter-trigger"
+            [class.active]="viewMode === 'list'"
+            (click)="toggleViewMode('list')"
+          >
+            <i class="fa-solid fa-list"></i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="javascript:void(0)"
+            class="bd-filter-layout-trigger bd-grid-filter-trigger"
+            [class.active]="viewMode === 'grid'"
+            (click)="toggleViewMode('grid')"
+          >
+            <i class="fa-solid fa-grid"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Sorting options -->
+    <div class="bd-sorting-select">
+      <select [(ngModel)]="sortOption" (change)="onSort()" class="course-orderby">
+        <option value="">Sort By</option>
+        <option value="program_title_az">Title (A-Z)</option>
+        <option value="program_title_za">Title (Z-A)</option>
+      </select>
+    </div>
+    
+    <!-- Price filter -->
+    <div class="bd-sorting-select">
+      <select [(ngModel)]="priceFilter" (change)="onPriceFilter()" class="course-orderby">
+        <option value="">Price</option>
+        <option value="low_to_high">Price: Low to High</option>
+        <option value="high_to_low">Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Course list style -->
+<div class="display-layout-list" [class.active]="viewMode === 'list'">
+  <div class="bd-course-list with-sidebar">
+    <div
+      class="bd-course-wrapper style-twelve"
+      *ngFor="let program of paginatedTrainingPrograms"
+    >
+      <!-- Course content (unchanged) -->
+      <a
+        [routerLink]="['/training', program.id]"
+        class="bd-course-thumb-wrapper bd-course-thumb-style p-relative"
+      >
+        <div class="bd-course-badge">
+          <span class="bd-badge badge-warning">20% Off</span>
+        </div>
+        <div class="bd-course-thumb-bg bg-1">
+          <img
+            src="assets/images/course/course-bg-1.webp"
+            alt="images"
+          />
+        </div>
+        <div class="bd-course-thumb-instructor center">
+          <img
+            src="assets/images/course/course-instructor-1.webp"
+            alt="instructor"
+          />
+        </div>
+        <div class="small-text bg-text-color">Training program</div>
+        <div class="bd-course-overly-title fs-190 text-white">
+          {{ program.title }}
+        </div>
+      </a>
+      <div class="bd-course-content">
+        <h5 class="bd-course-title underline mb-10">
+          <a [routerLink]="['/training', program.id]">{{
+            program.title
+          }}</a>
+        </h5>
+        <p class="bd-course-description">
+          {{ program.description }}
+        </p>
+        <div class="d-flex align-items-center gap-30 mb-15">
+          <div class="bd-course-author">
+            <div class="thumb">
+              <img
+                src="assets/images/avatar/avatar.webp"
+                alt="author"
+              />
+            </div>
+            <div class="name">
+              <a href="instructor-details.html">John Doe</a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="bd-course-meta d-flex flex-wrap align-items-center gap-20 mb-15"
+        >
+          <div class="bd-course-lesson">
+            <span
+              ><i class="fa-light fa-clock"></i> Duration:
+              {{ program.duration }} hours</span
+            >
+          </div>
+          <div class="bd-course-student">
+            <span
+              ><i class="fa-sharp fa-solid fa-list"></i>
+              {{ program.price }} {{ program.currency }}</span
+            >
+          </div>
+          <div class="bd-course-duration">
+            <span
+              ><i class="fa-sharp fa-solid fa-list"></i> All
+              Levels</span
+            >
+          </div>
+        </div>
+        <div class="bd-course-price">
+          <span class="current-price text-primary"
+            >{{ program.price }} {{ program.currency }}</span
+          >
+          <td>
+            <ul>
+              <li *ngFor="let module of program.modules">{{ module.title }}</li>
+            </ul>
+
+            <ul>
+              <li *ngFor="let module of program.modules">{{ module.description }}</li>
+            </ul>
+          </td>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- course list style end -->
+
+<!-- course grid style -->
+<div class="display-layout-grid" [class.active]="viewMode === 'grid'">
+  <div class="row g-30">
+    <div
+      class="col-xl-6 col-lg-12 col-md-12"
+      *ngFor="let program of paginatedTrainingPrograms"
+    >
+      <!-- Grid view content (unchanged) -->
+      <div class="bd-course-wrapper style-two">
+        <a
+          [routerLink]="['/training', program.id]"
+          class="bd-course-thumb-wrapper bd-course-thumb-style p-relative"
+        >
+          <div class="bd-course-badge">
+            <span class="bd-badge badge-warning">20% Off</span>
+          </div>
+          <div class="bd-course-thumb-bg bg-1">
+            <img
+              src="assets/images/course/course-bg-1.webp"
+              alt="images"
+            />
+          </div>
+          <div class="bd-course-thumb-instructor center">
+            <img
+              src="assets/images/course/course-instructor-1.webp"
+              alt="instructor"
+            />
+          </div>
+          <div class="small-text bg-text-color">Training program</div>
+          <div class="bd-course-overly-title fs-200 text-white">
+            {{ program.title }}
+          </div>
+        </a>
+        <div class="bd-course-content">
+          <div class="bd-course-meta d-flex-between mb-15">
+            <div class="bd-course-tag">
+              <a
+                class="bd-badge badge-outline-light badge-transparent"
+                [routerLink]="['/training', program.id]"
+                >{{ program.title }}</a
+              >
+            </div>
+            <div class="bd-course-lesson">
+              <span
+                ><i class="fa-light fa-book"></i> Duration:
+                {{ program.duration }} hours</span
+              >
+              <button (click)="enroll(program.id)">S’inscrire</button>
+            </div>
+          </div>
+          <h5 class="bd-course-title underline mb-10">
+            <a [routerLink]="['/training', program.id]">{{
+              program.title
+            }}</a>
+          </h5>
+          <div class="bd-course-rating d-flex-between">
+            <div class="bd-course-price">
+              <span class="current-price"
+                >{{ program.price }} {{ program.currency }}</span
+              >
+            </div>
+            <div
+              class="bd-course-rating-wrap d-flex align-items-center gap-10"
+            >
+              <div
+                class="bd-course-rating-icon fs-14 d-flex rating-color"
+              >
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+                <i class="fa-solid fa-star"></i>
+              </div>
+              <div class="bd-course-rating-text">
+                <span>4.9 (320)</span>
+              </div>
+            </div>
+          </div>
+          <div class="bd-course-full-border"></div>
+          <div
+            class="btn-wrap d-flex align-items-center justify-content-between"
+          >
+            <div class="bd-course-author">
+              <div class="thumb">
+                <img
+                  src="assets/images/avatar/avatar.webp"
+                  alt="author"
+                />
+              </div>
+              <div class="name">
+                <a href="instructor-details.html">John Doe</a>
+              </div>
+            </div>
+            <div class="bd-course-btn">
+              <button (click)="enroll(program.id)">S’inscrire</button>
+           
+                <span class="box-icon">
+                  <i
+                    class="fa-regular fa-arrow-right-long first-icon"
+                  ></i>
+                  <i
+                    class="fa-regular fa-arrow-right-long second-icon"
+                  ></i>
+                </span>
+           
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- course grid style end -->
+
+<!-- Updated pagination style -->
+<div class="basic-pagination">
+  <nav>
+    <ul>
+      <!-- Previous page button -->
+      <li [ngClass]="{'disabled': page === 1}">
+        <a href="javascript:void(0)" (click)="changePage(page - 1)" class="prev" [class.disabled]="page === 1">
+          <i class="fa-solid fa-angle-left"></i>
+        </a>
+      </li>
+
+      <!-- Page numbers -->
+      <li *ngFor="let pageNumber of pageNumbers()" [ngClass]="{'active': page === pageNumber}">
+        <a href="javascript:void(0)" (click)="changePage(pageNumber)">{{ pageNumber }}</a>
+      </li>
+
+      <!-- Next page button -->
+      <li [ngClass]="{'disabled': page === totalPages}">
+        <a href="javascript:void(0)" (click)="changePage(page + 1)" class="next" [class.disabled]="page === totalPages">
+          <i class="fa-solid fa-angle-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<!-- pagination style end -->
+<div class="bd-sidebar-search">
+  <div class="bd-sidebar-search-form">
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+      placeholder="Search"
+      name="search"
+    />
+    <button type="button" (click)="onSearch()"><i class="far fa-search"></i></button>
+  </div>
+</div>
+<div class="bd-course-widget widget-price">
+  <h5 class="bd-widget-title mb-20">Price</h5>
+  <div class="bd-widget-content">
+    <div class="checkbox-option">
+      <input id="course-price-1" type="radio" name="priceFilter" [value]="" [(ngModel)]="priceFilter" (change)="onPriceFilter()" />
+      <label for="course-price-1">All Prices</label>
+    </div>
+    <div class="checkbox-option">
+      <input id="course-price-2" type="radio" name="priceFilter" value="low_to_high" [(ngModel)]="priceFilter" (change)="onPriceFilter()" />
+      <label for="course-price-2">Low to High</label>
+    </div>
+    <div class="checkbox-option">
+      <input id="course-price-3" type="radio" name="priceFilter" value="high_to_low" [(ngModel)]="priceFilter" (change)="onPriceFilter()" />
+      <label for="course-price-3">High to Low</label>
+    </div>
+  </div>
+  
+ 
+  <app-footer></app-footer>
+ 
+</div>
+
+<app-chat></app-chat>

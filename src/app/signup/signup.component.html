@@ -1,0 +1,21 @@
+<div class="signup-form">
+    <h2>Créer un compte</h2>
+  
+    <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+    <div *ngIf="success" class="alert alert-success">{{ success }}</div>
+  
+    <form (ngSubmit)="signup()">
+      <div>
+        <label>Email :</label>
+        <input type="email" [(ngModel)]="email" name="email" required />
+      </div>
+  
+      <div>
+        <label>Nom d'utilisateur :</label>
+        <input type="text" [(ngModel)]="username" name="username" required />
+      </div>
+  
+      <button type="submit">S’inscrire</button>
+    </form>
+  </div>
+  

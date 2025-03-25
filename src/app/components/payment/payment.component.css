@@ -1,0 +1,61 @@
+.payment-container {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-control {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+
+.stripe-card {
+    width: 100%;
+    padding: 10px;
+    min-height: 50px; /* Assure une bonne hauteur */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background: #fff;
+}
+.stripe-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.payment-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 18px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.error-message {
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+
+/* Animation pour le bouton de chargement */
+.spinner-border {
+    margin-left: 8px;
+}

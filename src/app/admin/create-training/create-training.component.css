@@ -1,0 +1,59 @@
+/* Custom styles for the create training component */
+:host {
+  display: block;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border-color: var(--primary);
+}
+
+.form-control.ng-invalid.ng-touched {
+  border-color: #dc3545;
+}
+
+.profile-header {
+  background: linear-gradient(to right, #ffffff, #f8f9fa);
+}
+
+/* Custom animation for submit button */
+button[type="submit"]:not(:disabled) {
+  transition: all 0.3s ease;
+}
+
+button[type="submit"]:not(:disabled):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+button[type="submit"]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Statistics cards hover effect */
+.bg-white {
+  transition: transform 0.3s ease;
+}
+
+.bg-white:hover {
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .profile-header {
+    padding: 1rem;
+  }
+
+  .content-wrapper {
+    padding: 1rem;
+  }
+
+  .grid {
+    gap: 1rem;
+  }
+}
+

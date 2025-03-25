@@ -1,0 +1,19 @@
+<h2>Ajouter une nouvelle question</h2>
+
+<form (ngSubmit)="onSubmit()" [formGroup]="questionForm">
+  <div>
+    <label for="questionText">Question :</label>
+    <input id="questionText" formControlName="questionText" />
+    <div *ngIf="questionForm.controls['questionText'].invalid && questionForm.controls['questionText'].touched">
+      <span style="color: red;">Veuillez entrer une question.</span>
+    </div>
+  </div>
+  <button type="submit" [disabled]="questionForm.invalid">Ajouter</button>
+</form>
+
+<hr />
+
+<h3>Questions ajoutées :</h3>
+<ul>
+  <li *ngFor="let question of questions">{{ question }}</li>
+</ul>

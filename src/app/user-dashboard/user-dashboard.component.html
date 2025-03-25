@@ -1,0 +1,22 @@
+<h2>Mon espace personnel</h2>
+
+<p *ngIf="message" style="color: orange;">{{ message }}</p>
+
+<table *ngIf="participations.length > 0" border="1" style="width: 100%; margin-top: 20px;">
+  <thead>
+    <tr>
+      <th>ID Formation</th>
+      <th>Statut</th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of participations">
+      <td>{{ p.trainingProgramId }}</td>
+      <td>{{ p.status }}</td>
+      <td>{{ p.grade }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="participations.length === 0 && !message">Aucune participation trouvée.</p>
