@@ -1,0 +1,127 @@
+<main>
+  <section class="bd-new-course-area section-space">
+    <div class="container">
+      <h2 class="text-center mb-4">Add New Chapter</h2>
+      <div class="row g-30 justify-content-center">
+        <div class="col-xl-8 col-lg-9">
+          <div class="bd-new-course-wrapper">
+            <div class="card p-4">
+              <!-- Error Message -->
+             <!-- Error Message -->
+             <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+             {{ errorMessage }}
+             <button type="button" class="btn-close" (click)="errorMessage = ''" aria-label="Close alert"></button>
+             </div>
+
+
+              <!-- Loading Overlay -->
+              <div *ngIf="loading" class="loading-overlay">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+
+              <form #chapterForm="ngForm" (ngSubmit)="onSubmit(chapterForm)" novalidate>
+                <!-- Form-wide Error -->
+                <div *ngIf="formSubmitted && chapterForm.invalid" class="alert alert-warning">
+                  Please correct the errors in the form before submitting.
+                </div>
+
+                <!-- Chapter Title -->
+                <div class="form-input-box mb-20">
+                  <div class="form-input-title">
+                    <label for="chapterTitle">Chapter Title</label>
+                  </div>
+                  <div class="form-input">
+                    <input [(ngModel)]="chapterRequest.chapterTitle" name="chapterTitle" id="chapterTitle" type="text" placeholder="Enter Chapter Title" required minlength="3" #titleRef="ngModel" [class.is-invalid]="titleRef.invalid && (titleRef.touched || formSubmitted)">
+                    <div *ngIf="titleRef.invalid && (titleRef.touched || formSubmitted)" class="invalid-feedback">
+                      <div *ngIf="titleRef.errors?.['required']">Title is required</div>
+                      <div *ngIf="titleRef.errors?.['minlength']">Minimum 3 characters required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Chapter Description -->
+                <div class="form-input-box mb-20">
+                  <div class="form-input-title">
+                    <label for="chapterDescription">Description</label>
+                  </div>
+                  <div class="form-input">
+                    <textarea [(ngModel)]="chapterRequest.chapterDescription" name="chapterDescription" id="chapterDescription" placeholder="Enter Chapter Description" required minlength="10" #descRef="ngModel" [class.is-invalid]="descRef.invalid && (descRef.touched || formSubmitted)"></textarea>
+                    <div *ngIf="descRef.invalid && (descRef.touched || formSubmitted)" class="invalid-feedback">
+                      <div *ngIf="descRef.errors?.['required']">Description is required</div>
+                      <div *ngIf="descRef.errors?.['minlength']">Minimum 10 characters required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Chapter Order -->
+<div class="form-input-box mb-20">
+  <div class="form-input-title">
+      <label for="chapterOrder">Chapter Order</label>
+  </div>
+  <div class="form-input">
+      <input [(ngModel)]="chapterRequest.chapterOrder" 
+             name="chapterOrder"
+             id="chapterOrder" 
+             type="number" 
+             min="1" 
+             step="1"
+             pattern="^[1-9]\d*$"
+             required 
+             #orderRef="ngModel"
+             (keypress)="validateNumberInput($event)"
+             (paste)="validatePaste($event)"
+             [class.is-invalid]="orderRef.invalid && (orderRef.touched || formSubmitted)">
+      
+      <div *ngIf="orderRef.invalid && (orderRef.touched || formSubmitted)" class="invalid-feedback">
+          <div *ngIf="orderRef.errors?.['required']">Order is required</div>
+          <div *ngIf="orderRef.errors?.['min'] || orderRef.errors?.['pattern']">
+              Must be a positive whole number (1, 2, 3...)
+          </div>
+      </div>
+  </div>
+</div>
+                <!-- Attachments -->
+                <div class="form-input-box mb-20">
+                  <div class="form-input-title">
+                      <label for="chapterFiles" class="upload-label">Attachments (PDF/DOC/TXT)</label>
+                  </div>
+                  <div class="form-input">
+                      <div class="custom-file-upload">
+                          <input type="file" id="chapterFiles" name="attachments" (change)="onFileSelected($event)" multiple accept=".pdf,.doc,.docx,.txt" class="file-input">
+                          <label for="chapterFiles" class="file-label">
+                              <i class="fas fa-upload"></i> Choose Files
+                          </label>
+                      </div>
+                      <small id="fileHelp" class="form-text text-muted">
+                          Max 10MB per file. Allowed formats: PDF, DOC, DOCX, TXT
+                      </small>
+  
+                      <!-- File Previews -->
+                      <div *ngIf="selectedFiles.length > 0" class="file-preview mt-2">
+                        <div *ngFor="let file of selectedFiles" class="file-item">
+                          <span class="file-name">{{ file.name }}</span>
+                          <span class="file-size">({{ formatFileSize(file.size) }})</span>
+                        </div>
+                      </div>
+                  </div>
+                </div>
+                <!-- Form Actions -->
+                <div class="d-flex-items justify-content-start gap-30 mt-30">
+                  <button type="submit" class="bd-btn btn-primary" [disabled]="chapterForm.invalid || loading">
+                    <span *ngIf="!loading">Create Chapter</span>
+                    <span *ngIf="loading">Creating...</span>
+                  </button>
+                  <a [routerLink]="['/teacher/courses', courseId]" class="bd-btn btn-outline-secondary">
+                    Cancel
+                  </a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

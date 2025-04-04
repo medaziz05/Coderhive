@@ -1,0 +1,145 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "GestionEspacePFE": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "skipImport": false
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-builders/custom-webpack:browser", 
+          "options": {
+            "outputPath": "dist/gestion-espace-pfe",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": [
+              "zone.js",
+              "src/polyfills.ts"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets/" 
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/pdfjs-dist/build",
+                "output": "assets/pdfjs/" 
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/swiper",
+                "output": "assets/swiper/"
+              }
+            ],
+            "styles": [
+              "node_modules/swiper/swiper-bundle.min.css",
+              "src/assets/css/plugins/swiper.min.css",
+              "src/assets/css/vendor/bootstrap.min.css",
+              "src/assets/css/vendor/animate.min.css",
+              "src/assets/css/main.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/swiper/swiper-bundle.min.js",
+              "src/assets/js/plugins/swiper.min.js",
+              "node_modules/pdfjs-dist/build/pdf.worker.min.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "mammoth",
+              "pdfjs-dist"
+            ],
+            "optimization": {
+              "styles": {
+                "minify": false
+              }
+            },
+            "customWebpackConfig": {
+              "path": "./extra-webpack.config.js"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2MB",
+                  "maximumError": "3MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kB",
+                  "maximumError": "10kB"
+                }
+              ],
+              "outputHashing": "all",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-builders/custom-webpack:dev-server",
+          "options": {
+            "port": 4200,
+            "browserTarget": "GestionEspacePFE:build:development"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "GestionEspacePFE:build:production"
+            },
+            "development": {
+              "browserTarget": "GestionEspacePFE:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": ["zone.js", "zone.js/testing"],
+            "tsConfig": "tsconfig.spec.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "scripts": [
+              "src/assets/js/vendor/*.js"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

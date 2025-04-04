@@ -1,0 +1,502 @@
+
+    <!-- course-breadcrumb start -->
+    <section class="bd-course-breadcrumb-area section-space"> 
+        <div class="container">
+            <div class="row gy-30 justify-content-center text-center">
+                <div class="col-xl-8 col-lg-10 col-md-12">
+                    <div class="bd-course-breadcrumb-wrapper">
+                        <div class="bd-course-breadcrumb-content">
+                            <div class="bd-breadcrumb-list justify-content-center mb-20">
+                                <span><a href="/student/courses">Course List</a></span> <!-- Correct path for Student's Course List -->
+                                <span class="divider"><i class="fa-regular fa-angle-right"></i></span>
+                                <span class="active">Course Details</span>
+                            </div>
+                            <h2 class="bd-course-breadcrumb-title mb-15">
+                                {{ course?.courseTitle }}
+                            </h2>
+                            
+                            <div class="bd-course-details-meta border-padding-none mb-20 d-flex justify-content-center flex-wrap"> <!-- ✅ Centering content -->
+                                <div class="bd-course-author d-flex align-items-center">
+                                    <div class="thumb"><a href="#"><img [src]="course?.courseImage" alt="Course Image">
+                                    </a></div>
+                                    <div class="authour-meta ms-2">
+                                        <span class="subtitle">Created by</span>
+                                        <div class="name">
+                                          <a href="instructor-details.html">{{ course?.teacher?.name ?? 'Unknown Instructor' }}</a>
+                                        </div>
+                                      </div>
+                                </div>
+                                <div class="bd-course-details-meta-item ms-4">
+                                    <p class="title">Total Enrolled</p>
+                                    <span class="subtitle">9,450</span>
+                                </div>
+                            </div>
+    
+                            <div class="bd-course-details-language mb-20 d-flex justify-content-center"> <!-- ✅ Centering content -->
+                                <div class="bd-course-details-rating me-4">
+                                    <span class="fw-6">4.8</span>
+                                    <ul class="d-inline-flex">
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fas fa-star"></i></li>
+                                        <li><i class="fal fa-star"></i></li>
+                                    </ul>
+                                    <span>(980 reviews)</span>
+                                </div>
+                                <div class="bd-subtitle-btn">
+                                    <i class="fa-light fa-subtitles"></i>
+                                    Subtitles: <span class="fw-5">15+ Languages</span>
+                                </div>
+                            </div>
+    
+                            <div class="bd-course-add-time d-flex justify-content-center flex-wrap"> <!-- ✅ Centering content -->
+                                <div class="bd-course-add-time-item me-4">
+                                    <p>
+                                        <span class="icon"><i class="fa-solid fa-calendar-days"></i></span> 
+                                        Last Update: 
+                                        <span class="date">
+                                            {{ course?.courseUpdatedAt ? (course?.courseUpdatedAt | date: 'dd MMMM yyyy') : 'No update available' }}
+                                        </span>
+                                    </p>
+                                </div>
+                                <div class="bd-course-add-time-item">
+                                    <p>
+                                        <span class="icon"><i class="fa-light fa-rotate"></i></span> 
+                                        Released: 
+                                        <span class="date">
+                                            {{ course?.courseCreatedAt ? (course?.courseCreatedAt | date: 'dd MMMM yyyy') : 'No release date available' }}
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                              
+                        </div> 
+                    </div> 
+                </div> 
+            </div> 
+        </div> 
+    </section>
+        <!-- course-breadcrumb end -->
+         
+    <!-- course details area start -->
+    <section class="bd-course-details-area section-space">
+        <div class="container">
+            <div class="row gy-30">
+                <!-- Main Content -->
+                <div class="col-xl-8 col-lg-8">
+                    <div class="bd-course-details-content">
+                        <div class="bd-course-feature-box mb-30" id="overview">
+                            <h3 class="bd-course-details-content-title">Course Description</h3>
+                            <p class="description mb-15">
+                                {{ course?.courseDescription }}
+                            </p>
+                            <div class="row gy-30">
+                                <div class="col-lg-6">
+                                    <div class="bd-course-details-list">
+                                        <ul>
+                                            <li>
+                                                <span class="list-icon success">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                                Well-Structured & Organized course
+                                            </li>
+                                            <li>
+                                                <span class="list-icon success">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                                Practical Quiz in every chapter
+                                            </li>
+                                            <li>
+                                                <span class="list-icon success">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                                Expert Instructors
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="bd-course-details-list">
+                                        <ul>
+                                            <li>
+                                                <span class="list-icon success">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                                Learn at your own pace anytime!
+                                            </li>
+                                            <li>
+                                                <span class="list-icon success">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                                Clear Explanations
+                                            </li>
+                                            <li>
+                                                <span class="list-icon success">
+                                                    <i class="fa-solid fa-check"></i>
+                                                </span>
+                                                Lifetime Access
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="bd-course-feature-box mb-30" id="courseContent">
+                            <div class="bd-course-curriculum-accordion">
+                              <div class="accordion-common-style accordion-transparent accordion-sl-number accordion-item-margin">
+                                <div class="accordion" id="accordionExampleEight">
+                                  <div class="chapters-section mt-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-4">
+                                      <h4>Course Chapters</h4>
+                                    </div>
+                          
+                                    <!-- Updated chapter list section -->
+                                    <div *ngIf="course?.chapters?.length === 0" class="alert alert-info">
+                                      No chapters available for this course yet.
+                                    </div>
+                          
+                                    <!-- Chapter List -->
+                                    <div *ngFor="let chapter of course?.chapters" class="chapter-card card mb-3">
+                                      <div class="card-body">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                          <!-- Chapter Order and Title -->
+                                          <div class="d-flex align-items-center">
+                                            <h5 class="card-title mb-0">{{ chapter?.chapterOrder }} : {{ chapter?.chapterTitle }}</h5>
+                                          </div>
+                                          <!-- Buttons for View Chapter and Delete Chapter -->
+                                          <div class="d-flex align-items-center">
+                                            <!-- View Chapter Button -->
+                                            <div class="bd-course-btn ms-2">
+                                              <a class="bd-text-btn" [routerLink]="['/teacher/courses', course?.courseId, 'chapters', chapter?.chapterId]">
+                                                View Chapter
+                                                <span class="box-icon">
+                                                  <i class="fa-regular fa-arrow-right-long first-icon"></i>
+                                                  <i class="fa-regular fa-arrow-right-long second-icon"></i>
+                                                </span>
+                                              </a>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        
+                    <div class="bd-course-feature-box mb-30" id="review">
+                        <h3 class="bd-course-details-content-title">Course Rating</h3>
+                        <div class="bd-review-rating-wrapper">
+                            <div class="row gy-30 align-items-center">
+                                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-4">
+                                    <div class="bd-rating-box">
+                                        <div class="bd-rating-box-number">4.9</div>
+                                        <div class="bd-rating-box-icon" role="img" aria-label="Rated 5 out of 5 stars">
+                                            <a href="#" aria-label="1 star">
+                                              <i class="fa fa-star" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="#" aria-label="2 stars">
+                                              <i class="fa fa-star" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="#" aria-label="3 stars">
+                                              <i class="fa fa-star" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="#" aria-label="4 stars">
+                                              <i class="fa fa-star" aria-hidden="true"></i>
+                                            </a>
+                                            <a href="#" aria-label="5 stars">
+                                              <i class="fa fa-star" aria-hidden="true"></i>
+                                            </a>
+                                          </div>
+                                        <span class="bd-rating-box-title">(234 Reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="col-xl-9 col-lg-9 col-md-8 col-sm-12">
+                                    <div class="bd-review-progress-wrapper">
+                                        <!-- Rating for 5 Stars -->
+                                        <div class="bd-review-progress-bar progress-style-2">
+                                            <div class="bd-review-text">5</div>
+                                            <div class="single-progress">
+                                                <div class="progress">
+                                                    <div class="progress-bar bar-bg-3 wow bdFadeInLeft" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="bd-review-meta">
+                                                <span class="bd-review-percent">82%</span>
+                                                <span class="bd-review-number">212</span>
+                                            </div>
+                                        </div>
+                                        <!-- Rating for 3 Stars -->
+                                        <div class="bd-review-progress-bar progress-style-2">
+                                            <div class="bd-review-text">3</div>
+                                            <div class="single-progress">
+                                                <div class="progress">
+                                                    <div class="progress-bar bar-bg-4 wow bdFadeInLeft" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="bd-review-meta">
+                                                <span class="bd-review-percent">4%</span>
+                                                <span class="bd-review-number">9</span>
+                                            </div>
+                                        </div>
+                                        <!-- Rating for 2 Stars -->
+                                        <div class="bd-review-progress-bar progress-style-2">
+                                            <div class="bd-review-text">2</div>
+                                            <div class="single-progress">
+                                                <div class="progress">
+                                                    <div class="progress-bar bar-bg-5 wow bdFadeInLeft" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="bd-review-meta">
+                                                <span class="bd-review-percent">1%</span>
+                                                <span class="bd-review-number">5</span>
+                                            </div>
+                                        </div>
+                                        <!-- Rating for 1 Star -->
+                                        <div class="bd-review-progress-bar progress-style-2">
+                                            <div class="bd-review-text">1</div>
+                                            <div class="single-progress">
+                                                <div class="progress">
+                                                    <div class="progress-bar bar-bg-6 wow bdFadeInLeft" data-wow-duration="0.5s" data-wow-delay=".3s" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                            <div class="bd-review-meta">
+                                                <span class="bd-review-percent">1%</span>
+                                                <span class="bd-review-number">1</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bd-course-feature-box mb-30">
+                        <h3 class="bd-course-details-content-title">Course Review</h3>
+                        <div class="bd-postbox-comment">
+                            <ul>
+                                <li>
+                                    <div class="bd-postbox-comment-box d-sm-flex align-items-start">
+                                        <div class="bd-postbox-comment-info">
+                                            <div class="bd-postbox-comment-avatar thumb-radius">
+                                                <img src="assets/images/avatar/avatar.webp" alt="image">
+                                            </div>
+                                        </div>
+                                        <div class="bd-postbox-comment-text">
+                                            <div class="d-flex flex-wrap gap-15 align-items-center justify-content-between mb-10">
+                                                <div class="post-rating">
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                </div>
+                                                <button class="bd-like-btn" type="submit">
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </button>
+                                            </div>
+                                            <div class="bd-postbox-comment-name">
+                                                <h5 class="title mb-5"><a href="#">James Smith</a></h5>
+                                                <span class="post-meta"> July 14, 2024</span>
+                                            </div>
+                                            <p>This course exceeded my expectations! The instructor's knowledge and
+                                                delivery
+                                                were excellent. Highly recommend for anyone interested in data science.</p>
+                                            <div class="bd-postbox-comment-reply">
+                                                <a href="#">Reply</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bd-postbox-comment-box d-sm-flex align-items-start">
+                                        <div class="bd-postbox-comment-info">
+                                            <div class="bd-postbox-comment-avatar thumb-radius">
+                                                <img src="assets/images/avatar/avatar3.webp" alt="image">
+                                            </div>
+                                        </div>
+                                        <div class="bd-postbox-comment-text">
+                                            <div class="d-flex flex-wrap gap-15 align-items-center justify-content-between mb-10">
+                                                <div class="post-rating">
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                </div>
+                                                <button class="bd-like-btn" type="submit">
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </button>
+                                            </div>
+                                            <div class="bd-postbox-comment-name">
+                                                <h5 class="title mb-5"><a href="#">Michael Brown</a></h5>
+                                                <span class="post-meta"> July 14, 2024</span>
+                                            </div>
+                                            <p>Great course for beginners and experts alike! The instructor breaks down
+                                                complex topics very well.</p>
+                                            <div class="bd-postbox-comment-reply">
+                                                <a href="#">Reply</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="bd-postbox-comment-box d-sm-flex align-items-start">
+                                        <div class="bd-postbox-comment-info">
+                                            <div class="bd-postbox-comment-avatar thumb-radius">
+                                                <img src="assets/images/avatar/avatar2.webp" alt="image">
+                                            </div>
+                                        </div>
+                                        <div class="bd-postbox-comment-text">
+                                            <div class="d-flex flex-wrap gap-15 align-items-center justify-content-between mb-10">
+                                                <div class="post-rating">
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                    <a href="#"><i class="fa fa-star"></i></a>
+                                                </div>
+                                                <button class="bd-like-btn" type="submit">
+                                                    <i class="fa-regular fa-heart"></i>
+                                                </button>
+                                            </div>
+                                            <div class="bd-postbox-comment-name">
+                                                <h5 class="title mb-5"><a href="#">Emily Johnson</a></h5>
+                                                <span class="post-meta"> July 14, 2024</span>
+                                            </div>
+                                            <p>Excellent structure and well-paced! The instructor has a great teaching
+                                                style
+                                                that makes learning fun.</p>
+                                            <div class="bd-postbox-comment-reply">
+                                                <a href="#">Reply</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bd-course-feature-box">
+                        <h3 class="bd-course-details-content-title">Write a Review</h3>
+                        <div class="bd-review-form">
+                            <div class="bd-review-form-rating mb-15">
+                                <p>Your email address will not be published. Required fields are marked
+                                    *</p>
+                                <div class="bd-ratings-wrapper">
+                                    <i class="fa fa-star" data-value="1"></i>
+                                    <i class="fa fa-star" data-value="2"></i>
+                                    <i class="fa fa-star" data-value="3"></i>
+                                    <i class="fa fa-star" data-value="4"></i>
+                                    <i class="fa fa-star" data-value="5"></i>
+                                    <input type="hidden" name="rating" value="5">
+                                </div>
+                            </div>
+                            <form action="#">
+                                <div class="row gy-30">
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                                        <div class="bd-postbox-comment-input">
+                                            <input type="text" placeholder="Name" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-6 col-xl-6 col-lg-6 col-md-6">
+                                        <div class="bd-postbox-comment-input">
+                                            <input type="email" placeholder="Email" required="">
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-12">
+                                        <div class="bd-postbox-comment-input mb-15">
+                                            <textarea placeholder="Your Comment Here..." spellcheck="false"></textarea>
+                                        </div>
+                                        <div class="checkbox-option">
+                                            <input id="course-check-1" type="checkbox">
+                                            <label for="course-check-1">Save my name, email, and website in this
+                                                browser for
+                                                the next time I comment.</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-xxl-12">
+                                        <div class="bd-postbox-comment-btn">
+                                            <button type="submit" class="bd-btn btn-outline-primary">Submit
+                                                Review</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div> 
+            </div>
+                            <!-- Sidebar -->
+                            <div class="col-xl-4 col-lg-4">
+                                <div class="bd-course-sidebar-widget sidebar-sticky">
+                                    <div class="bd-course-sidebar-widget-list mb-20">
+                                        <h6 class="mb-15">This course includes:</h6>
+                                        <ul>
+                                            <li>
+                                                <div class="icon">
+                                                    <i class="fas fa-bookmark"></i>
+                                                    <span>Access</span>
+                                                </div>
+                                                <div class="video-corse-info">
+                                                    <span>Full Lifetime</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="icon">
+                                                  <i class="fas fa-th-list"></i>
+                                                  <span>Category</span>
+                                                </div>
+                                                <div class="video-corse-info">
+                                                    <span>{{ course?.courseCategory ?? 'No category specified' }}</span>
+                                                </div>
+                                              </li>
+                                              
+                                              <!-- Level -->
+                                              <li>
+                                                <div class="icon">
+                                                  <i class="fas fa-filter"></i>
+                                                  <span>Level</span>
+                                                </div>
+                                                <div class="video-corse-info">
+                                                    <span>{{ course?.level ?? 'Level not set' }}</span>
+                                                </div>
+                                              </li>
+                                            <li>
+                                                <div class="icon">
+                                                    <i class="fas fa-award"></i>
+                                                    <span>Certificate</span>
+                                                </div>
+                                                <div class="video-corse-info">
+                                                    <span>Yes</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="icon">
+                                                    <i class="fas fa-desktop"></i>
+                                                    <span>Chapter</span>
+                                                </div>
+                                                <div class="video-corse-info">
+                                                    <span>.</span>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="icon">
+                                                    <i class="fas fa-file-alt"></i>
+                                                    <span>Recourse</span>
+                                                </div>
+                                                <div class="video-corse-info">
+                                                    <span>5 Downloadable Files</span>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> <!-- Closing .col-xl-4 -->
+                        </div> <!-- Closing .row -->
+                    </div> <!-- Closing .container -->
+                </section> 
+    
+    

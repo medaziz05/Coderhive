@@ -1,0 +1,332 @@
+<main class="main-area">
+  <!-- banner area start  -->
+  <section class="bd-banner-area bd-banner-six section-space theme-bg bd-noise-bg p-relative fix">
+    <div class="container">
+      <div class="row gy-30 align-items-center justify-content-between">
+        <div class="col-xl-6">
+          <div class="bd-banner-content-six">
+            <span class="bd-banner-subtitle">Welcome to BeeHive</span>
+            <h1 class="bd-banner-title mb-20">Want to add a Quiz for this cahpter ? </h1>
+            <p class="bd-banner-description">Coding Quizzes are a fun way to test your skills and learn new tricks. They help you think faster, solve problems better, and grow as a developer—one challenge at a time!</p>
+            <div class="bd-banner-btn">
+              <a class="bd-btn btn-outline-border-white" 
+                 href="https://codecanyon.net/user/topylo/portfolio" 
+                 target="_blank" 
+                 rel="noopener noreferrer">
+                Add Quiz
+              </a>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-xl-6">
+          <!-- Swiper Container -->
+          <div class="swiper bookSlider">
+            <div class="swiper-wrapper">
+              <!-- Slide 1 -->
+              <div class="swiper-slide">
+                <div class="bd-book-slider-item">
+                  <div class="bd-book-slider-thumb">
+                    <img src="/assets/images/book/book-cover-1.webp" 
+                         alt="Bestselling Book 1"
+                         loading="lazy">
+                  </div>
+                  <div class="bd-book-slider-btn">
+                    <a class="bd-btn btn-primary btn-very-small" 
+                       routerLink="/shop-details">
+                      Explore
+                    </a>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Slide 2 -->
+              <div class="swiper-slide">
+                <div class="bd-book-slider-item">
+                  <div class="bd-book-slider-thumb">
+                    <img src="/assets/images/book/book-cover-2.webp" 
+                         alt="Bestselling Book 2"
+                         loading="lazy">
+                  </div>
+                  <div class="bd-book-slider-btn">
+                    <a class="bd-btn btn-primary btn-very-small" 
+                       routerLink="/shop-details">
+                      Explore
+                    </a>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Slide 3 -->
+              <div class="swiper-slide">
+                <div class="bd-book-slider-item">
+                  <div class="bd-book-slider-thumb">
+                    <img src="/assets/images/book/book-cover-3.webp" 
+                         alt="Bestselling Book 3"
+                         loading="lazy">
+                  </div>
+                  <div class="bd-book-slider-btn">
+                    <a class="bd-btn btn-primary btn-very-small" 
+                       routerLink="/shop-details">
+                      Explore
+                    </a>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Slide 4 -->
+              <div class="swiper-slide">
+                <div class="bd-book-slider-item">
+                  <div class="bd-book-slider-thumb">
+                    <img src="/assets/images/book/book-cover-4.webp" 
+                         alt="Bestselling Book 4"
+                         loading="lazy">
+                  </div>
+                  <div class="bd-book-slider-btn">
+                    <a class="bd-btn btn-primary btn-very-small" 
+                       routerLink="/shop-details">
+                      Explore
+                    </a>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Slide 5 -->
+              <div class="swiper-slide">
+                <div class="bd-book-slider-item">
+                  <div class="bd-book-slider-thumb">
+                    <img src="/assets/images/book/book-cover-5.webp" 
+                         alt="Bestselling Book 5"
+                         loading="lazy">
+                  </div>
+                  <div class="bd-book-slider-btn">
+                    <a class="bd-btn btn-primary btn-very-small" 
+                       routerLink="/shop-details">
+                      Explore
+                    </a>
+                  </div>
+                </div>
+              </div>
+  
+              <!-- Slide 6 -->
+              <div class="swiper-slide">
+                <div class="bd-book-slider-item">
+                  <div class="bd-book-slider-thumb">
+                    <img src="/assets/images/book/book-cover-6.webp" 
+                         alt="Bestselling Book 6"
+                         loading="lazy">
+                  </div>
+                  <div class="bd-book-slider-btn">
+                    <a class="bd-btn btn-primary btn-very-small" 
+                       routerLink="/shop-details">
+                      Explore
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <!-- Pagination -->
+            <div class="bd-book-slider-pagination">
+              <div class="swiper-pagination"></div>
+            </div>
+  
+            <!-- Navigation Buttons -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- banner area end  -->
+<!-- breadcrumb area start -->
+<section class="bd-breadcrumb-area p-relative fix z-index-11">
+  <div class="bd-breadcrumb-bg-two" data-background="assets/images/breadcrumb/breadcrumb-bg-2.webp"></div>
+  <div class="bd-breadcrumb-wrapper p-relative">
+      <div class="container">
+          <div class="row">
+              <div class="col-xl-12">
+                  <div class="bd-breadcrumb style-two d-flex-center">
+                      <div class="bd-breadcrumb-content">
+                          <h1 class="bd-breadcrumb-title">{{ chapter?.chapterTitle }}</h1> <!-- Chapter Title -->
+                          <div class="bd-breadcrumb-list">
+                              <span><a href="index.html">iStudy</a></span>
+                              <span class="divider"><i class="fa-regular fa-angle-right"></i></span>
+                              <span class="active">Chapter Details</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="bd-breadcrumb-shape">
+              <div class="shape-1"><img src="/assets/images/shape/breadcrumb-shape-1.webp" alt="shape"></div>
+              <div class="shape-3"><img src="/assets/images/shape/bulb-shape.webp" alt="shape"></div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- breadcrumb area end -->
+
+<!-- instructor-details area start -->
+<section class="bd-instructor-details-area section-space">
+  <div class="container">
+      <div class="row g-30">
+          <!-- Left Sidebar with Teacher Information -->
+          <div class="col-xl-4 col-lg-4 col-md-12">
+              <div class="bd-instructor-details-info sidebar-left sidebar-sticky">
+                  <div class="bd-instructor-details-thumb mb-20">
+                      <img src="/assets/images/instructor/instructor-thumb-01.webp" alt="Alex Morgan">
+                  </div>
+                  <div class="bd-instructor-info">
+                      <h3 class="name mb-5">{{ course?.teacher?.name }}</h3> 
+                      <span class="designation mb-5 d-block">{{ course?.teacher?.speciality }}</span> 
+                      <div class="bd-instructor-rating mb-15">
+                          <div class="rating-star">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </div>
+                          <span class="rating-count"> (25 Reviews)</span>
+                      </div>
+                      <div class="bd-instructor-info-list mb-20">
+                          <ul>
+                              <li><a href="mailto:alex.morgan@example.com"><i class="fal fa-envelope"></i> Sir Raslen</a></li>
+                              <li><a href="tel:+123456789"><i class="far fa-phone-alt"></i> +(123) 456-789</a></li>
+                              <li><a href="#"><i class="far fa-map-marker-alt"></i> 123 Learning St, Knowledge City, KC88 7ZX</a></li>
+                          </ul>
+                      </div>
+                      <div class="theme-social mb-20">
+                          <ul class="social-icon-list">
+                              <li><a href="#" title="Go to Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+                              <li><a href="#" title="Go to Twitter"><i class="fa-brands fa-x-twitter"></i></a></li>
+                              <li><a href="#" title="Go to LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                              <li><a href="#" title="Go to Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+                          </ul>
+                      </div>
+                      
+                      <!-- Added Edit Chapter Button -->
+                      <a [routerLink]="['/teacher/courses', courseId, 'chapters', chapterId, 'update']"  
+                         class="bd-btn btn-primary w-100">
+                          <span class="left-icon"><i class="fa-sharp fa-light fa-pen-to-square"></i></span> 
+                          Edit Chapter
+                      </a>
+
+                      <div class="bd-course-btn">
+                        <a class="bd-text-btn" [routerLink]="['/teacher/courses', courseId]">
+                            Back to Course
+                            <span class="box-icon">
+                                <i class="fa-regular fa-arrow-left-long first-icon"></i>
+                                <i class="fa-regular fa-arrow-left-long second-icon"></i>
+                            </span>
+                        </a>
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Right Content: Chapter Details -->
+          <div class="col-xl-8 col-lg-8 col-md-12">
+              <div class="bd-instructor-details-content">
+                  <!-- Loading Overlay -->
+                  <div *ngIf="isLoading" class="loading-overlay">
+                      <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                      </div>
+                      <p class="mt-2">Loading chapter content...</p>
+                  </div>
+
+                  <!-- Content -->
+                  <div *ngIf="!isLoading">
+                      <!-- Error Message -->
+                      <div *ngIf="errorMessage" class="alert alert-danger mb-4">
+                          {{ errorMessage }}
+                      </div>
+
+                      <!-- Chapter Details -->
+                      <div class="bd-instructor-feature-box mb-30">
+                          <h3 class="bd-instructor-details-title">Chapter Description</h3>
+                          <p class="bd-instructor-details-desc">{{ chapter?.chapterDescription }}</p>
+                      </div>
+
+                      <div class="bd-instructor-feature-box mb-30">
+                          <h3 class="bd-instructor-details-title">Chapter Order</h3>
+                          <p class="bd-instructor-details-desc">{{ chapter?.chapterOrder }}</p>
+                      </div>
+
+                      <div class="bd-instructor-feature-box mb-30">
+                          <h3 class="bd-instructor-details-title">Attachments</h3>
+
+                          <!-- No Attachments Message -->
+                          <div *ngIf="chapter?.attachments?.length === 0" class="alert alert-info">
+                              No attachments available for this chapter yet.
+                          </div>
+
+                          <!-- Attachments List -->
+                          <div class="attachments-list">
+                              <div *ngFor="let attachment of chapter?.attachments" class="attachment-item">
+                                  <!-- Clickable Attachment Title -->
+                                  <h5 class="bd-course-title underline mb-10">
+                                      <a href="javascript:void(0)" 
+                                         (click)="toggleAttachmentPreview(attachment)"
+                                         [class.active]="selectedAttachment?.fileName === attachment.fileName">
+                                          {{ attachment.fileName }}
+                                      </a>
+                                  </h5>
+
+                                  <!-- Embedded Preview Container -->
+                                  <div *ngIf="selectedAttachment?.fileName === attachment.fileName && isPreviewSupported(attachment.fileType)" 
+                                       class="attachment-preview-container">
+                                      <div class="preview-wrapper">
+                                          <iframe *ngIf="selectedAttachment?.previewUrl && isPreviewSupported(attachment.fileType)"
+                                                  [src]="attachmentPreviews[attachment.fileName]"
+                                                  class="embedded-preview"
+                                                  title="File Preview"
+                                                  (load)="onIframeLoad()"
+                                                  (error)="onIframeError()">
+                                          </iframe>
+                                          <div *ngIf="loadingPreview" class="preview-loading">
+                                              <div class="spinner-border text-primary" role="status">
+                                                  <span class="visually-hidden">Loading...</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <!-- Preview Not Available Message -->
+                                  <div class="attachment-meta">
+                                    <small class="text-muted">
+                                      {{ attachment.fileType }} - 
+                                      <span *ngIf="attachment.uploadedAt; else noDate">
+                                        {{ attachment.uploadedAt | date:'medium' }}
+                                      </span>
+                                      <ng-template #noDate>
+                                        <span>Date not available</span>
+                                      </ng-template>
+                                    </small>
+                                    
+                                    <!-- Add this button container -->
+                                    <div class="attachment-actions">
+                                      <button class="btn btn-danger btn-sm" 
+                                              (click)="deleteAttachment(attachment.filePath)"
+                                              *ngIf="attachment.filePath"
+                                              aria-label="Delete attachment" 
+                                              title="Delete attachment">
+                                        <i class="fas fa-trash-alt"></i>
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                      </div>
+                  </div> 
+              </div>
+          </div>
+
+      </div>
+  </div>
+</section>
+<!-- instructor-details area end -->
+</main>

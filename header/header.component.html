@@ -1,0 +1,149 @@
+<header>
+    <div class="bd-header-transparent-two">
+        <div class="bd-header-top style-three">
+            <div class="bd-header-top-left">
+                <ul>
+                    <li>
+                        <a href="tel:+8884467880" aria-label="Call us">
+                            <span><i class="fa-solid fa-phone-volume"></i></span>(888) 446-7880
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:example@istudy.com" aria-label="Email us">
+                            <span><i class="fa-sharp fa-light fa-envelope"></i></span>example.com
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bd-header-top-right text-md-end">
+                <a href="#" aria-label="Our Location">
+                    <span><i class="fa-sharp fa-regular fa-location-dot"></i></span>Brooklyn, NY 12207, New York
+                </a>
+            </div>
+        </div>
+
+        <div class="bd-header-area header-style-one" id="header-sticky">
+            <div class="bd-header-inner">
+                <div class="bd-header-left">
+                    <div class="bd-header-logo">
+                        <a href="index.html"><img src="assets/images/logo/logo.svg" alt="logo"></a>
+                    </div>
+                    <div class="bd-header-category d-none d-lg-block">
+                        <div class="bd-category-btn">
+                            <i class="fa-solid fa-grid"></i> Category
+                        </div>
+                        <div class="bd-category-dropdown">
+                            <nav>
+                                <ul>
+                                    <li><a href="courses.html">Development</a></li>
+                                    <li><a href="courses.html">Marketing</a></li>
+                                    <li><a href="courses.html">Photography</a></li>
+                                    <li><a href="courses.html">Cybersecurity</a></li>
+                                    <li><a href="courses.html">Data Science</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bd-header-menu">
+                    <nav class="main-menu bd-mobile-menu-active d-none d-xl-block">
+                        <ul>
+                            <li><a href="index.html">Home</a></li>
+
+                            <!-- ✅ Training Section -->
+                            <li class="menu-item-has-children">
+                                <a href="#" title="Our Training">Our Training</a>
+                                <ul class="submenu last-children">
+                                    <li class="menu-item-has-children has-arrow">
+                                        <a href="#" title="Training Categories">Training Categories</a>
+                                        <ul class="submenu">
+                                            <li><a href="courses-filter-search.html" title="View Marketing Trainings">Marketing</a></li>
+                                            <li><a href="courses-filter-category.html" title="Filter by Category">Training Category Filter</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a routerLink="/trainings" routerLinkActive="active" title="Add New Training">Ajouter une formation</a></li>
+                                </ul>
+                            </li>
+
+                       <!-- ✅ Course Section -->
+                       <li class="menu-item">
+                        <a routerLink="/teacher/profile" title="My Profile">My Profile</a>
+                      </li>
+                      
+<li class="menu-item-has-children">
+    <a href="#" title="Marketing Courses">User Courses</a>
+    <ul class="submenu">
+      <li><a [routerLink]="['/student/courses']" title="View Courses">View Courses</a></li> <!-- Updated to point to student courses -->
+    </ul>
+  </li>
+  
+
+
+                            <!-- ✅ Data Section -->
+                            <li class="menu-item-has-children">
+                                <a href="#" title="Data Science Courses">Data</a>
+                                <ul class="submenu">
+                                    <li><a href="courses-list-one.html">Courses Left Sidebar</a></li>
+                                    <li><a href="courses-list-two.html">Courses Right Sidebar</a></li>
+                                    <li><a href="courses-list-three.html">No Sidebar</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- ✅ Dashboard Section -->
+                            <li class="menu-item-has-children">
+                                <a href="#" title="Dashboard">Dashboard</a>
+                                <ul class="submenu last-children">
+                                    <li class="menu-item-has-children has-arrow">
+                                        <a href="#" title="Instructor Dashboard">Instructor Dashboard</a>
+                                        <ul class="submenu">
+                                            <li><a href="instructor-dashboard.html">Instructor Dashboard</a></li>
+                                            <li><a href="instructor-profile.html">Instructor Profile</a></li>
+                                            <li><a href="instructor-enrolled-courses.html">Enrolled Courses</a></li>
+                                            <li><a href="instructor-analytics.html">Instructor Analytics</a></li>
+                                            <li><a href="instructor-courses.html">My Courses</a></li>
+                                            <li><a href="instructor-settings.html">Instructor Settings</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children has-arrow">
+                                        <a href="#" title="Student Dashboard">Student Dashboard</a>
+                                        <ul class="submenu">
+                                            <li><a href="student-dashboard.html">Student Dashboard</a></li>
+                                            <li><a href="student-profile.html">Student Profile</a></li>
+                                            <li><a href="student-enrolled-courses.html">Enrolled Courses</a></li>
+                                            <li><a href="student-books.html">Student Books</a></li>
+                                            <li><a href="student-settings.html">Student Settings</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <div class="bd-header-right">
+                    <div class="bd-header-meta">
+                        <button class="bd-search-open-btn meta-icon" type="button" aria-label="Open Search">
+                            <i class="fa-regular fa-magnifying-glass"></i>
+                        </button>
+                        <button class="cartmini-open-btn meta-icon" type="button" aria-label="Open Cart">
+                            <i class="fa-regular fa-cart-shopping"></i>
+                            <span class="item-number">3</span>
+                        </button>
+                    </div>
+                    <div class="bd-header-sign-btn">
+                        <a class="bd-btn btn-outline-primary h-40px" href="sign-in.html">Login</a>
+                        <a class="bd-btn btn-outline-border-primary h-40px" href="sign-up.html">Register</a>
+                    </div>
+                    <div class="bd-header-hamburger">
+                        <div class="sidebar-toggle">
+                            <a class="bar-icon" href="#" title="Open Sidebar">
+                                <span></span><span></span><span></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

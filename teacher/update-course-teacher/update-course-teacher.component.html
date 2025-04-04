@@ -1,0 +1,146 @@
+<main>
+    <section class="bd-new-course-area section-space">
+        <div class="container">
+            <h2 class="text-center mb-4">Edit Course</h2>
+            <div class="row g-30 justify-content-center">
+                <div class="col-xl-8 col-lg-9">
+                    <div class="bd-new-course-wrapper">
+                        <div class="card p-4">
+                            <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)" novalidate>
+                                <!-- Course Category -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="courseCategory">Course Category</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <select [(ngModel)]="courseRequest.courseCategory" name="courseCategory" 
+                                            id="courseCategory" required #categoryRef="ngModel">
+                                            <option value="">Select a Category</option>
+                                            <option value="software-dev">Software Development</option>
+                                            <option value="ai-data-science">AI & Data Science</option>
+                                            <option value="cybersecurity">Cybersecurity</option>
+                                            <option value="devops">DevOps</option>
+                                            <option value="uiux-design">UI/UX Design</option>
+                                            <option value="database">Database</option>
+                                            <option value="other-tech">Other</option>
+                                        </select>
+                                    </div>
+                                    <div *ngIf="categoryRef.invalid && categoryRef.touched" class="text-danger">
+                                        Please select a category.
+                                    </div>
+                                </div>
+
+                                <!-- Course Title -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="courseTitle">Course Title</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <input [(ngModel)]="courseRequest.courseTitle" name="courseTitle" 
+                                            id="courseTitle" type="text" placeholder="Enter Title" required 
+                                            minlength="2" #courseTitleRef="ngModel">
+                                    </div>
+                                    <div *ngIf="courseTitleRef.invalid && courseTitleRef.touched" class="text-danger">
+                                        <div *ngIf="courseTitleRef.errors?.['required']">Title is required.</div>
+                                        <div *ngIf="courseTitleRef.errors?.['minlength']">Minimum 2 characters.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Course Description -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="courseDescription">Description</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <textarea [(ngModel)]="courseRequest.courseDescription" 
+                                            name="courseDescription" id="courseDescription" 
+                                            placeholder="Enter Description" required minlength="10" 
+                                            #courseDescRef="ngModel"></textarea>
+                                    </div>
+                                    <div *ngIf="courseDescRef.invalid && courseDescRef.touched" class="text-danger">
+                                        <div *ngIf="courseDescRef.errors?.['required']">Description is required.</div>
+                                        <div *ngIf="courseDescRef.errors?.['minlength']">Minimum 10 characters.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Course Type -->
+                                <div class="bd-course-product-item mb-20">
+                                    <div class="form-input-box">
+                                        <div class="form-input-title">
+                                            <label>Course Type</label>
+                                        </div>
+                                        <div class="form-input">
+                                            <div class="radio d-flex-items gap-30">
+                                                <div class="form-check">
+                                                    <input [(ngModel)]="courseRequest.coursePaid" 
+                                                        name="coursePaid" class="form-check-input" 
+                                                        type="radio" [value]="true" id="paid">
+                                                    <label class="form-check-label" for="paid">Paid</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input [(ngModel)]="courseRequest.coursePaid" 
+                                                        name="coursePaid" class="form-check-input" 
+                                                        type="radio" [value]="false" id="free">
+                                                    <label class="form-check-label" for="free">Free</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Course Level -->
+                                <div class="bd-course-product-item mb-20">
+                                    <div class="form-input-box">
+                                      <div class="form-input-title">
+                                        <label for="courseLevel">Course Level</label>
+                                      </div>
+                                      <div class="form-input">
+                                        <select [(ngModel)]="courseRequest.level" name="level" id="courseLevel" required>
+                                          <option *ngFor="let level of courseLevels" [value]="level">
+                                            {{ level | titlecase }}
+                                          </option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                <!-- Course Thumbnail -->
+                                <div class="form-input-box mb-30">
+                                    <div class="form-input-title">
+                                        <label for="imageUpload">Course Thumbnail</label>
+                                    </div>
+                                    <div class="bd-course-thumbnail">
+                                        <div class="bd-course-thumbnail-label">
+                                            <input type="file" id="imageUpload" accept="image/*" 
+                                                (change)="onFileSelected($event)">
+                                            <label for="imageUpload">
+                                                <span class="label-title">Upload Thumbnail</span>
+                                                <span class="bd-course-thumbnail-preview">
+                                                    <span class="bd-course-thumbnail-preview-box" 
+                                                        [ngStyle]="{'background-image': courseRequest.courseImage ? 
+                                                        'url(' + sanitizeUrl(courseRequest.courseImage) + ')' : 
+                                                        'url(assets/images/shape/select-thumb.webp)'}">
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Form Actions -->
+                                <div class="d-flex-items justify-content-start gap-30 mt-50">
+                                    <button type="submit" class="bd-btn btn-outline-primary" [disabled]="courseForm.invalid">
+                                        Update Course
+                                    </button>    
+                                    <button type="button" class="bd-btn btn-secondary" (click)="onCancel()">
+                                        Cancel
+                                      </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

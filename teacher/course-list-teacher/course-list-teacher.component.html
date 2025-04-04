@@ -1,0 +1,195 @@
+<main>
+  <!-- dashboard breadcrumb start -->
+  <div class="bd-dashboard-breadcrumb section-space-small-top">
+    <div class="container custom-container">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="bd-dashboard-breadcrumb-wrapper p-relative">
+            <div class="bd-dashboard-breadcrumb-bg image-bg" data-background="assets/images/bg/profile-bg.webp"></div>
+            <div class="bd-dashboard-profile">
+              <div class="bd-dashboard-profile-user">
+                <div class="bd-rank-badge">
+                  <img src="/assets/images/shape/rank-badge.webp" alt="image">
+                  <div class="badge-content">
+                    <span class="number"><span class="sub">#</span>1</span>
+                    <span class="icon">Rank</span>
+                  </div>
+                </div>
+                <div class="thumb"><img src="/assets/images/avatar/avatar2.webp" alt="image"></div>
+                <div class="content">
+                  <h3 class="name">Stefan Sagmeister</h3>
+                  <span class="designation d-block">Graphic Designers</span>
+                  <div class="bd-course-rating d-inline-flex align-items-center gap-10">
+                    <div class="bd-course-rating-icon fs-14 d-flex rating-color">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="bd-course-rating-text">
+                      <span>4.8 (313 Ratings)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bd-dashboard-profile-btn">
+                <a [routerLink]="['/teacher/add-course']" class="bd-btn btn-secondary-white">Create a New Course</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- dashboard breadcrumb end -->
+
+  <!-- Start Enrolled Courses Area -->
+  <div class="bd-dashboard-area section-space-bottom">
+    <div class="container">
+      <div class="bd-dashboard-main">
+        <div class="row gy-60">
+          <div class="col-xl-3 col-lg-3 col-md-4">
+            <div class="bd-dashboard-menu">
+              <h6 class="bd-dashboard-menu-title mt-0">Welcome, Stefan</h6>
+              <ul>
+                <li>
+                  <a href="instructor-dashboard.html"><span><i class="fa-light fa-gauge-high"></i></span>Dashboard</a>
+                </li>
+                <li>
+                  <a href="instructor-profile.html"><span><i class="fa-light fa-id-badge"></i></span>My Profile</a>
+                </li>
+                <li>
+                  <a href="instructor-analytics.html"><span><i class="fa-light fa-chart-line"></i></span>Analytics</a>
+                </li>
+                <li>
+                  <a href="instructor-enrolled-courses.html"><span><i class="fa-light fa-book-reader"></i></span>Enrolled Courses</a>
+                </li>
+                <li>
+                  <a href="instructor-wishlist.html"><span><i class="fa-light fa-heart"></i></span>Wishlist</a>
+                </li>
+                <li>
+                  <a href="instructor-reviews.html"><span><i class="fa-light fa-comment-dots"></i></span>Reviews</a>
+                </li>
+                <li>
+                  <a href="instructor-purchase-history.html"><span><i class="fa-light fa-receipt"></i></span>Purchase History</a>
+                </li>
+              </ul>
+
+              <h6 class="bd-dashboard-menu-title">Instructor</h6>
+              <ul>
+                <li>
+                  <a [routerLink]="['/teacher/courses']"><span><i class="fa-light fa-chalkboard-user"></i></span>My Courses</a>
+                </li>
+                <li>
+                  <a href="instructor-announcements.html"><span><i class="fa-light fa-bullhorn"></i></span>Announcement</a>
+                </li>
+                <li>
+                  <a href="instructor-my-quiz-attempts.html"><span><i class="fa-light fa-file-lines"></i></span>My Quiz Attempts</a>
+                </li>
+                <li>
+                  <a href="instructor-assignments.html"><span><i class="fa-light fa-tasks"></i></span>Assignments</a>
+                </li>
+                <li>
+                  <a href="instructor-books.html"><span><i class="fa-light fa-book"></i></span>My Books</a>
+                </li>
+                <li>
+                  <a href="instructor-certificate.html"><span><i class="fa-light fa-award"></i></span>Certificate</a>
+                </li>
+              </ul>
+
+              <h6 class="bd-dashboard-menu-title">User</h6>
+              <ul>
+                <li>
+                  <a href="instructor-settings.html"><span><i class="fa-light fa-sliders"></i></span>Settings</a>
+                </li>
+                <li>
+                  <a href="index.html"><span><i class="fa-light fa-sign-out-alt"></i></span>Logout</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right Side: Course List -->
+          <div class="col-xl-9 col-lg-9 col-md-8">
+            <div class="bd-dashboard-inner">
+              <!-- Adjust column size and layout as needed -->
+              <div class="row gy-30">
+                <div *ngFor="let course of courses" class="col-xl-6 col-lg-6 col-md-12">
+                  <div class="bd-course-wrapper style-ten">
+                    <div class="bd-course-thumb-wrapper bd-course-thumb-style p-relative">
+                      <!-- Paid or Free Badge -->
+                      <div class="bd-course-badge">
+                        <span class="bd-circle-badge white">{{ course.coursePaid ? 'PAID' : 'FREE' }}</span>
+                      </div>
+                    <!-- Course Image -->
+                  <div class="course-image-container">
+                  <a href="#"><img [src]="course?.courseImage" alt="Course Image"></a>
+                  </div>            
+                    </div>
+                    <div class="bd-course-content primary-bg">
+                      <!-- Course Title -->
+                      <h5 class="bd-course-title underline mb-10">
+                        <a [routerLink]="['/teacher/courses', course.courseId]">{{ course.courseTitle }}</a>
+                      </h5>
+
+                      <!-- Course Metadata (Level and Category) -->
+                      <div class="course-metadata">
+                        <div class="bd-course-level mb-2">
+                          <h5 class="metadata-item">
+                            <span class="level-label">Level:</span> 
+                            <span class="metadata-value">{{ course.level || 'Not Specified' | titlecase }}</span>
+                          </h5>
+                        </div>
+                        <div class="bd-course-category">
+                          <h5 class="metadata-item">
+                            <span class="category-label">Category:</span>
+                            <span class="metadata-value">{{ course.courseCategory }}</span>
+                          </h5>
+                        </div>
+                      </div>
+
+                      <!-- Dividing Line -->
+                      <div class="bd-course-full-border"></div>
+
+                      <!-- Course Actions -->
+                      <div class="btn-wrap d-flex align-items-center justify-content-between">
+                        <div class="bd-course-actions d-flex align-items-center gap-10">
+                          <!-- Delete Button -->
+                          <button class="delete-btn" (click)="deleteCourse(course.courseId)" title="Delete course">
+                            Delete
+                          </button>
+                          <!-- View Course Button -->
+                          <div class="bd-course-btn">
+                            <a class="bd-text-btn" [routerLink]="['/teacher/courses', course.courseId]">
+                              View Details
+                              <span class="box-icon">
+                                <i class="fa-regular fa-arrow-right-long first-icon"></i>
+                                <i class="fa-regular fa-arrow-right-long second-icon"></i>
+                              </span>
+                            </a>
+                          </div>
+                        </div>
+
+                        <!-- Number of Lessons and Students -->
+                        <div class="bd-course-content-bottom d-flex align-items-center">
+                          <div class="bd-course-lesson has-separator">
+                            <span><i class="fa-light fa-clock"></i> Lessons</span>
+                          </div>
+                          <div class="bd-course-lesson">
+                            <span><i class="fa-sharp fa-solid fa-list"></i>  Students</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End Enrolled Courses Area -->
+</main>
