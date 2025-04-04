@@ -1,8 +1,11 @@
 package com.codingfactory.course_management.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "teachers")
@@ -16,6 +19,10 @@ public class Teacher {
         @Column(name = "teacher_id") // Keeps the database column name consistent
         private Long teacherId;  // Use camelCase in Java
 
+
+        @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @JsonIgnore // ⭐ Add this to break the loop
+        private Set<Course> courses;
 
         @Column(nullable = false)
         @NotBlank(message = "Name cannot be empty")
@@ -50,5 +57,13 @@ public class Teacher {
 
         public void setSpeciality(String speciality) {
                 this.speciality = speciality;
+        }
+
+        public Set<Course> getCourses() {
+                return courses;
+        }
+
+        public void setCourses(Set<Course> courses) {
+                this.courses = courses;
         }
 }

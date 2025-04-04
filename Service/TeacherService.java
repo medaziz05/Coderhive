@@ -5,6 +5,8 @@ import com.codingfactory.course_management.Repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class TeacherService {
 
@@ -17,10 +19,8 @@ public class TeacherService {
     }
 
     // ✅ Fetch a teacher by `teacher_id`
-    public Teacher getTeacherById(Long teacherId) {
-        return teacherRepository.findById(teacherId)
-                .orElseThrow(() -> new RuntimeException("Teacher not found"));
+    public Optional<Teacher> getTeacherById(Long teacherId) {
+        return teacherRepository.findById(teacherId);
     }
-
 
 }

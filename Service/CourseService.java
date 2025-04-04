@@ -1,15 +1,30 @@
 package com.codingfactory.course_management.Service;
 
-import com.codingfactory.course_management.DTOS.CourseDTO;
-import com.codingfactory.course_management.Repository.StudentRepository;
+import com.codingfactory.course_management.DTOS.*;
+import com.codingfactory.course_management.Repository.ChapterRepository;
 import com.codingfactory.course_management.Repository.TeacherRepository;
+import com.codingfactory.course_management.configuration.ResourceNotFoundException;
+import com.codingfactory.course_management.entity.ChapterAttachment;
 import com.codingfactory.course_management.entity.Course;
-import com.codingfactory.course_management.Repository.CourseRepository;
 import com.codingfactory.course_management.entity.Teacher;
+import com.codingfactory.course_management.Repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import com.codingfactory.course_management.entity.Chapter;  // Ensure that this import is present
 
+import com.codingfactory.course_management.DTOS.ChapterListDTO;  // Import for ChapterListDTO
+import com.codingfactory.course_management.DTOS.ChapterDetailsDTO;  // Import for ChapterDetailsDTO
+import com.codingfactory.course_management.DTOS.AttachmentDTO;  // Im
+
+
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -19,132 +34,242 @@ import java.util.stream.Collectors;
 public class CourseService {
 
     @Autowired
-    private CourseRepository courseRepository;
+    private ChapterRepository chapterRepository;
 
     @Autowired
-    private StudentRepository studentRepository;
-
+    private CourseRepository courseRepository;
     @Autowired
     private TeacherRepository teacherRepository;
 
+    private ChapterService chapterService;
+
+    private final FileStorageService fileStorageService;
+    private final TeacherService teacherService;
+
+    @Value("${upload.path}")
+    private String uploadDir;
+
+    @Value("${api.base.url}")
+    private String apiBaseUrl;
+
+    @Autowired
+    public CourseService(CourseRepository courseRepository, TeacherRepository teacherRepository, ChapterRepository chapterRepository, ChapterService chapterService, FileStorageService fileStorageService, TeacherService teacherService) {
+        this.courseRepository = courseRepository;
+        this.teacherRepository = teacherRepository;
+        this.chapterRepository = chapterRepository;
+        this.chapterService = chapterService;
+        this.fileStorageService = fileStorageService;
+        this.teacherService = teacherService;
+    }
 
 
-    // ✅ Create a new course
-    public Course createCourse(Course course) {
-        Teacher teacher = teacherRepository.findById(1L) // Fetch teacher with ID 1
-                .orElseThrow(() -> new RuntimeException("Teacher with ID 1 not found")); // If not found, throw an error
+    @Transactional
+    public Course addCourse(CourseRequestDTO courseRequestDTO, MultipartFile courseImage) {
+        Teacher teacher = teacherRepository.findById(1L)
+                .orElseThrow(() -> new RuntimeException("Teacher not found"));
 
-        course.setTeacher(teacher);  // Associate the teacher with the course
+        // Create a new Course object and set its attributes
+        Course course = new Course();
+        course.setCourseTitle(courseRequestDTO.getCourseTitle());
+        course.setCourseCategory(courseRequestDTO.getCourseCategory());
+        course.setCourseDescription(courseRequestDTO.getCourseDescription());
+        course.setCoursePaid(courseRequestDTO.isCoursePaid());
+        course.setLevel(courseRequestDTO.getLevel());
 
-        // Set default image if not provided
-        if (course.getCourseImage() == null || course.getCourseImage().isEmpty()) {
-            course.setCourseImage("/uploads/default-course.png");
+        // Handle image upload if the image is provided
+        if (courseImage != null) {
+            // Generate a unique filename using the current timestamp and original filename
+            String fileName = System.currentTimeMillis() + "_" + courseImage.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir, fileName);
+
+            // Save the image file to the server
+            try {
+                Files.copy(courseImage.getInputStream(), filePath);
+            } catch (IOException e) {
+                throw new RuntimeException("Error saving image", e);
+            }
+
+            // Store the relative path to the image (for serving via static resources)
+            course.setCourseImage(apiBaseUrl + "/uploads/" + fileName);
         }
 
-        return courseRepository.save(course);  // Save and return the course
+        // Associate teacher, set created/updated timestamps
+        course.setTeacher(teacher);
+        course.setCourseCreatedAt(LocalDateTime.now());
+        course.setCourseUpdatedAt(LocalDateTime.now());
+
+        // Save the course and return it
+        return courseRepository.save(course);
     }
 
 
-    public List<CourseDTO> getAllCourses() {
-        List<Course> courses = courseRepository.findAll();
-        return courses.stream().map(course -> {
-            CourseDTO dto = new CourseDTO();
-            // Course basic info
-            dto.setCourseId(course.getCourseId());
-            dto.setCourseTitle(course.getCourseTitle());
-            dto.setCourseCategory(course.getCourseCategory());
-            dto.setCourseDescription(course.getCourseDescription());
-            dto.setCoursePaid(course.isCoursePaid());
-            dto.setLevel(course.getLevel());
-            dto.setCoursePrice(course.getCoursePrice());
-            dto.setCourseImage(course.getCourseImage());
 
-            // Timestamps
-            dto.setCourseCreatedAt(course.getCourseCreatedAt());
-            dto.setCourseUpdatedAt(course.getCourseUpdatedAt());
+    public CourseDetailsDTO getCourseById(Long courseId) {
+        Optional<Course> course = courseRepository.findCourseWithDetails(courseId);
+        if (course.isPresent()) {
+            Course c = course.get();
 
-            // Teacher info
-            Teacher teacher = course.getTeacher();
-            dto.setTeacherId(teacher.getTeacherId());
-            dto.setTeacherName(teacher.getName());
-            dto.setTeacherSpeciality(teacher.getSpeciality());
-
-            return dto;
-        }).collect(Collectors.toList());
+            // Convert the course entity to CourseDetailsDTO by passing individual values
+            return new CourseDetailsDTO(
+                    c.getCourseId(),
+                    c.getCourseTitle(),
+                    c.getCourseDescription(),
+                    c.getCourseCategory(),
+                    c.isCoursePaid(),
+                    c.getLevel().name(), // Assuming level is an enum
+                    c.getCourseImage(),
+                    c.getCourseCreatedAt(),
+                    c.getCourseUpdatedAt(),
+                    new TeacherSimpleDTO(c.getTeacher().getTeacherId(), c.getTeacher().getName()), // Convert Teacher to DTO
+                    c.getChapters().stream()
+                            .map(chapter -> new ChapterListDTO(chapter.getChapterId(), chapter.getChapterTitle(), chapter.getChapterOrder())) // Convert chapters to DTO
+                            .collect(Collectors.toList())
+            );
+        } else {
+            throw new ResourceNotFoundException("Course not found with id: " + courseId);
+        }
     }
-
-
-    public CourseDTO getCourseById(Long courseId) {
-        Course course = courseRepository.findById(courseId)
+    // ✅ Update course (excluding teacher and timestamps)
+    @Transactional
+    public CourseDetailsDTO updateCourse(Long id, CourseRequestDTO updatedCourse, MultipartFile courseImage) {
+        // Fetch the course from the database
+        Course existingCourse = courseRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
 
-        // Convert Course entity to CourseDTO
-        CourseDTO dto = new CourseDTO();
-        dto.setCourseId(course.getCourseId());
-        dto.setCourseTitle(course.getCourseTitle());
-        dto.setCourseCategory(course.getCourseCategory());
-        dto.setCourseDescription(course.getCourseDescription());
-        dto.setCoursePaid(course.isCoursePaid());
-        dto.setLevel(course.getLevel());
-        dto.setCoursePrice(course.getCoursePrice());
-        dto.setCourseImage(course.getCourseImage());
-        dto.setCourseCreatedAt(course.getCourseCreatedAt());
-        dto.setCourseUpdatedAt(course.getCourseUpdatedAt());
-        Teacher teacher = course.getTeacher();
-        dto.setTeacherId(teacher.getTeacherId());
-        dto.setTeacherName(teacher.getName());
-        dto.setTeacherSpeciality(teacher.getSpeciality());
+        // Update course fields
+        existingCourse.setCourseTitle(updatedCourse.getCourseTitle());
+        existingCourse.setCourseCategory(updatedCourse.getCourseCategory());
+        existingCourse.setCourseDescription(updatedCourse.getCourseDescription());
+        existingCourse.setCoursePaid(updatedCourse.isCoursePaid());
+        existingCourse.setLevel(updatedCourse.getLevel());
 
+        // If an image is provided, save it and update the image path
+        if (courseImage != null) {
+            String fileName = System.currentTimeMillis() + "_" + courseImage.getOriginalFilename();
+            Path filePath = Paths.get(uploadDir, fileName);
 
+            try {
+                // Save the image file to the server
+                Files.copy(courseImage.getInputStream(), filePath);
+            } catch (IOException e) {
+                throw new RuntimeException("Error saving image", e);
+            }
 
-        return dto;
-    }
+            // Update the image path
+            existingCourse.setCourseImage(apiBaseUrl + "/uploads/" + fileName);
+        }
 
-    public CourseDTO updateCourseById(Long courseId, Course courseDetails) {
-        Course existingCourse = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-
-        // Update fields
-        existingCourse.setCourseTitle(courseDetails.getCourseTitle());
-        existingCourse.setCourseCategory(courseDetails.getCourseCategory());
-        existingCourse.setCourseDescription(courseDetails.getCourseDescription());
-        existingCourse.setLevel(courseDetails.getLevel());
-        existingCourse.setCoursePaid(courseDetails.isCoursePaid());
-        existingCourse.setCourseImage(courseDetails.getCourseImage());
-        existingCourse.setCoursePrice(courseDetails.getCoursePrice());
+        // Set the updated time for the course
         existingCourse.setCourseUpdatedAt(LocalDateTime.now());
+        courseRepository.save(existingCourse);
 
-        Course updatedCourse = courseRepository.save(existingCourse);
 
-        // Convert the updated Course entity to CourseDTO
-        CourseDTO dto = new CourseDTO();
-        dto.setCourseId(updatedCourse.getCourseId());
-        dto.setCourseTitle(updatedCourse.getCourseTitle());
-        dto.setCourseCategory(updatedCourse.getCourseCategory());
-        dto.setCourseDescription(updatedCourse.getCourseDescription());
-        dto.setCoursePaid(updatedCourse.isCoursePaid());
-        dto.setLevel(updatedCourse.getLevel());
-        dto.setCoursePrice(updatedCourse.getCoursePrice());
-        dto.setCourseImage(updatedCourse.getCourseImage());
-        dto.setCourseCreatedAt(updatedCourse.getCourseCreatedAt());
-        dto.setCourseUpdatedAt(updatedCourse.getCourseUpdatedAt());
+        return new CourseDetailsDTO(
+                existingCourse.getCourseId(),
+                existingCourse.getCourseTitle(),
+                existingCourse.getCourseDescription(),
+                existingCourse.getCourseCategory(),
+                existingCourse.isCoursePaid(),
+                existingCourse.getLevel().name(), // Assuming level is an Enum
+                existingCourse.getCourseImage(),
+                existingCourse.getCourseCreatedAt(),
+                existingCourse.getCourseUpdatedAt(),
+                new TeacherSimpleDTO(existingCourse.getTeacher().getTeacherId(), existingCourse.getTeacher().getName()), // Convert Teacher to DTO
+                existingCourse.getChapters().stream()
+                        .map(chapter -> new ChapterListDTO(chapter.getChapterId(), chapter.getChapterTitle(), chapter.getChapterOrder())) // Convert chapters to DTO
+                        .collect(Collectors.toList())
+        );
+    }
 
-        // Add teacher details
-        Teacher teacher = updatedCourse.getTeacher();
-        dto.setTeacherId(teacher.getTeacherId());
-        dto.setTeacherName(teacher.getName());
-        dto.setTeacherSpeciality(teacher.getSpeciality());
 
+
+
+    private CourseDTO convertToDTO(Course course) {
+        // Ensure you're passing the course entity to the DTO constructor
+        return new CourseDTO(course);
+    }
+
+    public List<ChapterListDTO> getChaptersByCourseId(Long courseId) {
+        return chapterRepository.findByCourse_CourseId(courseId).stream()
+                .map(chapter -> new ChapterListDTO(
+                        chapter.getChapterId(),
+                        chapter.getChapterTitle(),
+                        chapter.getChapterOrder()
+                ))
+                .collect(Collectors.toList());
+    }
+
+
+    private CourseDetailsDTO convertToDetailsDTO(Course course) {
+        // Create TeacherSimpleDTO from teacher (assuming course.getTeacher() is not null)
+        TeacherSimpleDTO teacherDTO = new TeacherSimpleDTO(course.getTeacher().getTeacherId(), course.getTeacher().getName());
+
+        // Convert the List of Chapters without attachments
+        List<ChapterListDTO> chapterListDTO = course.getChapters().stream()
+                .map(chapter -> new ChapterListDTO(
+                        chapter.getChapterId(),
+                        chapter.getChapterTitle(),
+                        chapter.getChapterOrder()))
+                .collect(Collectors.toList()); // 'collect' is fine, the suggestion was for converting to a toList()
+
+        // Now return CourseDetailsDTO with all individual fields, not the entire course object
+        return new CourseDetailsDTO(
+                course.getCourseId(),
+                course.getCourseTitle(),
+                course.getCourseDescription(),
+                course.getCourseCategory(),
+                course.isCoursePaid(),
+                course.getLevel().name(), // Assuming 'level' is an Enum, otherwise adjust
+                course.getCourseImage(),
+                course.getCourseCreatedAt(),
+                course.getCourseUpdatedAt(),
+                teacherDTO,
+                chapterListDTO
+        );
+    }
+
+    public ChapterDetailsDTO getChapterDetailsById(Long chapterId) {
+        Chapter chapter = chapterRepository.findByIdWithAttachments(chapterId)
+                .orElseThrow(() -> new RuntimeException("Chapter not found"));
+
+        return new ChapterDetailsDTO(
+                chapter.getChapterId(),
+                chapter.getChapterTitle(),
+                chapter.getChapterDescription(),
+                chapter.getChapterOrder(),
+                chapter.getChapterCreatedAt(),
+                chapter.getChapterUpdatedAt(),
+                chapter.getCourse().getCourseId(),
+                chapter.getAttachments().stream()
+                        .map(this::convertAttachmentToDTO)
+                        .collect(Collectors.toList())
+        );
+    }
+
+
+    @Transactional(readOnly = true)
+    public CourseDetailsDTO getCourseDetailsById(Long id) {
+        Course course = courseRepository.findCourseWithDetails(id)
+                .orElseThrow(() -> new RuntimeException("Course not found"));
+
+        return convertToDetailsDTO(course);
+    }
+    // ✅ Get all courses
+    public List<CourseListDTO> getAllCourses() {
+        return courseRepository.findAllCourseListItems();
+    }
+
+    // ✅ Delete course
+    public void deleteCourse(Long id) {
+        courseRepository.deleteById(id);
+    }
+
+    // ✅ convert chapter attachment to dto
+    public AttachmentDTO convertAttachmentToDTO(ChapterAttachment attachment) {
+        AttachmentDTO dto = new AttachmentDTO();
+        dto.setFileName(attachment.getFileName());
+        dto.setFileType(attachment.getFileType());
+        dto.setUploadedAt(attachment.getUploadedAt());
         return dto;
     }
-
-
-    public void deleteCourse(Long courseId) {
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new RuntimeException("Course not found"));
-        courseRepository.delete(course);
-    }
-
-
-
 }

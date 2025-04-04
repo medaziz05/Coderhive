@@ -8,6 +8,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
 @Service
@@ -50,6 +51,14 @@ public class StudentService {
         } else {
             throw new RuntimeException("Student not found with ID: " + studentId);
         }
+    }
+
+    public void enrollStudentInCourse(Student student, Course course) throws AccessDeniedException {
+        if (course.isCoursePaid() && !student.isStudentMembership()) {
+            throw new AccessDeniedException("Paid course requires active membership");
+        }
+        student.getCourses().add(course);
+        studentRepository.save(student);
     }
 
 

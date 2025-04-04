@@ -1,7 +1,12 @@
 package com.codingfactory.course_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "chapters")
@@ -18,30 +23,54 @@ public class Chapter {
         @Column(name = "chapter_description", columnDefinition = "TEXT")
         private String chapterDescription;
 
-        @ManyToOne(fetch = FetchType.LAZY)
+        @ManyToOne(fetch = FetchType.EAGER)
         @JoinColumn(name = "course_id", nullable = false)
+        @JsonIgnoreProperties({"chapters", "students", "teacher"})
         private Course course;
-
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "student_id", nullable = false)
-        private Student student;
 
         @Column(name = "chapter_locked", nullable = false)
         private boolean chapterLocked;
-
-        @Column(name = "chapter_content", columnDefinition = "TEXT")
-        private String chapterContent;
 
         @Column(name = "chapter_order", nullable = false)
         private Integer chapterOrder;
 
         @Column(name = "chapter_createdAt", nullable = false, updatable = false)
-        private LocalDateTime chapterCreatedAt = LocalDateTime.now();
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+        private LocalDateTime chapterCreatedAt;
 
         @Column(name = "chapter_updatedAt", nullable = false)
-        private LocalDateTime chapterUpdatedAt = LocalDateTime.now();
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS")
+        private LocalDateTime chapterUpdatedAt;
 
 
+        @OneToMany(mappedBy = "chapter", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+        @JsonManagedReference // Add this annotation to manage serialization of attachments
+        private List<ChapterAttachment> attachments = new ArrayList<>();
+        // Constructor to initialize attachments list
+        public Chapter() {
+                this.attachments = new ArrayList<>();
+        }
+
+        // Helper method to add attachment
+        public void addAttachment(ChapterAttachment attachment) {
+                attachments.add(attachment);
+                attachment.setChapter(this);
+        }
+
+        // Lifecycle Callbacks
+        @PrePersist
+        protected void onCreate() {
+                chapterCreatedAt = LocalDateTime.now();
+                chapterUpdatedAt = chapterCreatedAt;
+        }
+
+
+        @PreUpdate
+        protected void onUpdate() {
+                chapterUpdatedAt = LocalDateTime.now();
+        }
+
+        // Getters and Setters
         public Long getChapterId() {
                 return chapterId;
         }
@@ -74,28 +103,12 @@ public class Chapter {
                 this.course = course;
         }
 
-        public Student getStudent() {
-                return student;
-        }
-
-        public void setStudent(Student student) {
-                this.student = student;
-        }
-
         public boolean isChapterLocked() {
                 return chapterLocked;
         }
 
         public void setChapterLocked(boolean chapterLocked) {
                 this.chapterLocked = chapterLocked;
-        }
-
-        public String getChapterContent() {
-                return chapterContent;
-        }
-
-        public void setChapterContent(String chapterContent) {
-                this.chapterContent = chapterContent;
         }
 
         public Integer getChapterOrder() {
@@ -122,8 +135,12 @@ public class Chapter {
                 this.chapterUpdatedAt = chapterUpdatedAt;
         }
 
-        @PreUpdate
-        public void preUpdate() {
-                this.chapterUpdatedAt = LocalDateTime.now();
+        public List<ChapterAttachment> getAttachments() {
+                return attachments;
         }
+
+        public void setAttachments(List<ChapterAttachment> attachments) {
+                this.attachments = attachments;
+        }
+
 }

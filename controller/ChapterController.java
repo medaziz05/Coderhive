@@ -1,69 +1,116 @@
 package com.codingfactory.course_management.controller;
 
-import com.codingfactory.course_management.entity.Chapter;
+import com.codingfactory.course_management.DTOS.*;
 import com.codingfactory.course_management.Service.ChapterService;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+@Slf4j
 @RestController
-@RequestMapping("/api/chapters")
-@Tag(name = "Chapters", description = "Manage course chapters")
-@CrossOrigin(origins = "http://localhost:4200") // Allow frontend requests
+@RequestMapping("/api/courses/{courseId}/chapters")
+@Tag(name = "Chapters", description = "Manage chapters")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ChapterController {
 
     private final ChapterService chapterService;
-
-    @Autowired
-    public ChapterController(ChapterService chapterService) {
+    public ChapterController(@Lazy ChapterService chapterService) {
         this.chapterService = chapterService;
     }
 
-    // ✅ Add a new chapter
-    @PostMapping("/add")
-    @Operation(summary = "Add a new chapter", description = "Creates a new chapter and returns the created entity.")
-    public ResponseEntity<Chapter> addChapter(@RequestBody Chapter chapter) {
-        Chapter savedChapter = chapterService.addChapter(chapter);
-        return ResponseEntity.ok(savedChapter);
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<String> handleIOException(IOException ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("File processing error: " + ex.getMessage());
     }
 
-    // ✅ Update an existing chapter
-    @PutMapping("/update/{chapterId}")
-    @Operation(summary = "Update an existing chapter", description = "Updates the chapter with the provided ID.")
-    public ResponseEntity<Chapter> updateChapter(@PathVariable Long chapterId, @RequestBody Chapter updatedChapter) {
-        Chapter updated = chapterService.updateChapter(chapterId, updatedChapter);
-        return ResponseEntity.ok(updated);
-    }
+    // ✅ Add Chapter
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addChapter(
+            @PathVariable Long courseId,
+            @Valid @RequestPart("chapterRequest") ChapterRequestDTO chapterRequestDTO,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) {
 
-    // ✅ Delete a chapter
-    @DeleteMapping("/delete/{chapterId}")
-    @Operation(summary = "Delete a chapter", description = "Deletes a chapter by its ID.")
-    public ResponseEntity<?> deleteChapter(@PathVariable Long chapterId) {
         try {
-            chapterService.deleteChapter(chapterId);
-            return ResponseEntity.ok().body("✅ Chapter deleted successfully.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body("❌ " + e.getMessage());
+            ChapterDetailsDTO newChapter = chapterService.createChapterWithFiles(courseId, chapterRequestDTO, files);
+            return new ResponseEntity<>(newChapter, HttpStatus.CREATED);
+        } catch (IllegalArgumentException ex) {
+            return ResponseEntity.badRequest().body(ex.getMessage());
+        } catch (IOException ex) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("File processing error: " + ex.getMessage());
+        } catch (Exception ex) {
+            return ResponseEntity.internalServerError()
+                    .body("Server error: " + ex.getMessage());
         }
     }
 
-    // ✅ Get all chapters by course ID
-    @GetMapping("/course/{courseId}")
-    @Operation(summary = "Get all chapters for a course", description = "Fetches all chapters belonging to a course.")
-    public ResponseEntity<List<Chapter>> getChaptersByCourse(@PathVariable Long courseId) {
-        List<Chapter> chapters = chapterService.getChaptersByCourse(courseId);
-        return ResponseEntity.ok(chapters);
+
+    // ✅ Get Chapter by ID
+    @GetMapping("/{chapterId}")
+    public ResponseEntity<ChapterDetailsDTO> getChapterById(
+            @PathVariable Long courseId,
+            @PathVariable Long chapterId) {
+        try {
+            ChapterDetailsDTO chapter = chapterService.getChapterById(chapterId);
+            return ResponseEntity.ok(chapter);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 
-    // ✅ Get a single chapter by its ID
-    @GetMapping("/{chapterId}")
-    @Operation(summary = "Get a chapter by ID", description = "Fetches a specific chapter by its ID.")
-    public ResponseEntity<Chapter> getChapterById(@PathVariable Long chapterId) {
-        Chapter chapter = chapterService.getChapterById(chapterId);
-        return ResponseEntity.ok(chapter);
+
+    // ✅ Update Chapter
+    @PutMapping("/{chapterId}")
+    public ResponseEntity<ChapterDetailsDTO> updateChapter(
+            @PathVariable Long courseId,
+            @PathVariable Long chapterId,
+            @RequestPart("chapterRequest") ChapterRequestDTO updatedChapter,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files) throws IOException {
+
+        ChapterDetailsDTO updatedChapterDetails = chapterService.updateChapterWithFiles(chapterId, updatedChapter, files);
+        return new ResponseEntity<>(updatedChapterDetails, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{chapterId}/attachments/{filePath}")
+    public ResponseEntity<Void> removeAttachment(
+            @PathVariable Long courseId,
+            @PathVariable Long chapterId,
+            @PathVariable String filePath) {
+
+        log.info("DELETE ATTACHMENT REQUEST - Course: {}, Chapter: {}, File: {}",
+                courseId, chapterId, filePath);
+
+        try {
+            String decodedFilePath = URLDecoder.decode(filePath, StandardCharsets.UTF_8);
+            log.debug("Decoded file path: {}", decodedFilePath);
+            chapterService.removeAttachment(chapterId, decodedFilePath);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            log.error("Attachment deletion failed", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Deletion failed");
+        }
+    }
+    // ✅ Delete Chapter
+    @DeleteMapping("/{chapterId}")
+    public ResponseEntity<Void> deleteChapter(@PathVariable Long courseId, @PathVariable Long chapterId) {
+        try {
+            chapterService.deleteChapter(chapterId);
+            return ResponseEntity.noContent().build(); // 204 No content
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

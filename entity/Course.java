@@ -2,6 +2,7 @@ package com.codingfactory.course_management.entity;
 
 import com.codingfactory.course_management.Enumeration.courselvl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -23,6 +24,7 @@ public class Course {
 
     @ManyToOne
     @JoinColumn(name = "teacher_id", nullable = false)
+    @JsonIgnoreProperties({"courses"})
     private Teacher teacher;
 
     @Column(name = "course_createdAt", nullable = false, updatable = false)
@@ -46,13 +48,13 @@ public class Course {
     @Column(name = "course_image", columnDefinition = "LONGTEXT")
     private String courseImage;
 
-    @Column(name = "course_price", nullable = false)
-    private double coursePrice;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore
+    // Add to your Course.java entity
+    @OneToMany(mappedBy = "course",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"course", "attachments"})
     private Set<Chapter> chapters;
-
 
 
     @ManyToMany
@@ -61,13 +63,15 @@ public class Course {
             joinColumns = @JoinColumn(name = "course_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    private Set<Student> students; // ✅ Many-to-many relationship with Student
+
+    @JsonIgnore
+    private Set<Student> students;
 
     public Course() {}
 
     public Course(Long courseId, String courseTitle, String courseCategory, Teacher teacher,
                   LocalDateTime courseCreatedAt, LocalDateTime courseUpdatedAt, String courseDescription,
-                  boolean coursePaid, courselvl level, String courseImage, double coursePrice) {
+                  boolean coursePaid, courselvl level, String courseImage) {
         this.courseId = courseId;
         this.courseTitle = courseTitle;
         this.courseCategory = courseCategory;
@@ -78,7 +82,6 @@ public class Course {
         this.coursePaid = coursePaid;
         this.level = level;
         this.courseImage = courseImage;
-        this.coursePrice = coursePrice;
     }
 
     public Long getCourseId() {
@@ -161,13 +164,6 @@ public class Course {
         this.courseImage = courseImage;
     }
 
-    public double getCoursePrice() {
-        return coursePrice;
-    }
-
-    public void setCoursePrice(double coursePrice) {
-        this.coursePrice = coursePrice;
-    }
 
     public Set<Chapter> getChapters() {
         return chapters;
