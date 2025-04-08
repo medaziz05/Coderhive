@@ -1,0 +1,24 @@
+server:
+  port: 8222
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: trainingprogram-service
+          uri: lb:http://TRAININGPROGRAM-SERVICE
+          predicates:
+            - Path=/api/v1/training/**
+        - id: trainingenrollment-service
+          uri: lb:http://TRAININGENROLLMENT-SERVICE
+          predicates:
+            - Path=/api/v1/enrollment/**
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
