@@ -1,10 +1,9 @@
 package com.pi.trainingenrollment.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import jakarta.persistence.*;
 
 @Entity
 @Data
@@ -15,7 +14,10 @@ public class Participant {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int userId;
+    @ManyToOne(fetch = FetchType.EAGER) // ✅ Relation dynamique
+    @JoinColumn(name = "user_id") // nom de la colonne en base
+    private User user;
+
     private int trainingProgramId;
 
     @Enumerated(EnumType.STRING)

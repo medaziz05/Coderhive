@@ -33,6 +33,6 @@ public class IAPredictionController {
             System.err.println("Erreur appel Flask : " + e.getMessage());
         }
 
-        return false; // valeur par défaut si erreur
+        return false;
     }
 }

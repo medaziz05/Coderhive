@@ -1,55 +1,91 @@
 package com.pi.trainingenrollment.service;
 
 import com.pi.trainingenrollment.entities.Participant;
+import com.pi.trainingenrollment.entities.User;
 import com.pi.trainingenrollment.repository.ParticipantRepository;
+import com.pi.trainingenrollment.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
 public class ParticipantService {
 
     private final ParticipantRepository participantRepository;
+    private final UserRepository userRepository;
+    private final JavaMailSender mailSender;
 
-    // Get all participants
     public List<Participant> getAllParticipants() {
         return participantRepository.findAll();
     }
 
-    // Get participant by ID
     public Participant getParticipantById(int id) {
         return participantRepository.findById(id).orElse(null);
     }
 
-    // Enroll a participant in a training program
     public Participant enrollParticipant(int userId, int trainingProgramId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Utilisateur non trouvé avec ID: " + userId));
+
         Participant participant = new Participant();
-        participant.setUserId(userId);
+        participant.setUser(user);
         participant.setTrainingProgramId(trainingProgramId);
         participant.setStatus(Participant.Status.ENROLLED);
-        return participantRepository.save(participant);
+
+        Participant savedParticipant = participantRepository.save(participant);
+
+        // ✅ Envoi de l'email après l'enregistrement
+        sendConfirmationEmail(user, savedParticipant);
+
+        return savedParticipant;
     }
 
-    // Update participant status
     public Participant updateParticipantStatus(int id, Participant.Status status, double grade) {
-        Optional<Participant> optionalParticipant = participantRepository.findById(id);
-        if (optionalParticipant.isPresent()) {
-            Participant participant = optionalParticipant.get();
+        return participantRepository.findById(id).map(participant -> {
             participant.setStatus(status);
-            if (status == Participant.Status.COMPLETED ) {
+            if (status == Participant.Status.COMPLETED) {
                 participant.setGrade(grade);
             }
             return participantRepository.save(participant);
-        } else {
-            throw new RuntimeException("Participant not found");
-        }
+        }).orElseThrow(() -> new RuntimeException("Participant non trouvé"));
     }
 
-    // Delete participant
     public void deleteParticipant(int id) {
         participantRepository.deleteById(id);
     }
+
+    private void sendConfirmationEmail(User user, Participant participant) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setTo(user.getEmail());
+            helper.setSubject("📩 Confirmation d'inscription à une formation");
+
+            String htmlContent = "<html>" +
+                    "<body style='font-family: Arial, sans-serif;'>" +
+                    "<h2 style='color: #2c3e50;'>Bonjour " + user.getUsername() + ",</h2>" +
+                    "<p>👏 Vous avez été inscrit avec succès à la formation <strong>(ID: " + participant.getTrainingProgramId() + ")</strong>.</p>" +
+                    "<p><strong>Statut :</strong> <span style='color: green;'>" + participant.getStatus() + "</span></p>" +
+                    "<br/>" +
+                    "<p>Merci de votre participation et à bientôt !</p>" +
+                    "<hr/>" +
+                    "<p style='font-size: 12px; color: #999;'>Cordialement,<br/>L'équipe Formation</p>" +
+                    "</body></html>";
+
+            helper.setText(htmlContent, true); // true => HTML
+
+            mailSender.send(message);
+            System.out.println("✅ Email de confirmation envoyé à " + user.getEmail());
+        } catch (MessagingException e) {
+            System.err.println("❌ Échec d'envoi de l'email: " + e.getMessage());
+        }
+    }
+
 }

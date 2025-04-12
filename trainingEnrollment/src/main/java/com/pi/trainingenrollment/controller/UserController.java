@@ -6,6 +6,8 @@ import com.pi.trainingenrollment.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/enrollment/users")
 
@@ -27,8 +29,20 @@ public class UserController {
         return userService.loginOrRegister(email); // tu peux renommer si besoin
     }
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userService.getById(id).orElse(null);
+
+
+    @GetMapping("/all")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
+
+
+
+
+
+
+
+
 }
+
+
