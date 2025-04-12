@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ParticipantHistoryDTO {
     private int participantId;
-    private String trainingTitle;   // depuis trainingprogram-service
+    private String trainingTitle;
     private int grade;
-    private String badge;
     private String status;
+    private String badge;
     private boolean cheated;
 }

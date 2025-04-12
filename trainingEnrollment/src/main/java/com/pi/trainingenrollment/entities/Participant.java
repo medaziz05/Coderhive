@@ -17,7 +17,7 @@ public class Participant {
     @ManyToOne(fetch = FetchType.EAGER) // ✅ Relation dynamique
     @JoinColumn(name = "user_id") // nom de la colonne en base
     private User user;
-
+    private boolean cheated;
     private int trainingProgramId;
 
     @Enumerated(EnumType.STRING)

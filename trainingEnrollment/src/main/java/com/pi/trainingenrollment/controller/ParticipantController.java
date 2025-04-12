@@ -2,19 +2,13 @@ package com.pi.trainingenrollment.controller;
 
 import com.pi.trainingenrollment.client.TrainingProgramClient;
 import com.pi.trainingenrollment.entities.Participant;
-import com.pi.trainingenrollment.entities.ParticipantHistoryDTO;
-import com.pi.trainingenrollment.model.TrainingProgram;
-import com.pi.trainingenrollment.repository.ParticipantRepository;
 import com.pi.trainingenrollment.service.ParticipantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,9 +17,6 @@ import java.util.List;
 public class ParticipantController {
 
     private final ParticipantService participantService;
-    @Autowired
-    private ParticipantRepository participantRepository;
-
     @Autowired
     private TrainingProgramClient trainingProgramClient;
 
@@ -57,23 +48,5 @@ public class ParticipantController {
     @GetMapping("/{id}")
     public ResponseEntity<Participant> getParticipantById(@PathVariable int id) {
         return ResponseEntity.ok(participantService.getParticipantById(id));
-    }
-    @GetMapping("/history/{userId}")
-    public List<ParticipantHistoryDTO> getHistory(@PathVariable int userId) {
-        List<Participant> participants = participantRepository.findByUserId(userId);
-        List<ParticipantHistoryDTO> history = new ArrayList<>();
-
-        for (Participant p : participants) {
-            TrainingProgram tp = trainingProgramClient.getTrainingProgramById(p.getTrainingProgramId());
-            history.add(new ParticipantHistoryDTO(
-                    p.getId(),
-                    tp.getTitle(),     // récupéré via RestTemplate !
-                    p.getGrade(),
-                    p.getStatus(),
-                    p.isCheated()
-            ));
-        }
-
-        return history;
     }
 }
