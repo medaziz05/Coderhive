@@ -53,23 +53,23 @@ private  final ParticipantRepository participantRepository;
     public ResponseEntity<Participant> getParticipantById(@PathVariable int id) {
         return ResponseEntity.ok(participantService.getParticipantById(id));
     }
+
+
     @GetMapping("/history/{userId}")
     public List<ParticipantHistoryDTO> getHistory(@PathVariable int userId) {
-        List<Participant> participants = participantRepository.findByUserId(userId);
+        List<Participant> participants = participantRepository.findByUser_Id(userId);
         List<ParticipantHistoryDTO> history = new ArrayList<>();
 
         for (Participant p : participants) {
             TrainingProgram tp = trainingProgramClient.getTrainingProgramById(p.getTrainingProgramId());
 
-            // Badge temporaire (tu peux rendre ça intelligent plus tard)
-            String badge = "En cours";
+            String badge = "En cours"; // ou badgeService.getBadge(...)
 
-            // Crée DTO avec toString pour l'enum status
             ParticipantHistoryDTO dto = new ParticipantHistoryDTO(
                     p.getId(),
                     tp.getTitle(),
                     (int) p.getGrade(),
-                    p.getStatus().toString(), // convertit l’enum en String
+                    p.getStatus().toString(),
                     badge,
                     p.isCheated()
             );
@@ -79,5 +79,6 @@ private  final ParticipantRepository participantRepository;
 
         return history;
     }
+
 
 }
