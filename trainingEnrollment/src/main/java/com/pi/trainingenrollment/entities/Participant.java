@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -24,6 +26,12 @@ public class Participant {
     private Status status;
 
     private double grade;
+    private Integer stars;
+    private String review;
+    @Column(name = "registration_date")
+    private LocalDate registrationDate;
+
+
 
     public enum Status {
         ENROLLED, COMPLETED, DROPPED

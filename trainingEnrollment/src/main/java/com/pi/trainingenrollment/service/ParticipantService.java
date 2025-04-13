@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -87,5 +88,42 @@ public class ParticipantService {
             System.err.println("❌ Échec d'envoi de l'email: " + e.getMessage());
         }
     }
+    public int calculateLearningScoreByUserId(int userId) {
+        List<Participant> participations = participantRepository.findByUser_Id(userId);
+
+        if (participations.isEmpty()) return 0;
+
+        int totalScore = 0;
+        int completed = 0;
+        int cheated = 0;
+
+        for (Participant p : participations) {
+            if ("COMPLETED".equalsIgnoreCase(p.getStatus().toString())) {
+                completed++;
+                totalScore += p.getGrade();
+            }
+            if (p.isCheated()) {
+                cheated++;
+            }
+        }
+
+        int averageGrade = completed > 0 ? totalScore / completed : 0;
+
+        int score = (int)((averageGrade * 0.6) + (completed * 10) - (cheated * 15));
+
+        return Math.max(score, 0); // pas de score négatif
+    }
+
+    public Participant enrollParticipantWithDate(int userId, int trainingProgramId, LocalDate registrationDate) {
+        Participant p = new Participant();
+        p.setUser(userRepository.findById(userId).orElseThrow());
+        p.setTrainingProgramId(trainingProgramId);
+        p.setStatus(Participant.Status.valueOf("ENROLLED"));
+        p.setGrade(0);
+        p.setRegistrationDate(registrationDate);
+        return participantRepository.save(p);
+    }
+
+
 
 }

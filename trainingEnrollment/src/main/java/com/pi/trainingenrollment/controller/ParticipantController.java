@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/enrollment")
@@ -79,6 +81,53 @@ private  final ParticipantRepository participantRepository;
 
         return history;
     }
+    @GetMapping("/score/{userId}")
+    public ResponseEntity<Integer> getLearningScore(@PathVariable int userId) {
+        int score = participantService.calculateLearningScoreByUserId(userId);
+        return ResponseEntity.ok(score);
+    }
+    @GetMapping("/recommend/{userId}")
+    public ResponseEntity<String> recommendTraining(@PathVariable int userId) {
+        List<Participant> history = participantRepository.findByUserId(userId);
+        String recommandation = "Aucune recommandation";
+
+        for (Participant p : history) {
+            if (p.getGrade() >= 85 && p.getStatus() == Participant.Status.COMPLETED) {
+                if (p.getTrainingProgramId() == 1) {
+                    recommandation = "🔥 Essayez notre formation Spring Boot Avancé !";
+                } else if (p.getTrainingProgramId() == 2) {
+                    recommandation = "🚀 Rejoignez le module Python Data Science !";
+                }
+            }
+        }
+
+        return ResponseEntity.ok(recommandation);
+    }
+
+    @PutMapping("/{id}/review")
+    public ResponseEntity<Participant> addReview(
+            @PathVariable int id,
+            @RequestParam int stars,
+            @RequestParam(required = false) String comment) {
+
+        Participant participant = participantService.getParticipantById(id);
+        participant.setStars(stars);
+        participant.setReview(comment);
+        return ResponseEntity.ok(participantRepository.save(participant));
+    }
+    @PostMapping("/register-date")
+    public Participant enrollWithDate(@RequestBody Map<String, String> payload) {
+        int userId = Integer.parseInt(payload.get("userId"));
+        int trainingProgramId = Integer.parseInt(payload.get("trainingProgramId"));
+        LocalDate registrationDate = LocalDate.parse(payload.get("registrationDate"));
+
+        return participantService.enrollParticipantWithDate(userId, trainingProgramId, registrationDate);
+    }
+
+
+
+
+
 
 
 }
