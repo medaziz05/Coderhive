@@ -10,16 +10,19 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.*;
 
-@Slf4j
+
 @Service
 public class ComplaintService implements IComplaintService {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ComplaintService.class);
 
     @Autowired
     private ComplaintRepository complaintRepository;
     private final Set<String> highPriorityKeywords = new HashSet<>(Arrays.asList(
             "urgent", "critique", "immédiat", "panne", "bloquant",
             "sécurité", "risque", "légal", "financier",
-            "production", "client important", "danger", "catastrophe"
+            "production", "client important", "danger", "catastrophe",
+            "error in course","bug in the site","bad words in forum",
+            "the payment dosn't work","the payment"
     ));
 
     private final Set<String> mediumPriorityKeywords = new HashSet<>(Arrays.asList(
@@ -31,7 +34,7 @@ public class ComplaintService implements IComplaintService {
     private final Set<String> lowPriorityKeywords = new HashSet<>(Arrays.asList(
             "information", "suggestion", "conseil", "question",
             "curiosité", "non urgent", "faible impact", "secondaire",
-            "optionnel", "exploratoire", "minimal", "trivial"
+            "optionnel", "exploratoire", "minimal", "trivial","advice","be instructor"
     ));
     private ComplaintPriority classifyComplaintPriority(Complaintts complaint) {
         // Convertir le titre et la description en minuscules pour la comparaison

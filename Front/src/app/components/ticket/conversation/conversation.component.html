@@ -1,0 +1,47 @@
+<div *ngIf="isLoading" class="loading-indicator">
+  Loading conversation...
+</div>
+
+<div *ngIf="errorMessage" class="error-message">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="!isLoading && messages.length" class="conversation-box">
+  <div class="messages">
+    <div *ngFor="let message of messages" 
+         [ngClass]="{'admin': message.senderId === 0, 'user': message.senderId !== 0}" 
+         class="message">
+      <span class="sender">{{ message.senderId === 0 ? 'Admin' : 'You' }}</span>
+      <p class="content">{{ message.content }}</p>
+    </div>
+  </div>
+
+  <!-- 🔒 Banner if conversation is closed -->
+  <div *ngIf="conversation?.closed" class="banner-closed">
+    <i class="fas fa-lock"></i> This conversation is closed. You can no longer send messages.
+  </div>
+
+  <!-- ✅ Reply only if NOT closed -->
+  <div class="input-area" *ngIf="!conversation?.closed">
+    <textarea [(ngModel)]="newMessage" 
+              placeholder="Type your message here..." 
+              (keydown.enter)="$event.preventDefault(); sendMessage()"></textarea>
+    <button (click)="sendMessage()" 
+            [disabled]="!newMessage.trim()">
+      <svg class="send-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+      </svg>
+      Send
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!isLoading && !messages.length" class="no-messages">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mx-auto mb-2" fill="none" viewBox="0 0 24 24" stroke="#a0aec0">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+  <p>No messages yet. Send your first message!</p>
+</div>

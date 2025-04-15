@@ -2,7 +2,7 @@ spring:
   application:
     name: Ticket
   datasource:
-    url: jdbc:mysql://localhost:3306/Ticket_db?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/ticketdb?createDatabaseIfNotExist=true
     username: root
     password:
   jpa:

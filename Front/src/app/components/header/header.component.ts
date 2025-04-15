@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,10 +8,29 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private router: Router,
+    public authService: AuthService
+  ) {}
 
-  // Method to check if the user is an admin
+  // Method to check if user is admin
   isAdmin(): boolean {
-    return this.authService.hasRole('admin'); // Adjust based on your role-checking logic
+    return this.authService.hasRole('admin');
+  }
+
+  // Method to check if user is logged in
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
+  }
+
+  // Logout method
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
+  // Mobile menu toggle
+  toggleMobileMenu(): void {
+    // Implement your mobile menu toggle logic here
   }
 }

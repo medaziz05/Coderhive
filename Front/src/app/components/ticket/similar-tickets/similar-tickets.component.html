@@ -1,0 +1,49 @@
+<!-- similar-tickets.component.html -->
+<div class="similar-tickets-container">
+    <h3 class="section-title">
+      <i class="fas fa-link"></i> Similar Resolved Tickets
+    </h3>
+  
+    <div *ngIf="isLoading" class="loading-indicator">
+      <div class="spinner"></div>
+      <p>Loading similar tickets...</p>
+    </div>
+  
+    <div *ngIf="errorMessage" class="error-message">
+      <i class="fas fa-exclamation-circle"></i>
+      <p>{{ errorMessage }}</p>
+      <button class="retry-btn" (click)="loadSimilarTickets()">Retry</button>
+    </div>
+  
+    <div *ngIf="!isLoading && !errorMessage &&  SimilarTicketDTO.length === 0" class="no-tickets-message">
+      <i class="fas fa-info-circle"></i>
+      <p>No similar tickets found.</p>
+    </div>
+  
+    <div *ngIf=" SimilarTicketDTO.length > 0" class="similar-tickets-list">
+      <div *ngFor="let ticket of  SimilarTicketDTO" class="similar-ticket-card">
+        <div class="ticket-header">
+          <h4 class="ticket-title">{{ ticket.title }}</h4>
+          <span class="ticket-status status-resolved">RESOLVED</span>
+        </div>
+        <p class="ticket-description">
+          {{ ticket.description.length > 100 ? (ticket.description.substring(0, 100) + '...') : ticket.description }}
+        </p>
+        <div class="ticket-meta">
+          <span class="ticket-category">{{ ticket.category }}</span>
+          <span *ngIf="ticket.resolvedAt" class="resolved-at">
+            Resolved: {{ ticket.resolvedAt | date: 'short' }}
+          </span>
+        </div>
+        <div class="ticket-actions">
+          <button class="view-ticket-btn" (click)="viewTicket(ticket.id)">
+            <i class="fas fa-eye"></i> View Ticket
+          </button>
+          <button *ngIf="ticket.conversationId" class="view-conversation-btn" 
+                  (click)="viewConversation(ticket.conversationId)">
+            <i class="fas fa-comments"></i> View Solution
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

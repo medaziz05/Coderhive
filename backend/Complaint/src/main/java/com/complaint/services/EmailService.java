@@ -14,7 +14,6 @@ public class EmailService {
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
-
     public void sendEmail(String to, String subject, String body) {
         try {
             log.info("Attempting to send email to: {}", to);

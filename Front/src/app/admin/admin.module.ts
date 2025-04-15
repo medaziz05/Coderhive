@@ -16,11 +16,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { TicketsComponent } from './tickets/tickets.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
   declarations: [ AdminLayoutComponent,  // Ajout du layout admin
-    DashboardComponent, ReclamationComponent, ResponseComponent, SearchComponent,
+    DashboardComponent, ReclamationComponent, ResponseComponent, SearchComponent, TicketsComponent,
   ],
   imports: [
     CommonModule,
@@ -35,7 +39,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    FormsModule
+    FormsModule,
+    MatDividerModule,
+    MatProgressBarModule,
+    BrowserAnimationsModule,
+
+    
 
   ],
   exports: [

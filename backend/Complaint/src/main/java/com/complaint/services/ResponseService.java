@@ -13,9 +13,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-@Slf4j
+
 @Service
 public class ResponseService implements IResponseService{
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ResponseService.class);
     @Autowired
     private ResponseRepository responseRepository;
     @Autowired

@@ -1,0 +1,103 @@
+<div class="admin-ticket-container">
+  <header class="page-header">
+    <h2 class="page-title">Support Ticket Management</h2>
+    <span class="ticket-count">Total Tickets: {{ filteredTickets.length }}</span>
+  </header>
+  
+  <div class="controls-bar">
+    <input [(ngModel)]="searchTerm" type="text" placeholder="Search tickets..." class="search-input" />
+    <div class="sort-buttons">
+      <button (click)="toggleSort('title')" class="sort-btn">Sort by Title</button>
+      <button (click)="toggleSort('createdAt')" class="sort-btn">Sort by Date</button>
+      <button (click)="toggleSort('status')" class="sort-btn">Sort by Status</button>
+    </div>
+  </div>
+
+  <!-- Main content wrapper for side-by-side layout -->
+  <div class="main-content">
+    <!-- Ticket List -->
+    <section class="ticket-list">
+      <div *ngFor="let ticket of filteredTickets" class="ticket-card" 
+           [class.selected]="ticket === selectedTicket" (click)="selectTicket(ticket)">
+        <div class="ticket-header">
+          <h3 class="ticket-title">{{ ticket.title }}</h3>
+          <span class="ticket-status" [class]="'status-' + ticket.status.toLowerCase()">
+            {{ ticket.status }}
+          </span>
+        </div>
+        <p class="ticket-description">
+          {{ ticket.description.length > 100 ? (ticket.description.substring(0, 100) + '...') : ticket.description }}
+        </p>
+        <div class="ticket-meta">
+          <span>{{ ticket.createdAt | date: 'short' }}</span>
+          <span>#{{ ticket.id }}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ticket Details -->
+    <section *ngIf="selectedTicket" class="ticket-detail">
+      <div class="detail-header">
+        <h3>{{ selectedTicket.title }}</h3>
+        <div class="action-buttons">
+          <!-- New Export PDF Button -->
+          <!-- Update Export PDF Button to be enabled only for RESOLVED tickets -->
+          <button class="export-pdf-btn" (click)="exportPDF()" 
+          [disabled]="selectedTicket?.status !== 'RESOLVED' || !selectedTicket?.conversation?.messages?.length">
+          <i class="fas fa-file-pdf"></i> Export PDF
+          </button>
+          <div class="status-display">
+            <span class="status-label">Status:</span>
+            <span class="status-badge" [class]="'status-' + selectedTicket.status.toLowerCase()">
+              {{ selectedTicket.status }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <p class="ticket-full-description">{{ selectedTicket.description }}</p>
+
+      <div class="message-thread">
+        <h4>Conversation History</h4>
+        <ng-container *ngIf="selectedTicket?.conversation as conv">
+          <ng-container *ngIf="conv && conv.messages && conv.messages.length > 0; else noMessages">
+            <div *ngFor="let msg of conv.messages" class="message">
+              <div class="message-header">
+                <span class="sender">{{ msg.senderId === 0 ? 'Admin' : 'User' }}</span>
+                <span class="message-date">{{ msg.createdAt | date:'short' }}</span>
+              </div>
+              <p class="message-content">{{ msg.content }}</p>
+            </div>
+          </ng-container>
+        </ng-container>
+        <ng-template #noMessages>
+          <p class="no-messages">No messages yet.</p>
+        </ng-template>
+      </div>
+
+      <div class="reply-section" *ngIf="!isConversationClosedFlag; else closedNotice">
+        <h4>Send Reply</h4>
+        <textarea [(ngModel)]="replyMessage" placeholder="Type your reply..." class="reply-textarea"></textarea>
+        <button class="reply-button" (click)="sendReply()">
+          <i class="fas fa-paper-plane"></i> Send Reply
+        </button>
+      </div>
+
+      <ng-template #closedNotice>
+        <p class="conversation-closed-msg">
+          <i class="fas fa-lock"></i> This conversation is closed.
+        </p>
+      </ng-template>
+
+      <div class="status-section">
+        <h4>Update Status</h4>
+        <div class="status-options">
+          <button *ngFor="let s of statusOptions" (click)="updateStatus(s)" 
+                  class="status-button" [class]="'status-' + s.toLowerCase()">
+            {{ s }}
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

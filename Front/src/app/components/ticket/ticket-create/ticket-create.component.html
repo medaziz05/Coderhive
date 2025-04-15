@@ -1,0 +1,119 @@
+<div class="ticket-create-container">
+  <header class="create-header">
+    <h2>Create New Support Ticket</h2>
+    <p class="subtitle">Fill out the form below to submit a new support request</p>
+  </header>
+  
+  <form (ngSubmit)="onSubmit()" class="ticket-form">
+    <div class="form-group">
+      <label for="title">
+        <i class="icon-title"></i> Title
+      </label>
+      <input 
+        type="text" 
+        id="title" 
+        [(ngModel)]="ticket.title" 
+        name="title" 
+        required
+        placeholder="Brief description of your issue">
+      <p class="hint">Keep it short but descriptive (50 characters max)</p>
+    </div>
+
+    <div class="form-group">
+      <label for="category">
+        <i class="icon-category"></i> Category
+      </label>
+      <select id="category" [(ngModel)]="ticket.category" name="category" required>
+        <option value="" disabled selected>Select a category</option>
+        <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+
+    <!-- 🔁 Dynamic Fields Based on Selected Category -->
+    <div class="form-group" *ngFor="let field of dynamicFields">
+      <label>{{ field.label }}</label>
+      <input 
+        type="text" 
+        [(ngModel)]="ticket[field.model]" 
+        [placeholder]="field.placeholder" 
+        [name]="field.model" />
+    </div>
+
+    <div class="form-group">
+      <label for="description">
+        <i class="icon-description"></i> Description
+      </label>
+      <textarea 
+        id="description" 
+        [(ngModel)]="ticket.description" 
+        name="description" 
+        required
+        rows="6"
+        placeholder="Please provide detailed information about your issue"></textarea>
+      <p class="hint">Include any error messages, steps to reproduce, and expected behavior</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+      <i class="icon-warning"></i>
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" (click)="navigateToTickets()" class="cancel-btn">
+        <i class="icon-close"></i> Cancel
+      </button>
+      <button type="submit" [disabled]="!ticket.title || !ticket.description || isLoading || checkingForSimilarTickets" class="submit-btn">
+        <i *ngIf="!isLoading" class="icon-check"></i>
+        {{ isLoading ? 'Submitting...' : (checkingForSimilarTickets ? 'Checking...' : 'Create Ticket') }}
+      </button>
+    </div>
+    
+    <!-- Checking for similar tickets overlay -->
+    <div *ngIf="checkingForSimilarTickets" class="similar-tickets-checking-overlay">
+      <div class="spinner"></div>
+      <p>Checking for similar tickets...</p>
+    </div>
+  </form>
+  
+  <!-- Similar Tickets Modal -->
+  <div *ngIf="showSimilarTicketsModal" class="similar-tickets-modal">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Similar Tickets Found</h3>
+        <button class="close-btn" (click)="cancelTicketCreation()">×</button>
+      </div>
+      
+      <div class="modal-body">
+        <p class="modal-message">
+          We found similar tickets that have already been resolved. 
+          These might have the solution you're looking for:
+        </p>
+        
+        <div class="similar-tickets-list">
+          <div *ngFor="let ticket of similarTickets" class="similar-ticket-item">
+            <h4>{{ ticket.title }}</h4>
+            <p>{{ ticket.description.length > 150 ? (ticket.description.substring(0, 150) + '...') : ticket.description }}</p>
+            <div class="ticket-actions">
+              <button (click)="viewSimilarTicket(ticket.id)" class="view-ticket-btn">
+                <i class="fas fa-eye"></i> View Ticket
+              </button>
+              <button *ngIf="ticket.conversationId" (click)="viewSimilarConversation(ticket.conversationId)" class="view-conversation-btn">
+                <i class="fas fa-comments"></i> View Solution
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button class="cancel-btn" (click)="cancelTicketCreation()">
+          <i class="fas fa-times"></i> Cancel
+        </button>
+        <button class="continue-btn" (click)="continueWithTicketCreation()">
+          <i class="fas fa-arrow-right"></i> Continue Anyway
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

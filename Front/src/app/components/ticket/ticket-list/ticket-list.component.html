@@ -1,0 +1,66 @@
+<div class="ticket-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-indicator">
+    <div class="spinner"></div>
+    <p>Loading your tickets...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="error-message alert alert-error">
+    <div class="error-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <div class="error-content">
+      <h4>Error Loading Tickets</h4>
+      <p>{{ errorMessage }}</p>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && tickets.length === 0" class="no-tickets empty-state">
+    <div class="empty-icon">
+      <i class="far fa-folder-open"></i>
+    </div>
+    <h3>No Support Tickets Yet</h3>
+    <p>When you create support tickets, they'll appear here.</p>
+    <button class="btn-primary">Create New Ticket</button>
+  </div>
+
+  <!-- Ticket List -->
+  <div *ngIf="tickets.length > 0" class="ticket-list">
+    <h2 class="ticket-list-header">Your Support Tickets</h2>
+    <div class="ticket-grid">
+      <div *ngFor="let ticket of tickets" class="ticket-card" 
+           [class.resolved]="ticket.status === 'RESOLVED'"
+           (click)="ticket.id !== undefined ? viewTicketDetails(ticket.id) : null">
+        <div class="ticket-header">
+          <h3 class="ticket-title">{{ ticket.title }}</h3>
+          <span class="ticket-status" [class]="'status-' + ticket.status.toLowerCase()">
+            {{ ticket.status | titlecase }}
+          </span>
+        </div>
+        
+        <p class="ticket-description">{{ truncateDescription(ticket.description, 100) }}</p>
+        <div *ngIf="ticket.status !== 'RESOLVED'" class="estimated-time-container">
+          <span class="estimated-time-icon">⏱️</span>
+          <span class="estimated-time-text" [ngClass]="getEstimatedTimeClass(ticket.estimatedResponseTime)">
+            Temps estimé de reponse par l'admin : {{ ticket.estimatedResponseTime }}
+          </span>
+        </div>
+        
+        <div class="ticket-footer">
+          <div class="ticket-meta">
+            <span class="ticket-date">
+              <i class="far fa-calendar-alt"></i> {{ ticket.createdAt | date }}
+            </span>
+          </div>
+          <a [routerLink]="['/conversation', ticket.conversation?.id]" 
+             class="btn-view" 
+             (click)="$event.stopPropagation()">
+            View Conversation <i class="fas fa-chevron-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

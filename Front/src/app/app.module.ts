@@ -13,6 +13,28 @@ import { AdminModule } from './admin/admin.module'; // ✅ Import du module Admi
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
+import { TicketListComponent } from './components/ticket/ticket-list/ticket-list.component';
+import { TicketCreateComponent } from './components/ticket/ticket-create/ticket-create.component';
+import { TicketDetailComponent } from './components/ticket/ticket-detail/ticket-detail.component';
+import { ConversationComponent } from './components/ticket/conversation/conversation.component';
+
+
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatBadgeModule } from '@angular/material/badge';
+
+import { MatDialogModule } from '@angular/material/dialog';
+import { SimilarTicketsComponent } from './components/ticket/similar-tickets/similar-tickets.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +44,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FooterComponent,
     AddfeedbackComponent,
     LoginComponent,
-
+    TicketListComponent,
+    TicketCreateComponent,
+    TicketDetailComponent,
+    ConversationComponent,
+    SimilarTicketsComponent,
+  
+    
+    
   ],
   imports: [
     BrowserModule,
@@ -31,7 +60,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AdminModule,
     HttpClientModule,
     MatSnackBarModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatIconModule,
+    MatListModule,
+    MatDividerModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatBadgeModule,
+    MatDialogModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]

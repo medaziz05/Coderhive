@@ -1,0 +1,59 @@
+<div class="ticket-detail-container">
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-indicator">
+    <div class="spinner"></div>
+    <p>Loading ticket details...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="errorMessage" class="error-message">
+    <i class="fas fa-exclamation-circle"></i>
+    <p>{{ errorMessage }}</p>
+    <button class="retry-btn" (click)="retryLoading()">Retry</button>
+  </div>
+
+  <!-- Ticket Details -->
+  <div *ngIf="ticket && !isLoading" class="ticket-detail">
+    <div class="detail-header">
+      <h2>{{ ticket.title }}</h2>
+      <span class="status-badge" [class]="'status-' + ticket.status.toLowerCase()">
+        {{ ticket.status }}
+      </span>
+    </div>
+
+    <div class="detail-content">
+      <div class="description-section">
+        <h3>Description</h3>
+        <p class="description">{{ ticket.description }}</p>
+      </div>
+
+      <div class="meta-section">
+        <div class="meta-item">
+          <strong>Category:</strong> {{ ticket.category }}
+        </div>
+        <div class="meta-item">
+          <strong>Created at:</strong> {{ ticket.createdAt | date:'medium' }}
+        </div>
+      </div>
+
+       
+    
+
+      <div *ngIf="ticket.conversation" class="conversation-link">
+        <a [routerLink]="['/conversation', ticket.conversation.id]" class="view-conversation-btn">
+          <i class="fas fa-comments"></i> View Conversation
+        </a>
+      </div>
+    </div>
+    
+    <div *ngIf="ticket.status !== 'RESOLVED'" class="similar-tickets-section">
+      <app-similar-tickets [ticket]="ticket"></app-similar-tickets>
+    </div>
+
+    <div class="action-footer">
+      <button class="back-btn" (click)="router.navigate(['/tickets'])">
+        <i class="fas fa-arrow-left"></i> Back to Tickets
+      </button>
+    </div>
+  </div>
+</div>
