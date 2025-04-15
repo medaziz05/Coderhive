@@ -1,0 +1,27 @@
+<div class="container mt-4">
+    <h3>📜 Historique du participant</h3>
+  
+    <button class="btn btn-outline-danger mb-3" (click)="exportToPDF()">📤 Exporter en PDF</button>
+  
+    <div *ngFor="let p of history" class="border rounded p-3 mb-3 bg-white shadow-sm">
+      <h5>{{ p.trainingTitle }}</h5>
+      <p><strong>Note :</strong> {{ p.grade }}%</p>
+      <p><strong>Status :</strong> {{ p.status }}</p>
+      <p><strong>Badge :</strong>
+        <span [ngClass]="getBadgeClass(p.badge)" class="badge rounded-pill">
+          {{ p.badge }}
+        </span>
+      </p>
+    </div>
+  
+    <div *ngIf="recommendedText" class="alert alert-info mt-4">
+      📢 {{ recommendedText }}
+    </div>
+  
+    <button *ngIf="recommendedProgramId"
+            class="btn btn-success"
+            [routerLink]="['/training', recommendedProgramId]">
+      🚀 Rejoindre la formation recommandée
+    </button>
+  </div>
+  
