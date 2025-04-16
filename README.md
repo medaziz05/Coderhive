@@ -56,3 +56,20 @@ L’interface utilisateur permet :
 
 ---
 
+## 👨‍💻 Auteur de ce module
+Développé par **Slim-Fady Hanafi**, dans le cadre d’un projet collaboratif DevDynamous 🎯.
+
+---
+
+## 📁 Arborescence principale (backend)
+
+hackathon/ ├── controller/ │ ├── HackathonController.java │ └── HackathonParticipationController.java ├── entities/ │ └── Hackathon.java, HackathonParticipation.java, etc. ├── dtos/ ├── service/ ├── repository/ └── resources/
+
+
+---
+
+## 📬 Contact
+Pour toute question ou contribution :  
+📧 slimfady.hanafi@yahoo.fr  
+🌍 [GitHub - DevDynamous](https://github.com/wissaldaoud/Devdynamousawd)
+
