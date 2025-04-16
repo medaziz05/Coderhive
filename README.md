@@ -25,4 +25,34 @@ Ce microservice assure la gestion complète des hackathons : création, inscript
 - Compter les participants : `GET /api/v1/hackathons/count/{hackathonId}`
 - Vérifier si un utilisateur est inscrit : `GET /api/v1/hackathons/status?hackathonId=1&userId=5`
 
+#### 📊 Statistiques
+- Niveau de difficulté des hackathons : `GET /api/v1/hackathons/getStatistics`
+
+#### 📰 Intégration avec les publications
+- Liste paginée des publications : `GET /api/v1/hackathons/posts`
+- Récupérer une publication par ID : `GET /api/v1/hackathons/post/{id}`
+- Marquer une publication comme "meilleur post" pour un hackathon : `POST /api/v1/hackathons/{id}/best-post/{postId}`
+- Voir les meilleurs posts : `GET /api/v1/hackathons/{id}/best-post`
+
+---
+
+## 🖥️ Frontend (Angular)
+L’interface utilisateur permet :
+- Visualisation des hackathons
+- Participation / désinscription à un hackathon
+- Affichage des meilleurs posts liés à chaque événement
+- Consultation des statistiques et du nombre de participants
+
+---
+
+## ⚙️ Technologies utilisées
+- ✅ Spring Boot 3.x
+- ✅ Angular 16+
+- ✅ MySQL / JPA / Hibernate
+- ✅ Spring Cloud : Eureka Discovery, Config Server
+- ✅ Docker (conteneurisation des microservices)
+- ✅ Architecture RESTful
+- ✅ Lombok
+
+---
 
