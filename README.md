@@ -1,28 +1,64 @@
-# Pi 
-Projet Springboot-Angular partie de Slim-Fady HANAFi, Gestion Forum-Hackathon
+# 🌐 Hackathon & Forum Frontend (Angular 16+)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+Ce projet représente la partie **frontend Angular** du module de gestion des hackathons et forums, développé dans le cadre d’un projet collaboratif DevDynamous. Il communique avec des microservices **Spring Boot** via une **API Gateway** centralisée.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📌 Objectifs du frontend
 
-## Code scaffolding
+L’application Angular permet aux utilisateurs de :
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- 🔍 **Consulter les hackathons disponibles**
+- 🧑‍💻 **Participer ou se désinscrire d’un hackathon**
+- 🏆 **Voir les meilleurs posts liés à chaque hackathon**
+- 📊 **Afficher des statistiques dynamiques sur la participation**
+- 📬 **Interagir avec un forum tech intégré**
 
-## Build
+---
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🔗 Communication entre services
 
-## Running unit tests
+Le frontend Angular interagit avec l’API Gateway (`Spring Cloud Gateway`) exposant les microservices suivants :
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `hackathon-service`
+- `post-service` (forum)
+- `user-service`
+- `auth-service`
 
-## Running end-to-end tests
+Toutes les requêtes HTTP transitent via `http://localhost:8222/api/...`.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+---
 
-## Further help
+## 🧩 Fonctionnalités principales
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### Hackathons
+- Liste des hackathons (`/hackathons`)
+- Détails et statistiques d’un hackathon
+- Inscription à un hackathon
+- Affichage des participants et des meilleurs posts
+
+### Forum
+- Consultation des publications
+- Interaction avec les commentaires
+- Statistiques de posts par utilisateur
+
+### Authentification
+- Connexion sécurisée via `auth-service`
+- Affichage conditionnel des fonctionnalités selon le rôle (admin, user...)
+
+---
+
+## ⚙️ Technologies utilisées
+
+- ✅ **Angular 16+**
+- ✅ **TypeScript / HTML / SCSS**
+- ✅ **Bootstrap / Tailwind / Custom CSS**
+- ✅ **RxJS / HTTPClientModule**
+- ✅ **Chart.js / ApexCharts (pour les stats)**
+- ✅ **Eureka + Gateway côté backend**
+- ✅ **Connexion aux microservices via Gateway**
+
+---
+
+## 🖼️ Structure du projet
+
