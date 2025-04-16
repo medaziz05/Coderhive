@@ -1,3 +1,28 @@
-Projet Springboot-Angular partie de Slim-Fady HANAFi, Gestion Forum-Hackathon
-bismillah 
+# 🚀 Hackathon Management Module (Spring Boot + Angular)
+
+Ce module fait partie d’un projet complet développé avec **Spring Boot** (backend) et **Angular** (frontend) basé sur une architecture **microservices**. Il se concentre sur la **gestion des hackathons**, permettant aux utilisateurs de créer, consulter, participer et interagir autour de compétitions tech en ligne.
+
+---
+
+## 🧩 Microservice : `hackathon-service`
+
+Ce microservice assure la gestion complète des hackathons : création, inscription des participants, statistiques et interactions avec des publications.
+
+### ✨ Fonctionnalités principales
+
+#### 📌 Gestion des Hackathons
+- Création de hackathon : `POST /api/v1/hackathons`
+- Consultation d’un hackathon par ID : `GET /api/v1/hackathons/{id}`
+- Liste paginée de tous les hackathons : `GET /api/v1/hackathons?page=0&size=10`
+- Mise à jour : `PUT /api/v1/hackathons/{id}`
+- Suppression : `DELETE /api/v1/hackathons/{id}`
+
+#### 👥 Gestion des Participants
+- Rejoindre un hackathon : `POST /api/v1/hackathons/join?hackathonId=1&userId=5`
+- Quitter un hackathon : `DELETE /api/v1/hackathons/unjoin?hackathonId=1&userId=5`
+- Voir les participations d’un utilisateur : `GET /api/v1/hackathons/user/{userId}`
+- Voir les participants d’un hackathon : `GET /api/v1/hackathons/hackathon/{hackathonId}`
+- Compter les participants : `GET /api/v1/hackathons/count/{hackathonId}`
+- Vérifier si un utilisateur est inscrit : `GET /api/v1/hackathons/status?hackathonId=1&userId=5`
+
 
