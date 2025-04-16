@@ -62,3 +62,4 @@ Toutes les requêtes HTTP transitent via `http://localhost:8222/api/...`.
 
 ## 🖼️ Structure du projet
 
+src/ ├── app/ │ ├── components/ # Composants UI (hackathon, forum, stats) │ ├── pages/ # Pages principales │ ├── services/ # Services HTTP (API Gateway) │ └── auth/ # Authentification & guards ├── assets/ # Images, styles, JS plugins ├── environments/ # Configuration d’environnement └── index.html
