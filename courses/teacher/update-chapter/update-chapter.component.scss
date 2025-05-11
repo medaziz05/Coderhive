@@ -1,0 +1,38 @@
+.file-item {
+  padding: 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+
+  &.new-file {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+  }
+
+  &.existing-file {
+    background-color: #e9f5ff;
+    border: 1px solid #b8daff;
+  }
+}
+.existing-attachments {
+  .attachment-item {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-bottom: 8px;
+
+    .file-info {
+      min-width: 0; // Allows text truncation
+
+      .file-name {
+        max-width: 200px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .btn {
+      flex-shrink: 0; // Prevents buttons from shrinking
+    }
+  }
+}

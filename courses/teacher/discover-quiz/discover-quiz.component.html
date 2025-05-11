@@ -1,0 +1,211 @@
+<div class="max-w-full bg-gray-100 dark:bg-gray-700 min-h-screen">
+  <!-- Search and Filters Section -->
+  <div class="bg-white max-w-3xl mx-auto dark:bg-gray-800 rounded-lg shadow-md p-6">
+    <!-- Search Input -->
+    <div class="mb-4">
+      <label class="sr-only" for="search">Search quizzes</label>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3">
+          <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+          </svg>
+        </div>
+        
+        <div class="mb-4">
+          <label for="search" class="sr-only">Search quizzes</label>
+          <div class="relative">
+        <input [(ngModel)]="searchOptions.title" 
+        id="search"
+        name="searchInput" 
+        class="w-full pl-10 pr-4 py-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Search quizzes..."
+        type="search"
+        aria-label="Search quizzes"> <!-- Add aria-label -->
+
+ <button (click)="onClearTitle()" 
+         *ngIf="searchOptions.title?.length > 0"
+         type="button" 
+         aria-label="Clear search" 
+         class="absolute inset-y-0 right-3 flex items-center">
+   <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" 
+        fill="none" 
+        stroke="currentColor" 
+        viewBox="0 0 24 24"
+        aria-hidden="true"> <!-- Add aria-hidden -->
+     <path stroke-linecap="round" 
+           stroke-linejoin="round" 
+           stroke-width="2" 
+           d="M6 18L18 6M6 6l12 12"></path>
+   </svg>
+ </button>
+</div>
+</div>
+<!-- Filters Row -->
+<div class="flex flex-col md:flex-row gap-4 mb-4">
+  <!-- Category Filter -->
+  <div class="w-full md:w-1/3">
+    <label for="categoryFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+    <select [(ngModel)]="searchOptions.categoryName" 
+            id="categoryFilter"
+            name="categoryFilter" 
+            class="w-full p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
+      <option value="">All Categories</option>
+      <option *ngFor="let category of courseCategories" 
+              [value]="category">
+        {{ category }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Questions Filter -->
+  <div class="w-full md:w-1/3">
+    <label for="questionsFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Questions</label>
+    <select [(ngModel)]="searchOptions.numberOfQuestions" 
+            id="questionsFilter"
+            name="questionsFilter" 
+            class="w-full p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            aria-label="Select number of questions"> <!-- Add aria-label -->
+      <option value="">Any Amount</option>
+      <option value="5" aria-label="5 or more questions">5+</option>
+      <option value="10" aria-label="10 or more questions">10+</option>
+      <option value="15" aria-label="15 or more questions">15+</option>
+    </select>
+  </div>
+
+  <!-- Difficulty Filter -->
+  <div class="w-full md:w-1/3">
+    <label for="difficultyFilter" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Difficulty</label>
+    <select [(ngModel)]="searchOptions.difficulty" 
+            id="difficultyFilter"
+            name="difficultyFilter"
+            class="w-full p-2.5 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+            aria-label="Select difficulty level"> <!-- Add aria-label -->
+      <option value="">All Levels</option>
+      <option value="EASY" aria-label="Easy difficulty">Easy</option>
+      <option value="MEDIUM" aria-label="Medium difficulty">Medium</option>
+      <option value="HARD" aria-label="Hard difficulty">Hard</option>
+    </select>
+  </div>
+</div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-between items-center">
+      <!-- Sorting Dropdown -->
+      <div class="relative">
+        <button class="flex items-center text-gray-700 dark:text-gray-300" type="button">
+          <span class="mr-1">Sort by:</span>
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <div class="absolute z-10 hidden bg-white dark:bg-gray-700 rounded-lg shadow-lg py-2 mt-1">
+          <button (click)="onSortDifficulty('ASC', $event)" 
+                  [class.font-bold]="searchOptions.sortByDifficulty === 'ASC'"
+                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left">
+            Easiest First {{ searchOptions.sortByDifficulty === 'ASC' ? '✓' : '' }}
+          </button>
+          <button (click)="onSortDifficulty('DESC', $event)" 
+                  [class.font-bold]="searchOptions.sortByDifficulty === 'DESC'"
+                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left">
+            Hardest First {{ searchOptions.sortByDifficulty === 'DESC' ? '✓' : '' }}
+          </button>
+          <button (click)="onSortCreated('DESC', $event)"
+                  [class.font-bold]="searchOptions.sortByCreatedDate === 'DESC'"
+                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left">
+            Newest First {{ searchOptions.sortByCreatedDate === 'DESC' ? '✓' : '' }}
+          </button>
+          <button (click)="onSortCreated('ASC', $event)"
+                  [class.font-bold]="searchOptions.sortByCreatedDate === 'ASC'"
+                  class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left">
+            Oldest First {{ searchOptions.sortByCreatedDate === 'ASC' ? '✓' : '' }}
+          </button>
+        </div>
+      </div>
+
+      <button (click)="onSearch()" 
+              class="px-6 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors">
+        Apply Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Content Section -->
+  <div class="px-3 mt-6">
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div *ngFor="let _ of [1,2,3,4,5,6]" class="animate-pulse bg-white dark:bg-gray-800 rounded-lg shadow-md p-4">
+        <div class="h-48 bg-gray-200 dark:bg-gray-700 rounded-lg mb-4"></div>
+        <div class="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+        <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full mb-4"></div>
+        <div class="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
+      </div>
+    </div>
+
+    <!-- Loaded Content -->
+    <div *ngIf="!isLoading" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div *ngFor="let quiz of quizzes" class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+        <img [src]="apiBase + '/api/quiz/' + quiz.id + '/photo'" 
+             alt="Quiz thumbnail" 
+             class="w-full h-48 object-cover">
+        <div class="p-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-semibold text-blue-600 dark:text-blue-400">
+              {{ quiz.category }}
+            </span>
+            <span class="px-2.5 py-1 text-sm rounded-full" 
+                  [ngClass]="{
+                    'bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-400': quiz.difficulty === 'EASY',
+                    'bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-400': quiz.difficulty === 'MEDIUM',
+                    'bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-400': quiz.difficulty === 'HARD'
+                  }">
+              {{ quiz.difficulty }}
+            </span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-800 dark:text-white mb-2">{{ quiz.title }}</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-4">
+            {{ quiz.totalQuestions }} Questions
+          </p>
+          <button [routerLink]="['/play', quiz.id]" 
+                  class="w-full py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 transition-colors">
+            Start Quiz
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex justify-center my-8">
+      <nav class="inline-flex items-center gap-1">
+        <button (click)="goToPrevPage($event)" 
+        [disabled]="isLoading || currentPage === 0"
+        class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-l-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
+        aria-label="Previous page">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+
+        <div *ngFor="let page of getPageNumbers()" class="flex">
+          <button *ngIf="page !== -1" 
+                  (click)="goToPage($event, page)"
+                  [disabled]="isLoading"
+                  [class.bg-blue-600]="currentPage === page - 1"  
+                  [class.text-white]="currentPage === page - 1"
+                  class="px-4 py-2 border-y border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700">
+            {{ page }}
+          </button>
+          <span *ngIf="page === -1" class="px-4 py-2 border-y border-gray-300 dark:border-gray-600">...</span>
+        </div>
+
+        <button (click)="goToNextPage($event)" 
+        [disabled]="isLoading || currentPage >= totalPages - 1"
+        class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-r-lg hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50"
+        aria-label="Next page">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </div>
+</div>

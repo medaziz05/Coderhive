@@ -1,0 +1,298 @@
+<div class="relative min-h-screen">
+  <!-- Deadline animation -->
+  <div id="deadline-wrapper" class="absolute top-0 w-full z-50">
+    <div id="deadline">
+      <svg preserveAspectRatio="none" id="line" viewBox="0 0 581 158" enable-background="new 0 0 581 158">
+        <g id="fire">
+          <rect id="mask-fire-black" x="511" y="41" width="38" height="34" />
+          <g>
+            <defs>
+              <rect id="mask_fire" x="511" y="41" width="38" height="34" />
+            </defs>
+            <clipPath id="mask-fire_1_">
+              <use xlink:href="#mask_fire" overflow="visible" />
+            </clipPath>
+            <g id="group-fire" clipPath="url(#mask-fire_1_)">
+              <path id="red-flame" fill="#B71342"
+                d="M528.377,100.291c6.207,0,10.947-3.272,10.834-8.576 c-0.112-5.305-2.934-8.803-8.237-10.383c-5.306-1.581-3.838-7.9-0.79-9.707c-7.337,2.032-7.581,5.891-7.11,8.238 c0.789,3.951,7.56,4.402,5.077,9.48c-2.482,5.079-8.012,1.129-6.319-2.257c-2.843,2.233-4.78,6.681-2.259,9.703 C521.256,98.809,524.175,100.291,528.377,100.291z" />
+              <path id="yellow-flame" opacity="0.71" fill="#F7B523"
+                d="M528.837,100.291c4.197,0,5.108-1.854,5.974-5.417 c0.902-3.724-1.129-6.207-5.305-9.931c-2.396-2.137-1.581-4.176-0.565-6.32c-4.401,1.918-3.384,5.304-2.482,6.658 c1.511,2.267,2.099,2.364,0.42,5.8c-1.679,3.435-5.42,0.764-4.275-1.527c-1.921,1.512-2.373,4.04-1.528,6.563 C522.057,99.051,525.994,100.291,528.837,100.291z" />
+              <path id="white-flame" opacity="0.81" fill="#FFFFFF"
+                d="M529.461,100.291c-2.364,0-4.174-1.322-4.129-3.469 c0.04-2.145,1.117-3.56,3.141-4.198c2.022-0.638,1.463-3.195,0.302-3.925c2.798,0.821,2.89,2.382,2.711,3.332 c-0.301,1.597-2.883,1.779-1.938,3.834c0.912,1.975,3.286,0.938,2.409-0.913c1.086,0.903,1.826,2.701,0.864,3.924 C532.18,99.691,531.064,100.291,529.461,100.291z" />
+            </g>
+          </g>
+        </g>
+        <g id="progress-trail">
+          <path fill="#FFFFFF"
+            d="M491.979,83.878c1.215-0.73-0.62-5.404-3.229-11.044c-2.583-5.584-5.034-10.066-7.229-8.878c-2.854,1.544-0.192,6.286,2.979,11.628C487.667,80.917,490.667,84.667,491.979,83.878z" />
+          <path fill="#FFFFFF" d="M571,76v-5h-23.608c0.476-9.951-4.642-13.25-4.642-13.25l-3.125,4c0,0,3.726,2.7,3.625,5.125c-0.071,1.714-2.711,3.18-4.962,4.125H517v5h10v24h-25v-5.666c0,0,0.839,0,2.839-0.667s6.172-3.667,4.005-6.333s-7.49,0.333-9.656,0.166s-6.479-1.5-8.146,1.917c-1.551,3.178,0.791,5.25,5.541,6.083l-0.065,4.5H16c-2.761,0-5,2.238-5,5v17c0,2.762,2.239,5,5,5h549c2.762,0,5-2.238,5-5v-17c0-2.762-2.238-5-5-5h-3V76H571z" />
+          <path fill="#FFFFFF" d="M535,65.625c1.125,0.625,2.25-1.125,2.25-1.125l11.625-22.375c0,0,0.75-0.875-1.75-2.125s-3.375,0.25-3.375,0.25s-8.75,21.625-9.875,23.5S533.875,65,535,65.625z" />
+        </g>
+        <g>
+          <defs>
+            <path id="SVGID_1_" d="M484.5,75.584c-3.172-5.342-5.833-10.084-2.979-11.628c2.195-1.188,4.646,3.294,7.229,8.878c2.609,5.64,4.444,10.313,3.229,11.044C490.667,84.667,487.667,80.917,484.5,75.584z M571,76v-5h-23.608c0.476-9.951-4.642-13.25-4.642-13.25l-3.125,4c0,0,3.726,2.7,3.625,5.125c-0.071,1.714-2.711,3.18-4.962,4.125H517v5h10v24h-25v-5.666c0,0,0.839,0,2.839-0.667s6.172-3.667,4.005-6.333s-7.49,0.333-9.656,0.166s-6.479-1.5-8.146,1.917c-1.551,3.178,0.791,5.25,5.541,6.083l-0.065,4.5H16c-2.761,0-5,2.238-5,5v17c0,2.762,2.239,5,5,5h549c2.762,0,5-2.238,5-5v-17c0-2.762-2.238-5-5-5h-3V76H571z M535,65.625c1.125,0.625,2.25-1.125,2.25-1.125l11.625-22.375c0,0,0.75-0.875-1.75-2.125s-3.375,0.25-3.375,0.25s-8.75,21.625-9.875,23.5S533.875,65,535,65.625z" />
+          </defs>
+          <clipPath id="SVGID_2_">
+            <use xlink:href="#SVGID_1_" overflow="visible" />
+          </clipPath>
+          <rect id="progress-time-fill" x="-100%" y="34" clipath="url(#SVGID_2_)" fill="#BE002A" width="586"
+            height="103" />
+        </g>
+      </svg>
+
+      <div class="deadline-days">
+        Deadline <span class="day">7</span> <span class="days">days</span>
+      </div>
+    </div>
+  </div>
+
+
+
+  
+<div class="flex justify-center pt-10 max-w-4xl mx-auto p-6 bg-white rounded-t-lg shadow-md dark:bg-gray-800">
+    <div class="flex space-x-4">
+      <div
+        class="inline-flex h-9 w-full items-baseline justify-start rounded-lg bg-gray-100 p-1 sm:w-auto dark:bg-gray-900">
+        <button (click)="setActiveTab('play')"
+                [ngClass]="{'bg-white text-slate-950 dark:bg-gray-800 dark:text-white': activeTab === 'play',
+                           'bg-transparent text-slate-500 dark:text-gray-400': activeTab !== 'play'}"
+                class="group inline-flex items-center justify-center whitespace-nowrap py-2 align-middle font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed stroke-blue-700 min-w-[32px] gap-1.5 text-xs disabled:stroke-slate-400 disabled:text-slate-400 hover:stroke-blue-950 hover:text-blue-950 h-7 w-full rounded-md px-3 shadow sm:w-auto"
+                type="button">
+          <svg aria-hidden="true" class="w-[20px] h-[20px] text-gray-800 dark:text-white"
+               fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" />
+          </svg>
+          <span>Play</span>
+        </button>
+        <button (click)="setActiveTab('leaderboard')"
+                [ngClass]="{'bg-white text-slate-950 dark:bg-gray-800 dark:text-white': activeTab === 'leaderboard',
+                           'bg-transparent text-slate-500 dark:text-gray-400': activeTab !== 'leaderboard'}"
+                class="group inline-flex items-center justify-center whitespace-nowrap py-2 align-middle font-semibold transition-all duration-300 ease-in-out disabled:cursor-not-allowed stroke-blue-700 min-w-[32px] gap-1.5 text-xs disabled:stroke-slate-400 disabled:text-slate-400 hover:stroke-blue-950 hover:text-blue-950 h-7 w-full rounded-md px-3 shadow sm:w-auto"
+                type="button">
+          <svg aria-hidden="true" class="w-[20px] h-[20px] text-gray-800 dark:text-white"
+               fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.083 5.104c.35-.8 1.485-.8 1.834 0l1.752 4.022a1 1 0 0 0 .84.597l4.463.342c.9.069 1.255 1.2.556 1.771l-3.33 2.723a1 1 0 0 0-.337 1.016l1.03 4.119c.214.858-.71 1.552-1.474 1.106l-3.913-2.281a1 1 0 0 0-1.008 0L7.583 20.8c-.764.446-1.688-.248-1.474-1.106l1.03-4.119A1 1 0 0 0 6.8 14.56l-3.33-2.723c-.698-.571-.342-1.702.557-1.771l4.462-.342a1 1 0 0 0 .84-.597l1.753-4.022Z" stroke="currentColor"
+                  stroke-width="2" />
+          </svg>
+  
+          <span>Leaderboard</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  
+  <div class="max-w-4xl mb-8 mx-auto min-h-[70vh] bg-gray-300 dark:bg-gray-900">
+    <div *ngIf="!complete && activeTab == 'play'" class="mx-auto p-6 text-center">
+      <ng-container *ngIf="!isLoading; else loadingContent">
+        <h1 class="text-3xl font-bold mb-6 text-gray-700 dark:text-gray-300">{{ quiz?.title }}</h1>
+        <h1 class="text-2xl font-semibold text-gray-700 dark:text-gray-400">{{ getCurrentQuestion() }}</h1>
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
+          <button 
+            (click)="onAnswer(answer.answerLetter)" 
+            *ngFor="let answer of getQuizAnswersForCurrentQuestionSorted()"
+            class="bg-white border border-gray-300 rounded-lg p-4 flex items-center justify-center shadow-md hover:bg-gray-50 focus:outline-none">
+            <span class="text-xl font-bold mr-2">{{ answer.answerLetter }}.</span>
+            <span>{{ answer.answerTitle }}</span>
+            <svg *ngIf="isAnswerWrong && answer.letter === getCurrentQuestionCorrectAnswerLetter()"
+                 aria-hidden="true" class="w-[30px] h-[30px] text-green-500" fill="none" height="24"
+                 viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                    stroke-width="2" />
+            </svg>
+          </button>
+        </div>
+      </ng-container>
+      <ng-template #loadingContent>
+        <div class="mx-auto p-6 text-center animate-pulse">
+          <div class="h-9 bg-gray-200 rounded-lg dark:bg-gray-700 w-3/4 mx-auto mb-6"></div>
+          <div class="h-7 bg-gray-200 rounded-lg dark:bg-gray-700 w-2/3 mx-auto mb-8"></div>
+          <div class="grid grid-cols-1 gap-4 md:grid-cols-2 answers-mt">
+            <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+              <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+            </div>
+            <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+              <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+            </div>
+            <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+              <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+            </div>
+            <div class="bg-gray-200 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center h-16">
+              <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-4/5"></div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <div *ngIf="isAnswerWrong"
+           class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
+        <svg aria-hidden="true" class="w-[48px] h-[48px] text-red-600" fill="none" height="24"
+             viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="m15 9-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" />
+        </svg>
+        <h1 class="text-3xl font-bold dark:text-white">Wrong!</h1>
+        <p
+          class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ 'The correct answer is ' + getCurrentQuestionCorrectAnswerLetter() }}</p>
+      </div>
+      <div *ngIf="isAnswerCorrect"
+           class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800  shadow-md">
+        <svg aria-hidden="true" class="w-[48px] h-[48px] text-green-600 dark:text-white"
+             fill="none" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" />
+        </svg>
+  
+        <h1 class="text-3xl font-bold dark:text-white">Well Done!</h1>
+        <p class="tracking-widest text-gray-400 md:text-lg dark:text-gray-400">{{ successMessage }}</p>
+      </div>
+      <div class="flex-1">
+        <button (click)="onNext()" *ngIf="nextQuestionIsReady" class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-center w-full dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                type="button">
+          Next
+          <svg aria-hidden="true" class="rtl:rotate-180 w-3.5 h-3.5 ms-2" fill="none" viewBox="0 0 14 10"
+               xmlns="http://www.w3.org/2000/svg">
+            <path d="M1 5h12m0 0L9 1m4 4L9 9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="activeTab === 'leaderboard'" class="mx-auto p-6">
+      <div class="overflow-auto  h-[63vh]">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+            <th class="py-3 px-6" scope="col">Country</th>
+            <th class="py-3 px-6" scope="col">Nickname</th>
+            <th class="py-3 px-6" scope="col">Score</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let score of quizScores" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="py-4 px-6">
+              <span [ngClass]="'fi fi-' + (score.countryCode?.toLowerCase() || 'us')"></span>
+            </td>
+            <td class="py-4 px-6">{{ score.nickname }}</td>
+            <td class="py-4 px-6">{{ score.totalCorrect }}/{{ quiz?.questions.length }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div [ngClass]="{'hidden': !complete || activeTab === 'leaderboard'}" class="mx-auto p-6 text-center">
+      <!-- Displaying Score -->
+      <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
+        <span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
+          {{ totalCorrect + '/' + totalQuestions }}
+        </span>
+      </h1>
+      
+      <!-- Dynamic Result Message -->
+      <h3 class="text-3xl font-bold dark:text-white" [ngClass]="{
+        'text-green-600': quizPassed,
+        'text-red-600': !quizPassed
+      }">
+        {{ quizPassed ? 'Well Done! 👏' : 'Try Again! 💪' }}
+      </h3>
+      
+      <div class="mt-2 text-xl text-gray-600 dark:text-gray-300">
+        {{ quizResultMessage }}
+      </div>
+      
+      <!-- Pass/Fail Message with Confetti -->
+      <div *ngIf="quizPassed" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800 shadow-md">
+        <h1 class="text-2xl font-bold mb-4 dark:text-white">🎉 Congratulations, You Passed!</h1>
+        <p class="text-lg dark:text-white">Keep up the great work, you're mastering the material! 🎓</p>
+      </div>
+      
+      <div *ngIf="!quizPassed" class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800 shadow-md">
+        <h1 class="text-2xl font-bold mb-4 dark:text-white">😢 Better Luck Next Time!</h1>
+        <p class="text-lg dark:text-white">Review the chapter and try again. You're getting closer! 💪</p>
+      </div>
+      
+      <!-- Leaderboard Section -->
+      <div *ngIf="activeTab === 'leaderboard'" class="mx-auto p-6">
+        <h2 class="text-2xl font-bold dark:text-white mb-4">Leaderboard</h2>
+        <div class="overflow-auto h-[63vh]">
+          <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs sticky top-0 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th class="py-3 px-6" scope="col">Country</th>
+                <th class="py-3 px-6" scope="col">Nickname</th>
+                <th class="py-3 px-6" scope="col">Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let score of quizScores" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="py-4 px-6">
+                  <span [ngClass]="'fi fi-' + (score.countryCode?.toLowerCase() || 'us')"></span>
+                </td>
+                <td class="py-4 px-6">{{ score.nickname }}</td>
+                <td class="py-4 px-6">{{ score.totalCorrect }}/{{ quiz?.questions.length }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Submit Nickname and Join Leaderboard -->
+      <div *ngIf="activeTab === 'leaderboard'" class="mx-auto p-6 text-center">
+        <div class="mt-4 p-3 max-w-2xl flex flex-col justify-center items-center mx-auto bg-white text-center rounded-2xl dark:bg-gray-800 shadow-md">
+          <h1 class="text-2xl font-bold mb-4 dark:text-white">Join Leaderboard</h1>
+          
+          <div class="w-full mb-4">
+            <label class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white" for="country">
+              Select Country
+            </label>
+            <div class="relative" id="country">
+              <button
+                class="flex items-center justify-between w-full px-4 py-2 text-sm font-medium text-left text-gray-700 bg-gray-50 border border-gray-300 rounded-lg dark:text-white dark:bg-gray-700 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                data-dropdown-toggle="dropdown"
+                id="dropdownButton"
+                type="button"
+              >
+                <span class="fi fi-{{ selectedCountry }}"></span> {{ getSelectedCountry() }}
+                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                     xmlns="http://www.w3.org/2000/svg">
+                  <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                </svg>
+              </button>
+              <div
+                class="hidden z-10 w-full mt-1 bg-white rounded-lg shadow-md dark:bg-gray-700 max-h-60 overflow-y-auto"
+                data-popper-escaped
+                data-popper-placement="bottom"
+                data-popper-reference-hidden
+                id="dropdown"
+              >
+                <ul aria-labelledby="dropdownButton" class="py-1 text-sm text-gray-700 dark:text-gray-200">
+                  <li (click)="selectedCountry = country.code; document.getElementById('dropdownButton')?.click()"
+                      *ngFor="let country of countries"
+                      class="flex items-center px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600">
+                    <span class="fi fi-{{ country.code }} mr-2"></span> {{ country.name }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+    
+          <div class="w-full mb-4">
+            <label class="block text-left mb-2 text-sm font-medium text-gray-900 dark:text-white" for="nickname">
+              Nickname
+            </label>
+            <input #nickNameInput="ngModel" [(ngModel)]="nickname"
+                   class="block w-full p-2.5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                   id="nickname" name="nickname" placeholder="Enter your nickname" required
+                   type="text">
+          </div>
+    
+          <button (click)="onSubmitScore()" [disabled]="nickNameInput.invalid"
+                  class="w-full px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800"
+                  type="button">
+            Join
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

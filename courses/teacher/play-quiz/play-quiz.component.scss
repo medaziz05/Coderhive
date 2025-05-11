@@ -1,0 +1,305 @@
+/* play-quiz.component.scss */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+button {
+  transition: all 0.2s ease;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.dark {
+  .quiz-container {
+    background-color: #1a202c;
+  }
+  
+  .progress-bar {
+    background-color: #2d3748;
+  }
+}
+
+// deadline css // 
+
+#deadline {
+  background: #1A1B24;
+  padding: 20px 0;
+  width: 100%;
+  max-width: 1200px; /* Optional max-width for better scaling */
+  height: auto;
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: none;
+  margin: 0 auto;
+}
+#deadline-wrapper {
+  width: 100vw;
+  position: relative;
+  z-index: 9999 !important;
+  margin-top: 60px !important;
+  display: flex;
+  justify-content: center;
+}
+#deadline svg {
+  width: 100%;
+  height: 180px !important;
+  transform: scale(1.2) translateY(20px) !important;
+}
+
+@media (max-width: 768px) {
+  #deadline-wrapper {
+    margin: 40px 0 20px;
+    background: #1A1B24;
+    padding: 20px 0;
+  }
+  #deadline svg {
+    height: 150px;
+    transform: scale(1) translateY(10px);
+  }
+}
+#progress-time-fill {
+  animation-name: progress-fill; 
+  animation-timing-function: linear; 
+  animation-iteration-count: infinite;
+}
+#death-group {
+  opacity: 1 !important;
+  display: block !important;
+  transform: translateX(0) !important;
+  animation: walk 20s linear infinite !important;
+}
+
+
+#designer-body, 
+#designer-head,
+#designer-arm-grop {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+#death-arm {
+  animation: move-arm 3s ease infinite;
+  transform-origin: -60px 74px;
+}
+#death-tool {
+  animation: move-tool 3s ease infinite;
+  transform-origin: -48px center;
+}
+#designer-arm-grop {
+  animation: write 1.5s ease infinite;
+  transform: translate(0, 0) rotate(0deg) scale(1, 1);
+  transform-origin: 90% top;
+}
+.deadline-days {
+  color: #fff;
+  text-align: center;
+  width: 100px;
+  margin: 0 auto;
+  position: relative;
+  height: 20px;
+  font-family: 'Oswald', sans-serif;
+}
+.deadline-days .inner {
+  width: 100px;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.mask-red, .mask-white {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+}
+.mask-red {
+  left: 0;
+  width: 0;
+  color: #BE002A;
+  animation: text-red 20s ease infinite;
+  z-index: 2;
+  background: #1A1B24;
+}
+.mask-white {
+  right: 0;
+}
+#red-flame {
+  opacity: 0;
+  animation: show-flames 20s ease infinite, red-flame 120ms ease infinite;
+  transform-origin: center bottom;
+}
+#yellow-flame {
+  opacity: 0;
+  animation: show-flames 20s ease infinite, yellow-flame 120ms ease infinite;
+  transform-origin: center bottom;
+}
+#white-flame {
+  opacity: 0;
+  animation: show-flames 20s ease infinite, red-flame 100ms ease infinite;
+  transform-origin: center bottom;
+}
+
+
+
+@keyframes progress-fill {
+  0% {
+      x: -100%;
+  }
+  100% {
+      x: -3%;
+  }
+}
+@keyframes walk {
+  0% {
+      transform: translateX(0);
+  }
+  6% {
+      transform: translateX(0);
+  }
+  10% {
+      transform: translateX(100px);
+  }
+  15% {
+      transform: translateX(140px);
+  }
+  25% {
+      transform: translateX(170px);
+  }
+  35% {
+      transform: translateX(220px);
+  }
+  45% {
+      transform: translateX(280px);
+  }
+  55% {
+      transform: translateX(340px);
+  }
+  65% {
+      transform: translateX(370px);
+  }
+  75% {
+      transform: translateX(430px);
+  }
+  85% {
+      transform: translateX(460px);
+  }
+  100% {
+      transform: translateX(520px);
+  }
+}
+@keyframes move-arm {
+  0% {
+      transform: rotate(0);
+  }
+  5% {
+      transform: rotate(0);
+  }
+  9% {
+      transform: rotate(40deg);
+  }
+  80% {
+      transform: rotate(0);
+  }
+}
+@keyframes move-tool {
+  0% {
+      transform: rotate(0);
+  }
+
+  5% {
+      transform: rotate(0);
+  }
+
+  9% {
+      transform: rotate(50deg);
+  }
+
+  80% {
+      transform: rotate(0);
+  }
+}
+@keyframes write {
+  0% {
+      transform: translate(0, 0) rotate(0deg) scale(1, 1);
+  }
+  16% {
+      transform: translate(0px, 0px) rotate(5deg) scale(0.8, 1);
+  }
+  32% {
+      transform: translate(0px, 0px) rotate(0deg) scale(1, 1);
+  }
+  48% {
+      transform: translate(0px, 0px) rotate(6deg) scale(0.8, 1);
+  }
+  65% {
+      transform: translate(0px, 0px) rotate(0deg) scale(1, 1);
+  }
+  83% {
+      transform: translate(0px, 0px) rotate(4deg) scale(0.8, 1);
+  }
+}
+@keyframes text-red {
+  0% {
+      width: 0%;
+  }
+  100% {
+      width: 98%;
+  }
+}
+@keyframes show-flames {
+  0% {
+      opacity: 0;
+  }
+  74% {
+      opacity: 0;
+  }
+  80% {
+      opacity: 1;
+  }
+  99% {
+      opacity: 1;
+  }
+  100% {
+      opacity: 0;
+  }
+}
+@keyframes red-flame {
+  0% {
+      transform: translateY(-30px) scale(1, 1);
+  }
+  25% {
+      transform: translateY(-30px) scale(1.1, 1.1);
+  }
+  75% {
+      transform: translateY(-30px) scale(0.8, 0.7); 
+  }
+  100% {
+      transform: translateY(-30px) scale(1, 1); 
+  }
+}
+@keyframes yellow-flame {
+  0% {
+      transform: translateY(-30px) scale(0.8, 0.7);
+  }
+  50% {
+      transform: translateY(-30px) scale(1.1, 1.2);
+  }
+  100% {
+      transform: translateY(-30px) scale(1, 1);
+  }
+}
+

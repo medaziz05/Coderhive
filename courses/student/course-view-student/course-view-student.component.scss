@@ -1,0 +1,20 @@
+/* Highlight stars on hover */
+.fas.fa-star:hover {
+  color: gold;  /* Hover effect */
+  cursor: pointer;
+}
+
+/* Highlight the selected rating */
+.fas {
+  color: gold;  /* Active selected rating */
+}
+
+/* Disable stars after rating */
+.fas.fa-star.disabled {
+  color: gold;  /* Keep stars gold even if not hovered */
+}
+
+/* Optional: Style for submit button */
+button {
+  cursor: pointer;
+}

@@ -1,0 +1,187 @@
+
+<!-- breadcrumb area start -->
+<section class="bd-breadcrumb-area p-relative fix z-index-11">
+  <div class="bd-breadcrumb-bg-two" data-background="/assets/images/breadcrumb/breadcrumb-bg-2.webp"></div>
+  <div class="bd-breadcrumb-wrapper p-relative">
+      <div class="container">
+          <div class="row">
+              <div class="col-xl-12">
+                  <div class="bd-breadcrumb style-two d-flex-center">
+                      <div class="bd-breadcrumb-content">
+                          <h1 class="bd-breadcrumb-title">{{ chapter?.chapterTitle }}</h1> <!-- Chapter Title -->
+                          <div class="bd-breadcrumb-list">
+                              <span><a href="index.html">iStudy</a></span>
+                              <span class="divider"><i class="fa-regular fa-angle-right"></i></span>
+                              <span class="active">Chapter Details</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="bd-breadcrumb-shape">
+              <div class="shape-1"><img src="/assets/images/shape/breadcrumb-shape-1.webp" alt="shape"></div>
+              <div class="shape-3"><img src="/assets/images/shape/bulb-shape.webp" alt="shape"></div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- breadcrumb area end -->
+
+<!-- instructor-details area start -->
+<section class="bd-instructor-details-area section-space">
+  <div class="container">
+      <div class="row g-30">
+          <!-- Left Sidebar with Teacher Information -->
+          <div class="col-xl-4 col-lg-4 col-md-12">
+              <div class="bd-instructor-details-info sidebar-left sidebar-sticky">
+                  <div class="bd-instructor-details-thumb mb-20">
+                      <img src="/assets/images/instructor/raslen_teacher.png" alt="Alex Morgan">
+                  </div>
+                  <div class="bd-instructor-info">
+                      <h3 class="name mb-5">{{ course?.teacher?.name }}</h3> 
+                      <span class="designation mb-5 d-block">{{ course?.teacher?.speciality }}</span> 
+                      <div class="bd-instructor-rating mb-15">
+                          <div class="rating-star">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </div>
+                          <span class="rating-count"> (25 Reviews)</span>
+                      </div>
+                      <div class="bd-instructor-info-list mb-20">
+                          <ul>
+                              <li><a href="mailto:alex.morgan@example.com"><i class="fal fa-envelope"></i> Sir Raslen</a></li>
+                              <li><a href="tel:+123456789"><i class="far fa-phone-alt"></i> +(123) 456-789</a></li>
+                              <li><a href="#"><i class="far fa-map-marker-alt"></i> 123 Learning St, Knowledge City, KC88 7ZX</a></li>
+                          </ul>
+                      </div>
+                      <div class="theme-social mb-20">
+                          <ul class="social-icon-list">
+                              <li><a href="#" title="Go to Facebook"><i class="fa-brands fa-facebook-f"></i></a></li>
+                              <li><a href="#" title="Go to Twitter"><i class="fa-brands fa-x-twitter"></i></a></li>
+                              <li><a href="#" title="Go to LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                              <li><a href="#" title="Go to Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+                          </ul>
+                      </div>
+                      <a [routerLink]="['/student/courses', courseId]"  
+                      class="bd-btn btn-secondary w-100">
+                      <span class="left-icon"><i class="fa-regular fa-arrow-left"></i></span> 
+                      Back to Course 
+                   </a>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Right Content: Chapter Details -->
+          <div class="col-xl-8 col-lg-8 col-md-12">
+              <div class="bd-instructor-details-content">
+                  <!-- Loading Overlay -->
+                  <div *ngIf="isLoading" class="loading-overlay">
+                      <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                      </div>
+                      <p class="mt-2">Loading chapter content...</p>
+                  </div>
+
+                  <!-- Content -->
+                  <div *ngIf="!isLoading">
+                      <!-- Error Message -->
+                      <div *ngIf="errorMessage" class="alert alert-danger mb-4">
+                          {{ errorMessage }}
+                      </div>
+
+                      <!-- Chapter Details -->
+                      <div class="bd-instructor-feature-box mb-30">
+                          <h3 class="bd-instructor-details-title">Chapter Description</h3>
+                          <p class="bd-instructor-details-desc">{{ chapter?.chapterDescription }}</p>
+                      </div>
+
+                      <div class="bd-instructor-feature-box mb-30">
+                          <h3 class="bd-instructor-details-title">Chapter Order</h3>
+                          <p class="bd-instructor-details-desc">{{ chapter?.chapterOrder }}</p>
+                      </div>
+
+                      <div class="bd-instructor-feature-box mb-30">
+                          <h3 class="bd-instructor-details-title">Attachments</h3>
+
+                          <!-- No Attachments Message -->
+                          <div *ngIf="chapter?.attachments?.length === 0" class="alert alert-info">
+                              No attachments available for this chapter yet.
+                          </div>
+
+                          <!-- Attachments List -->
+                          <div class="attachments-list">
+                              <div *ngFor="let attachment of chapter?.attachments" class="attachment-item">
+                                  <!-- Clickable Attachment Title -->
+                                  <h5 class="bd-course-title underline mb-10">
+                                      <a href="javascript:void(0)" 
+                                         (click)="toggleAttachmentPreview(attachment)"
+                                         [class.active]="selectedAttachment?.fileName === attachment.fileName">
+                                          {{ attachment.fileName }}
+                                      </a>
+                                  </h5>
+
+                                  <!-- Embedded Preview Container -->
+                                  <div *ngIf="selectedAttachment?.fileName === attachment.fileName && isPreviewSupported(attachment.fileType)" 
+                                       class="attachment-preview-container">
+                                      <div class="preview-wrapper">
+                                          <iframe *ngIf="selectedAttachment?.previewUrl && isPreviewSupported(attachment.fileType)"
+                                                  [src]="attachmentPreviews[attachment.fileName]"
+                                                  class="embedded-preview"
+                                                  title="File Preview"
+                                                  (load)="onIframeLoad()"
+                                                  (error)="onIframeError()">
+                                          </iframe>
+                                          <div *ngIf="loadingPreview" class="preview-loading">
+                                              <div class="spinner-border text-primary" role="status">
+                                                  <span class="visually-hidden">Loading...</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+
+                                  <!-- Preview Not Available Message -->
+                                  <div class="attachment-meta">
+                                    <small class="text-muted">
+                                      {{ attachment.fileType }} - 
+                                      <span *ngIf="isDate(attachment.uploadedAt); else invalidDate">                                        {{ attachment.uploadedAt | date:'medium' }}
+                                      </span>
+                                      <ng-template #invalidDate>
+                                        <span>Date unavailable</span>
+                                      </ng-template>
+                                    </small>
+                                    
+                                    <!-- Add this button container -->
+                                  </div>
+
+                     <div class="quiz-section" *ngIf="chapter?.quiz">
+                          <h3 class="bd-instructor-details-title">Chapter Quiz</h3>
+                          <div class="attachment-item">
+                              <h5 class="bd-course-title underline mb-10">
+                                  {{ chapter.quiz.title }}
+                              </h5>
+                              <div class="attachment-meta">
+                                  <small class="text-muted">
+                                      {{ chapter.quiz.difficulty }} - 
+                                      {{ chapter.quiz.totalQuestions }} questions
+                                  </small>
+                              </div>
+                              <a class="bd-btn btn-primary" 
+                                 [routerLink]="['/student/courses', courseId, 'chapters', chapterId, 'quiz']">
+                                  Play Quiz
+                              </a>
+                          </div>
+                      </div>
+                                </div>
+                              </div>
+                      </div>
+                  </div> 
+              </div>
+          </div>
+
+      </div>
+  </div>
+
+<!-- instructor-details area end -->

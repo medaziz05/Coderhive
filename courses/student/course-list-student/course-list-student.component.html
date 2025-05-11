@@ -1,0 +1,191 @@
+<section class="bd-course-list-area section-space">
+  <div class="container">
+      <div *ngIf="errorMessage" class="alert alert-danger">
+          {{ errorMessage }}
+      </div>
+      
+      <div class="row gy-30">
+          <!-- Course List Section (Main Content) -->
+          <div class="col-xxl-9 col-xl-8 col-lg-9">
+              <div class="row g-30">
+                <div *ngFor="let course of filteredCourses" class="col-xl-6 col-lg-6 col-md-12">
+                      <div class="bd-course-wrapper style-ten">
+                          <div class="bd-course-thumb-wrapper bd-course-thumb-style p-relative">
+                              <!-- Paid or Free Badge -->
+                              <div class="bd-course-badge">
+                                  <span class="bd-circle-badge white">{{ course.coursePaid ? 'PAID' : 'FREE' }}</span>
+                              </div>
+
+                              <!-- Course Image -->
+                              <div class="course-image-container">
+                                  <a href="#"><img [src]="course?.courseImage" alt="Course Image" title="{{ course.courseTitle }}"></a>
+                              </div>
+                          </div>
+
+                          <div class="bd-course-content primary-bg">
+                              <!-- Course Title -->
+                              <h5 class="bd-course-title underline mb-10">
+                                <a [routerLink]="['/student/courses', course.courseId]" title="View course details for {{ course.courseTitle }}">{{ course.courseTitle }}</a>
+                            </h5>
+
+                              <!-- Course Metadata (Level and Category) -->
+                              <div class="course-metadata">
+                                  <div class="bd-course-level mb-2">
+                                      <h5 class="metadata-item">
+                                          <span class="level-label">Level:</span> 
+                                          <span class="metadata-value">{{ course.level || 'Not Specified' | titlecase }}</span>
+                                      </h5>
+                                  </div>
+                                  <div class="bd-course-category">
+                                      <h5 class="metadata-item">
+                                          <span class="category-label">Category:</span>
+                                          <span class="metadata-value">{{ course.courseCategory }}</span>
+                                      </h5>
+                                  </div>
+                              </div>
+
+                              <!-- Dividing Line -->
+                              <div class="bd-course-full-border"></div>
+
+                              <!-- View Course Button -->
+                              <div class="bd-course-btn">
+                                <a class="bd-text-btn" [routerLink]="['/student/courses', course.courseId]" title="View details for {{ course.courseTitle }}">
+                                    View Details
+                                      <span class="box-icon">
+                                          <i class="fa-regular fa-arrow-right-long first-icon"></i>
+                                          <i class="fa-regular fa-arrow-right-long second-icon"></i>
+                                      </span>
+                                  </a>
+                              </div>
+
+                              <!-- Number of Lessons and Students -->
+                              <div class="bd-course-content-bottom d-flex align-items-center">
+                                  <div class="bd-course-lesson has-separator">
+                                      <span><i class="fa-light fa-clock" title="Number of lessons"></i> Lessons</span>
+                                  </div>
+                                  <div class="bd-course-lesson">
+                                      <span><i class="fa-sharp fa-solid fa-list" title="Number of students"></i> Students</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div> <!-- End of Course List Section -->
+          </div> <!-- End of Course Column -->
+
+          <!-- Filter Sidebar Section (On the Right Side) -->
+          <div class="col-xxl-3 col-xl-4 col-lg-3">
+            <div class="bd-course-sidebar sidebar-right sidebar-sticky">
+              <!-- Search Widget -->
+              <div class="bd-course-widget widget-search">
+                <h5 class="bd-widget-title mb-20">Search</h5>
+                <div class="bd-widget-content">
+                  <div class="bd-sidebar-search">
+                    <label for="searchQuery" class="sr-only">Search courses</label>
+                    <input type="text" 
+                           id="searchQuery"
+                           [(ngModel)]="currentFilters.searchQuery" 
+                           (ngModelChange)="onSearchInput()" 
+                           placeholder="Search courses..."
+                           title="Search for courses">
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Categories Widget -->
+              <div class="bd-course-widget widget-category">
+                <h5 class="bd-widget-title mb-20">Categories</h5>
+                <div class="bd-widget-content">
+                  <div *ngFor="let category of categories" class="checkbox-option">
+                    <input type="checkbox"
+                           [id]="'category-' + category"
+                           [checked]="currentFilters.category === category"
+                           (change)="onCategoryChange(category, $event.target.checked)"
+                           title="Filter by category: {{ category }}">
+                    <label [for]="'category-' + category">{{ category }}</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Level Widget -->
+              <div class="bd-course-widget widget-level">
+                <h5 class="bd-widget-title mb-20">Level</h5>
+                <div class="bd-widget-content" role="radiogroup">
+                  <div *ngFor="let level of levelOptions" class="checkbox-option">
+                    <input type="radio"
+                           [id]="'level-' + level.value"
+                           name="level"
+                           [value]="level.value"
+                           [(ngModel)]="currentFilters.level"
+                           (change)="onLevelChange(level.value)"
+                           title="Filter by level: {{ level.display }}">
+                    <label [for]="'level-' + level.value">{{ level.display }}</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price Widget -->
+              <div class="bd-course-widget widget-price">
+                <h5 class="bd-widget-title mb-20">Price</h5>
+                <div class="bd-widget-content" role="radiogroup">
+                  <div *ngFor="let price of priceOptions" class="checkbox-option">
+                    <input type="radio"
+                           [id]="'price-' + price"
+                           name="price"
+                           [value]="price"
+                           [(ngModel)]="currentFilters.price"
+                           (change)="onPriceChange(price)"
+                           title="Filter by price: {{ price }}">
+                    <label [for]="'price-' + price">{{ price }}</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Reset Filters Button -->
+              <div class="bd-course-widget">
+                <button class="btn btn-secondary" (click)="resetFilters()" title="Reset filters to default">
+                  Reset Filters
+                </button>
+              </div>
+              
+              <!-- Loading and Error Messages -->
+              <div *ngIf="loading" class="loading-spinner">
+                Loading courses...
+              </div>
+              <div *ngIf="errorMessage" class="alert alert-danger">
+                {{ errorMessage }}
+              </div>
+
+              <!-- Ratings Widget -->
+              <div class="bd-course-widget widget-ratings">
+                  <h5 class="bd-widget-title mb-20">Ratings</h5>
+                  <div class="bd-widget-content">
+                      <div class="checkbox-option">
+                          <input id="course-ratings-1" type="checkbox" title="Filter by 5 stars" />
+                          <label for="course-ratings-1">
+                              <i class="fa-sharp fa-solid fa-star" title="5 stars"></i>
+                              <i class="fa-sharp fa-solid fa-star"></i>
+                              <i class="fa-sharp fa-solid fa-star"></i>
+                              <i class="fa-sharp fa-solid fa-star"></i>
+                              <i class="fa-sharp fa-solid fa-star"></i>
+                              <span>(15)</span>
+                          </label>
+                      </div>
+                      <div class="checkbox-option">
+                          <input id="course-ratings-2" type="checkbox" checked="" title="Filter by 4 stars" />
+                          <label for="course-ratings-2">
+                              <i class="fa-sharp fa-solid fa-star" title="4 stars"></i>
+                              <i class="fa-sharp fa-solid fa-star"></i>
+                              <i class="fa-sharp fa-solid fa-star"></i>
+                              <i class="fa-sharp fa-solid fa-star"></i>
+                              <i class="fa-sharp fa-regular fa-star"></i>
+                              <span>(4)</span>
+                          </label>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div> <!-- End of Filter Sidebar Section -->
+      </div> <!-- End of Row -->
+  </div> <!-- End of Container -->
+</section> <!-- End of Course List Area -->

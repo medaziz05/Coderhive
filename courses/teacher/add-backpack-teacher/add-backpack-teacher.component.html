@@ -1,0 +1,86 @@
+<main>
+    <section class="bd-new-course-area section-space">
+        <div class="container">
+            <h2 class="text-center mb-4">New Backpack</h2>
+            <div class="row g-30 justify-content-center">
+                <div class="col-xl-8 col-lg-9">
+                    <div class="bd-new-course-wrapper">
+                        <div class="card p-4">
+                            <form #backpackForm="ngForm" (ngSubmit)="onSubmit(backpackForm)" novalidate>
+                                <!-- Title Input -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="title">Backpack Title</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <input [(ngModel)]="backpackRequest.title" name="title" 
+                                            id="title" type="text" placeholder="Enter Title" required 
+                                            minlength="2" #titleRef="ngModel">
+                                    </div>
+                                    <div *ngIf="titleRef.invalid && titleRef.touched" class="text-danger">
+                                        <div *ngIf="titleRef.errors?.['required']">Title is required.</div>
+                                        <div *ngIf="titleRef.errors?.['minlength']">Minimum 2 characters.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Content Input -->
+                                <div class="form-input-box mb-20">
+                                    <div class="form-input-title">
+                                        <label for="content">Content</label>
+                                    </div>
+                                    <div class="form-input">
+                                        <textarea [(ngModel)]="backpackRequest.content" 
+                                            name="content" id="content" 
+                                            placeholder="Enter your content..." 
+                                            required minlength="10" 
+                                            rows="8"
+                                            #contentRef="ngModel"></textarea>
+                                    </div>
+                                    <div *ngIf="contentRef.invalid && contentRef.touched" class="text-danger">
+                                        <div *ngIf="contentRef.errors?.['required']">Content is required.</div>
+                                        <div *ngIf="contentRef.errors?.['minlength']">Minimum 10 characters.</div>
+                                    </div>
+                                </div>
+
+                                <!-- Image Upload -->
+                                <div class="form-input-box mb-30">
+                                    <div class="form-input-title">
+                                        <label for="imageUpload">Backpack Image</label>
+                                    </div>
+                                    <div class="bd-course-thumbnail">
+                                        <div class="bd-course-thumbnail-label">
+                                            <input type="file" id="imageUpload" accept="image/*" 
+                                                (change)="onFileSelected($event)">
+                                            <label for="imageUpload">
+                                                <span class="label-title">Upload Image</span>
+                                                <span class="bd-course-thumbnail-preview">
+                                                    <span class="bd-course-thumbnail-preview-box" 
+                                                        [ngStyle]="{'background-image': previewUrl ? 
+                                                        'url(' + previewUrl + ')' : 'url(/assets/images/shape/select-thumb.webp)'}">
+                                                    </span>
+                                                </span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Form Actions -->
+                                <div class="d-flex-items justify-content-start gap-30 mt-50">
+                                    <button type="submit" 
+                                            class="bd-btn btn-outline-primary" 
+                                            [disabled]="backpackForm.invalid || loading">
+                                        <span *ngIf="!loading">Publish</span>
+                                        <span *ngIf="loading">Publishing...</span>
+                                    </button>
+                                    <a [routerLink]="['/teacher/profile']" class="bd-btn btn-outline-secondary">
+                                        Back to Profile
+                                      </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

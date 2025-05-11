@@ -1,0 +1,137 @@
+<main>
+  <section class="bd-new-course-area section-space">
+    <div class="container">
+      <h2 class="text-center mb-4">Create Chapter Quiz</h2>
+      <div class="row g-30 justify-content-center">
+        <div class="col-xl-8 col-lg-9">
+          <div class="bd-new-course-wrapper">
+            <div class="card p-4">
+              <!-- Error Message -->
+              <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ errorMessage }}
+                <button type="button" class="btn-close" (click)="errorMessage = ''" aria-label="Close"></button>
+              </div>
+
+              <!-- Loading Overlay -->
+              <div *ngIf="loading" class="loading-overlay">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+
+              <!-- Course Category Display -->
+              <div class="form-input-box mb-20">
+                <div class="form-input-title">
+                  <label>Course Category</label>
+                </div>
+                <div class="form-input">
+                  <input type="text" 
+                        [value]="category" 
+                        class="form-control"
+                        disabled
+                        placeholder="Loading course category...">
+                </div>
+                <small class="form-text text-muted">
+                  Quizzes are automatically categorized with the course's category
+                </small>
+              </div>
+
+              <form #quizForm="ngForm" (ngSubmit)="onSubmit(quizForm)" novalidate>
+                <!-- Form-wide Error -->
+                <div *ngIf="formSubmitted && quizForm.invalid" class="alert alert-warning">
+                  Please correct the errors in the form before submitting.
+                </div>
+
+                <!-- Quiz Topic -->
+                <div class="form-input-box mb-20">
+                  <div class="form-input-title">
+                    <label for="topic">Quiz Topic</label>
+                  </div>
+                  <div class="form-input">
+                    <input [(ngModel)]="quiz.topic" 
+                          name="topic" 
+                          id="topic" 
+                          type="text" 
+                          placeholder="Enter Quiz Topic (e.g., 'Python Basics')" 
+                          required
+                          minlength="5"
+                          #topicRef="ngModel"
+                          [class.is-invalid]="topicRef.invalid && (topicRef.touched || formSubmitted)">
+                    <div *ngIf="topicRef.invalid && (topicRef.touched || formSubmitted)" class="invalid-feedback">
+                      <div *ngIf="topicRef.errors?.['required']">Topic is required</div>
+                      <div *ngIf="topicRef.errors?.['minlength']">Minimum 5 characters required</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Number of Questions -->
+                <div class="form-input-box mb-20">
+                  <div class="form-input-title">
+                    <label for="questions">Number of Questions</label>
+                  </div>
+                  <div class="form-input">
+                    <select [(ngModel)]="quiz.numberOfQuestions" 
+                          name="questions" 
+                          id="questions" 
+                          class="form-select"
+                          required
+                          #questionsRef="ngModel"
+                          [class.is-invalid]="questionsRef.invalid && (questionsRef.touched || formSubmitted)">
+                      <option *ngFor="let n of nquestions" [value]="n">{{ n }} Questions</option>
+                    </select>
+                    <div *ngIf="questionsRef.invalid && (questionsRef.touched || formSubmitted)" class="invalid-feedback">
+                      Please select number of questions
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Difficulty Level -->
+                <div class="form-input-box mb-20">
+                  <div class="form-input-title">
+                    <label for="difficulty">Difficulty Level</label>
+                  </div>
+                  <div class="form-input">
+                    <select [(ngModel)]="quiz.difficulty" 
+                          name="difficulty" 
+                          id="difficulty" 
+                          class="form-select"
+                          required
+                          #difficultyRef="ngModel"
+                          [class.is-invalid]="difficultyRef.invalid && (difficultyRef.touched || formSubmitted)">
+                      <option *ngFor="let d of difficulties" [value]="d">{{ d | titlecase }}</option>
+                    </select>
+                    <div *ngIf="difficultyRef.invalid && (difficultyRef.touched || formSubmitted)" class="invalid-feedback">
+                      Please select difficulty level
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="d-flex-items justify-content-start gap-30 mt-30">
+                  <button type="submit" class="bd-btn btn-primary" [disabled]="quizForm.invalid || loading">
+                    <span *ngIf="!loading">Create Quiz</span>
+                    <span *ngIf="loading">Creating...</span>
+                  </button>
+                  <a [routerLink]="['/teacher/courses', courseId, 'chapters', chapterId]" class="bd-btn btn-outline-secondary">
+                    Cancel
+                  </a>
+                </div>
+              </form>
+
+              <!-- Success Message -->
+              <div *ngIf="success" class="alert alert-success mt-3">
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-check-circle me-2"></i>
+                  Quiz created successfully!
+                  <a [routerLink]="['/teacher/courses', courseId, 'chapters', chapterId]" class="alert-link ms-2">
+                    View Chapter
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
